@@ -1,26 +1,42 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
+import { Student } from './entities/student.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+//import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class StudentService {
-  create(createStudentDto: CreateStudentDto) {
-    return 'This action adds a new student';
-  }
 
-  findAll() {
-    return `This action returns all student`;
-  }
+  constructor(
+    @InjectRepository(Student)
+     private studentRepository: Repository<Student>,
 
-  findOne(id: number) {
-    return `This action returns a #${id} student`;
-  }
+   ){}
 
-  update(id: number, updateStudentDto: UpdateStudentDto) {
-    return `This action updates a #${id} student`;
-  }
 
-  remove(id: number) {
-    return `This action removes a #${id} student`;
-  }
+  async register(createStudentDto: CreateStudentDto){
+  
+    const existingUser = await this.studentRepository.findOne({ where: { email: createStudentDto.email } });
+
+    
+    if (existingUser) {
+        throw new HttpException('Student already exists', HttpStatus.FORBIDDEN);
+    }
+
+    console.log(createStudentDto);
+    const hashedPassword = await bcrypt.hash(createStudentDto.password, 10);
+    
+    const newStudent = await this.studentRepository.create({...createStudentDto, password: hashedPassword});
+
+    const savedStudent = await this.studentRepository.save(newStudent);
+
+    console.log('Student saved to database:', savedStudent);
+
+    return savedStudent;
+
+}
+
 }

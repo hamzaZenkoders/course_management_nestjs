@@ -1,40 +1,55 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm";
+import { whiteListDomain } from "src/core/whitelistedDomain.entity";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
-export enum StudentRole {
+import { Roles } from "src/features/enums/roles";
+/* export enum StudentRole {
     admin = "ADMIN",
     teacher = "TEACHER",
     student = "STUDENT",
-}
+} */
 
+@Entity()
 export class Student {
     @PrimaryGeneratedColumn()
     id: number;
+    
+    @Column({type: 'varchar'})
+    name:string;
    
     @Column({unique: true})
     email:string;
 
-    @Column({type: 'text'})
+    @Column({type: 'varchar'})
     password:string;
 
-    @Column({type: 'number'})
+    @Column({type: 'varchar'})
     age: number;
 
-    @Column({type:'text'})
+    @Column({type:'varchar'})
     address: string;
 
-    @Column({type:'text'})
+    @Column({type:'varchar'})
     contact: string;
 
-    @Column({type:'text'})
-    dateOfBirth: string;
+    @Column({ type: 'timestamp' }) 
+    dateOfBirth: Date;
 
-    @Column({type:'text'})
-     role: string; 
+    @Column({
+        type: "enum",
+        enum:Roles,
+        default: Roles.student,
+    })
+    role: Roles
 
-    @Column({type:'text'})
+    @Column({ type: 'date', default: () => 'CURRENT_DATE' })
     createdAt: Date;
 
-    @Column({type:'text'})
+    @Column({ type: 'date', default: () => 'CURRENT_DATE', onUpdate: 'CURRENT_DATE' })
     updatedAt: Date;
+
+    
+    @OneToOne(()=>whiteListDomain)
+    @JoinColumn()
+    domainID: whiteListDomain;
 
 }
