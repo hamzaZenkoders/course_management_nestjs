@@ -21,7 +21,7 @@ let MailController = class MailController {
         this.otpService = otpService;
     }
     verify(otpVeriferDto) {
-        return this.otpService.OtpVerification();
+        return this.otpService.OtpVerification(otpVeriferDto);
     }
 };
 exports.MailController = MailController;

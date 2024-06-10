@@ -6,6 +6,8 @@ import { OTP } from "./entity/otp.entity";
 import { OtpVerifierDto } from "./dto/otp.verification";
 import { OtpPurpose } from "src/features/enums/otpEnum";
 
+import { otpGen } from 'otp-gen-agent';
+
 
 @Injectable()
 export class OtpService{ 
@@ -14,15 +16,14 @@ export class OtpService{
    @InjectRepository(OTP)
    private otpRepository: Repository<OTP>){}
 
-   async OtpVerification(){
-    //  this.mailService.sendEmailOtp()
+   async OtpVerification(otpVeriferDto: OtpVerifierDto){
+     const findOtp = await this.otpRepository.find({ where: { otp: otpVeriferDto.otp} });
    }
 
-   async saveOtp(linkedID: number, otp: number){
+   async saveOtp(linkedID: number, otp: string){
    
       const expiryTime = new Date(Date.now() + 24 * 60 * 60 * 1000); 
     
-
       const newOtp = this.otpRepository.create({
          otp: otp,
          purpose: OtpPurpose.signup, // Assuming you have a default purpose for signup
@@ -30,8 +31,13 @@ export class OtpService{
          student: { id: linkedID } // Pass the linkedID as student id
      });
    
-      await this.otpRepository.save(newOtp);
+      await this.otpRepository.save(newOtp);//
       
+   }
+
+   async generateOTP(){
+      const otp = await otpGen();
+      return otp;
    }
 
 }

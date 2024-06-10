@@ -20,7 +20,6 @@ const bcrypt = require("bcrypt");
 const otp_entity_1 = require("../../core/otp/entity/otp.entity");
 const student_entity_1 = require("./entities/student.entity");
 const mail_service_1 = require("../../core/mail/mail.service");
-const otp_gen_agent_1 = require("otp-gen-agent");
 const otp_service_1 = require("../../core/otp/otp.service");
 let StudentService = class StudentService {
     constructor(studentRepository, otpRepository, mailService, otpService) {
@@ -45,11 +44,11 @@ let StudentService = class StudentService {
         });
         const tempSave = { id: newStudent.id, ...newStudent };
         const savedStudent = await this.studentRepository.save(tempSave);
-        const otp = await (0, otp_gen_agent_1.otpGen)();
-        console.log("type checking ", typeof (otp));
+        const otpRecieved = await this.otpService.generateOTP();
+        const encryptedOtp = await bcrypt.hash(otpRecieved, 10);
         if (savedStudent.isVerified === false) {
-            await this.otpService.saveOtp(savedStudent.id, otp);
-            await this.mailService.sendEmailOtp(tempSave.email, otp);
+            await this.otpService.saveOtp(savedStudent.id, encryptedOtp);
+            await this.mailService.sendEmailOtp(tempSave.email, otpRecieved);
             return {
                 statusCode: common_1.HttpStatus.OK,
                 message: 'Verification otp is sent to email',
@@ -58,6 +57,14 @@ let StudentService = class StudentService {
         else {
             console.log('Student is verified:', savedStudent);
             return savedStudent;
+        }
+    }
+    async login(loginInStudentDto) {
+        const existingUser = await this.studentRepository.findOne({
+            where: { email: loginInStudentDto.email },
+        });
+        if (!existingUser) {
+            throw new common_1.NotFoundException('User not found');
         }
     }
     async findOne(email) {

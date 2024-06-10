@@ -1,6 +1,6 @@
 //importing built in methods
 
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository} from 'typeorm';
 
@@ -27,6 +27,7 @@ import { otpGen } from 'otp-gen-agent';
 import { OtpService } from 'src/core/otp/otp.service';
 import { OtpVerifierDto } from 'src/core/otp/dto/otp.verification';
 import { OtpPurpose } from '../enums/otpEnum';
+import { LoginInStudentDto } from './dto/login-student-dto';
 
 
 @Injectable()
@@ -68,16 +69,17 @@ export class StudentService {
     const savedStudent = await this.studentRepository.save(tempSave);
 
     //generating otp
-       const otp = await otpGen();
-       console.log("type checking ",typeof(otp));
+       const otpRecieved = await this.otpService.generateOTP();
+       const encryptedOtp = await bcrypt.hash(otpRecieved,10);
+
 
     if (savedStudent.isVerified === false) {
 
       //saving Otp in the otp table
-      await this.otpService.saveOtp(savedStudent.id,otp); 
+      await this.otpService.saveOtp(savedStudent.id,encryptedOtp); 
 
       //sending otp
-        await this.mailService.sendEmailOtp(tempSave.email,otp); //
+        await this.mailService.sendEmailOtp(tempSave.email,otpRecieved); //
       return {
         statusCode: HttpStatus.OK,
         message: 'Verification otp is sent to email',
@@ -88,6 +90,21 @@ export class StudentService {
 
       return savedStudent;
     }
+  }
+
+  async login(loginInStudentDto: LoginInStudentDto){
+
+    const existingUser = await this.studentRepository.findOne({
+      where: { email: loginInStudentDto.email },
+    });
+
+    if(!existingUser){
+      throw new NotFoundException('User not found');
+    }
+/* 
+    if(existingUser.isVerified === false){
+      throw new 
+    } */
   }
 
   async findOne(email: string): Promise<Student | undefined> {

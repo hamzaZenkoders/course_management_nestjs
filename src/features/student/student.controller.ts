@@ -15,6 +15,7 @@ import { EmailAuthorizationGuard } from 'src/core/guards/emailAuthorization.guar
 import { whiteListDomain } from 'src/core/entities/whitlistedDomain.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { LoginInStudentDto } from './dto/login-student-dto';
 //import { UpdateStudentDto } from './dto/update-student.dto';
 
 @Controller('student')
@@ -28,7 +29,9 @@ export class StudentController {
   }
 
   @Post('/auth/login')
-  signIn(){}
+  signIn(@Body() loginInStudentDto: LoginInStudentDto){
+    return this.studentService.login(loginInStudentDto);
+  }
 
 
   // @UseGuards(AuthGuard('local'))

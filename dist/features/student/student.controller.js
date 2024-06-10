@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const student_service_1 = require("./student.service");
 const create_student_dto_1 = require("./dto/create-student.dto");
 const emailAuthorization_guard_1 = require("../../core/guards/emailAuthorization.guard");
+const login_student_dto_1 = require("./dto/login-student-dto");
 let StudentController = class StudentController {
     constructor(studentService) {
         this.studentService = studentService;
@@ -24,7 +25,9 @@ let StudentController = class StudentController {
     create(createStudentDto) {
         return this.studentService.register(createStudentDto);
     }
-    signIn() { }
+    signIn(loginInStudentDto) {
+        return this.studentService.login(loginInStudentDto);
+    }
     getData() {
         return 'working correctly';
     }
@@ -43,8 +46,9 @@ __decorate([
 ], StudentController.prototype, "create", null);
 __decorate([
     (0, common_1.Post)('/auth/login'),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [login_student_dto_1.LoginInStudentDto]),
     __metadata("design:returntype", void 0)
 ], StudentController.prototype, "signIn", null);
 __decorate([

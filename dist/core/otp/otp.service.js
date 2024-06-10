@@ -19,12 +19,14 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const otp_entity_1 = require("./entity/otp.entity");
 const otpEnum_1 = require("../../features/enums/otpEnum");
+const otp_gen_agent_1 = require("otp-gen-agent");
 let OtpService = class OtpService {
     constructor(mailService, otpRepository) {
         this.mailService = mailService;
         this.otpRepository = otpRepository;
     }
-    async OtpVerification() {
+    async OtpVerification(otpVeriferDto) {
+        const findOtp = await this.otpRepository.find({ where: { otp: otpVeriferDto.otp } });
     }
     async saveOtp(linkedID, otp) {
         const expiryTime = new Date(Date.now() + 24 * 60 * 60 * 1000);
@@ -35,6 +37,10 @@ let OtpService = class OtpService {
             student: { id: linkedID }
         });
         await this.otpRepository.save(newOtp);
+    }
+    async generateOTP() {
+        const otp = await (0, otp_gen_agent_1.otpGen)();
+        return otp;
     }
 };
 exports.OtpService = OtpService;

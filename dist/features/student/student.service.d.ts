@@ -5,6 +5,7 @@ import { OTP } from 'src/core/otp/entity/otp.entity';
 import { Student } from './entities/student.entity';
 import { MailService } from 'src/core/mail/mail.service';
 import { OtpService } from 'src/core/otp/otp.service';
+import { LoginInStudentDto } from './dto/login-student-dto';
 export declare class StudentService {
     private studentRepository;
     private otpRepository;
@@ -31,5 +32,6 @@ export declare class StudentService {
         statusCode: HttpStatus;
         message: string;
     }>;
+    login(loginInStudentDto: LoginInStudentDto): Promise<void>;
     findOne(email: string): Promise<Student | undefined>;
 }

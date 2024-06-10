@@ -7,8 +7,8 @@ export class OTP {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'int' })
-  otp: number;
+  @Column({ type: 'varchar' })
+  otp: string;
 
   @Column({
     type: 'enum',

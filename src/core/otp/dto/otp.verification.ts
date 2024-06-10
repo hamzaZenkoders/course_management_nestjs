@@ -9,15 +9,6 @@ export class OtpVerifierDto {
     @IsEmpty()
     otp: number;
   
-    @IsEnum(OtpPurpose)
-    purpose: OtpPurpose;
-   
-    @IsDate()
-    createdAt: Date;
-  
-   @IsTimeZone()
-    expiresAt: Timestamp;
-
   
 }
   

@@ -1,6 +1,7 @@
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { whiteListDomain } from 'src/core/entities/whitlistedDomain.entity';
+import { LoginInStudentDto } from './dto/login-student-dto';
 export declare class StudentController {
     private readonly studentService;
     constructor(studentService: StudentService);
@@ -24,7 +25,7 @@ export declare class StudentController {
         statusCode: import("@nestjs/common").HttpStatus;
         message: string;
     }>;
-    signIn(): void;
+    signIn(loginInStudentDto: LoginInStudentDto): Promise<void>;
     getData(): string;
     getDataTwo(createStudentDto: CreateStudentDto): Promise<import("./entities/student.entity").Student>;
 }

@@ -10,7 +10,7 @@ export class MailController {
 
   @Post('/verifyOtp')
   verify(@Body() otpVeriferDto: OtpVerifierDto){
-    return this.otpService.OtpVerification();
+    return this.otpService.OtpVerification(otpVeriferDto);
   }
   
 }
