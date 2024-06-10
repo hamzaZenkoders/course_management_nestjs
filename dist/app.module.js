@@ -11,22 +11,42 @@ const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const typeorm_1 = require("@nestjs/typeorm");
+const student_entity_1 = require("./features/student/entities/student.entity");
+const course_entity_1 = require("./features/course/entities/course.entity");
+const teacher_entity_1 = require("./features/teacher/entities/teacher.entity");
+const enrollment_entity_1 = require("./features/enrollment/entities/enrollment.entity");
+const whitlistedDomain_entity_1 = require("./core/entities/whitlistedDomain.entity");
+const passport_1 = require("@nestjs/passport");
+const student_module_1 = require("./features/student/student.module");
+const course_module_1 = require("./features/course/course.module");
+const teacher_module_1 = require("./features/teacher/teacher.module");
+const auth_module_1 = require("./core/auth/auth.module");
+const otp_entity_1 = require("./core/entities/otp.entity");
+const config_1 = require("@nestjs/config");
+const mail_module_1 = require("./core/mail/mail.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            config_1.ConfigModule.forRoot({ isGlobal: true }),
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'postgres',
                 host: 'localhost',
                 port: 5432,
                 username: 'postgres',
-                password: 'dxtx100',
+                password: 'dxtx998',
                 database: 'lms',
-                entities: [__dirname + '/../**/*.entity.js'],
+                entities: [student_entity_1.Student, course_entity_1.Course, teacher_entity_1.Teacher, enrollment_entity_1.Enrollment, whitlistedDomain_entity_1.whiteListDomain, otp_entity_1.OTP],
                 synchronize: true,
-            })
+            }),
+            auth_module_1.AuthModule,
+            student_module_1.StudentModule,
+            passport_1.PassportModule,
+            course_module_1.CourseModule,
+            teacher_module_1.TeacherModule,
+            mail_module_1.MailModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

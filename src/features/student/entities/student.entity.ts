@@ -1,7 +1,17 @@
-import { whiteListDomain } from "src/core/whitelistedDomain.entity";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-import { Roles } from "src/features/enums/roles";
+import { Roles } from 'src/features/enums/roles';
+import { whiteListDomain } from 'src/core/entities/whitlistedDomain.entity';
+import { OTP } from 'src/core/entities/otp.entity';
+import { Transform } from 'class-transformer';
+
 /* export enum StudentRole {
     admin = "ADMIN",
     teacher = "TEACHER",
@@ -10,46 +20,55 @@ import { Roles } from "src/features/enums/roles";
 
 @Entity()
 export class Student {
-    @PrimaryGeneratedColumn()
-    id: number;
-    
-    @Column({type: 'varchar'})
-    name:string;
-   
-    @Column({unique: true})
-    email:string;
+  @Transform((value) => value, { toPlainOnly: true })
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({type: 'varchar'})
-    password:string;
+  @Column({ type: 'varchar' })
+  name: string;
 
-    @Column({type: 'varchar'})
-    age: number;
+  @Column({ unique: true })
+  email: string;
 
-    @Column({type:'varchar'})
-    address: string;
+  @Column({ type: 'varchar' })
+  password: string;
 
-    @Column({type:'varchar'})
-    contact: string;
+  @Column({ type: 'int' })
+  age: number;
 
-    @Column({ type: 'timestamp' }) 
-    dateOfBirth: Date;
+  @Column({ type: 'varchar' })
+  address: string;
 
-    @Column({
-        type: "enum",
-        enum:Roles,
-        default: Roles.student,
-    })
-    role: Roles
+  @Column({ type: 'varchar' })
+  contact: string;
 
-    @Column({ type: 'date', default: () => 'CURRENT_DATE' })
-    createdAt: Date;
+  @Column({ type: 'timestamp' })
+  dateOfBirth: Date;
 
-    @Column({ type: 'date', default: () => 'CURRENT_DATE', onUpdate: 'CURRENT_DATE' })
-    updatedAt: Date;
+  @Column({
+    type: 'enum',
+    enum: Roles,
+    default: Roles.student,
+  })
+  role: Roles;
 
-    
-    @OneToOne(()=>whiteListDomain)
-    @JoinColumn()
-    domainID: whiteListDomain;
+  @Column({ type: 'boolean', default: false }) //change in ERD also
+  isVerified: boolean;
 
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
+  updatedAt: Date;
+
+  @OneToOne(() => whiteListDomain)
+  @JoinColumn()
+  domainID: whiteListDomain;
+
+  @OneToMany(() => OTP, (otp) => otp.student)
+  otps: OTP[];
 }

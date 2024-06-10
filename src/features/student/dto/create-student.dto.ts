@@ -1,6 +1,16 @@
-import { IsDate, IsEmail, IsEmpty, IsEnum, IsInt, isInt, IsNumber, IsPhoneNumber, IsString } from "class-validator";
-import { Roles } from "src/features/enums/roles";
-
+import {
+  IsBoolean,
+  IsDate,
+  IsEmail,
+  IsEmpty,
+  IsEnum,
+  IsInt,
+  isInt,
+  IsNumber,
+  IsPhoneNumber,
+  IsString,
+} from 'class-validator';
+import { Roles } from 'src/features/enums/roles';
 
 /* export enum StudentRole {
     admin = "ADMIN",
@@ -10,40 +20,43 @@ import { Roles } from "src/features/enums/roles";
 } */
 
 export class CreateStudentDto {
-    @IsString()
-    @IsEmpty()
-    name: string;
+  @IsString()
+  @IsEmpty()
+  name: string;
 
-    @IsEmail()
-    @IsEmpty()
-    email:string;
+  @IsEmail()
+  @IsEmpty()
+  email: string;
 
-    @IsString()
-    @IsEmpty()
-    password:string;
+  @IsString()
+  @IsEmpty()
+  password: string;
 
-    @IsInt()
-    @IsEmpty()
-    age: number;
+  @IsInt()
+  @IsEmpty()
+  age: number;
 
-    @IsString()
-    @IsEmpty()
-    address: string;
+  @IsString()
+  @IsEmpty()
+  address: string;
 
-    @IsPhoneNumber()
-    contact: string;
+  @IsPhoneNumber()
+  contact: string;
 
-    @IsDate()
-    dateOfBirth: Date;
+  @IsDate()
+  dateOfBirth: Date;
 
-    @IsEnum(Roles, {
-        message: "Enter a valid role"
-    })
-    role:Roles;
+  @IsEnum(Roles, {
+    message: 'Enter a valid role',
+  })
+  role: Roles;
 
-    @IsDate()
-    createdAt: Date;
+  @IsBoolean()
+  isVerified: boolean = false;
 
-    @IsDate()
-    updatedAt: Date;
+  @IsDate()
+  createdAt: Date;
+
+  @IsDate()
+  updatedAt: Date;
 }

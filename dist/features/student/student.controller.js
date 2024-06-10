@@ -16,30 +16,25 @@ exports.StudentController = void 0;
 const common_1 = require("@nestjs/common");
 const student_service_1 = require("./student.service");
 const create_student_dto_1 = require("./dto/create-student.dto");
-const update_student_dto_1 = require("./dto/update-student.dto");
+const emailAuthorization_guard_1 = require("../../core/guards/emailAuthorization.guard");
 let StudentController = class StudentController {
     constructor(studentService) {
         this.studentService = studentService;
     }
     create(createStudentDto) {
-        return this.studentService.create(createStudentDto);
+        return this.studentService.register(createStudentDto);
     }
-    findAll() {
-        return this.studentService.findAll();
+    getData() {
+        return 'working correctly';
     }
-    findOne(id) {
-        return this.studentService.findOne(+id);
-    }
-    update(id, updateStudentDto) {
-        return this.studentService.update(+id, updateStudentDto);
-    }
-    remove(id) {
-        return this.studentService.remove(+id);
+    getDataTwo(createStudentDto) {
+        return this.studentService.findOne(createStudentDto.email);
     }
 };
 exports.StudentController = StudentController;
 __decorate([
-    (0, common_1.Post)(),
+    (0, common_1.Post)('/auth/signup'),
+    (0, common_1.UseGuards)(emailAuthorization_guard_1.EmailAuthorizationGuard),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_student_dto_1.CreateStudentDto]),
@@ -50,29 +45,14 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], StudentController.prototype, "findAll", null);
+], StudentController.prototype, "getData", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)('/second'),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [create_student_dto_1.CreateStudentDto]),
     __metadata("design:returntype", void 0)
-], StudentController.prototype, "findOne", null);
-__decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_student_dto_1.UpdateStudentDto]),
-    __metadata("design:returntype", void 0)
-], StudentController.prototype, "update", null);
-__decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], StudentController.prototype, "remove", null);
+], StudentController.prototype, "getDataTwo", null);
 exports.StudentController = StudentController = __decorate([
     (0, common_1.Controller)('student'),
     __metadata("design:paramtypes", [student_service_1.StudentService])
