@@ -9,6 +9,7 @@ export declare class Teacher {
     designation: string;
     password: string;
     role: Roles;
+    isSuspended: boolean;
     createdAt: Date;
     updatedAt: Date;
     courses: Course[];

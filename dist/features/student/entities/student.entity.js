@@ -13,8 +13,8 @@ exports.Student = void 0;
 const typeorm_1 = require("typeorm");
 const roles_1 = require("../../enums/roles");
 const whitlistedDomain_entity_1 = require("../../../core/entities/whitlistedDomain.entity");
-const otp_entity_1 = require("../../../core/entities/otp.entity");
 const class_transformer_1 = require("class-transformer");
+const otp_entity_1 = require("../../../core/otp/entity/otp.entity");
 let Student = class Student {
 };
 exports.Student = Student;
@@ -63,6 +63,10 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'boolean', default: false }),
     __metadata("design:type", Boolean)
 ], Student.prototype, "isVerified", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'boolean', default: false }),
+    __metadata("design:type", Boolean)
+], Student.prototype, "isSuspended", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }),
     __metadata("design:type", Date)

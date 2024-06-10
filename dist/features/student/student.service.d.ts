@@ -1,12 +1,16 @@
 import { HttpStatus } from '@nestjs/common';
-import { CreateStudentDto } from './dto/create-student.dto';
-import { Student } from './entities/student.entity';
 import { Repository } from 'typeorm';
-import { OTP } from 'src/core/entities/otp.entity';
+import { CreateStudentDto } from './dto/create-student.dto';
+import { OTP } from 'src/core/otp/entity/otp.entity';
+import { Student } from './entities/student.entity';
+import { MailService } from 'src/core/mail/mail.service';
+import { OtpService } from 'src/core/otp/otp.service';
 export declare class StudentService {
     private studentRepository;
     private otpRepository;
-    constructor(studentRepository: Repository<Student>, otpRepository: Repository<OTP>);
+    private readonly mailService;
+    private readonly otpService;
+    constructor(studentRepository: Repository<Student>, otpRepository: Repository<OTP>, mailService: MailService, otpService: OtpService);
     register(createStudentDto: CreateStudentDto): Promise<({
         id: number;
         name: string;
@@ -18,6 +22,7 @@ export declare class StudentService {
         dateOfBirth: Date;
         role: import("../enums/roles").Roles;
         isVerified: boolean;
+        isSuspended: boolean;
         createdAt: Date;
         updatedAt: Date;
         domainID: import("../../core/entities/whitlistedDomain.entity").whiteListDomain;

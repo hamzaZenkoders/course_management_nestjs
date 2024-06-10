@@ -33,6 +33,11 @@ export class Teacher {
     })
     role: Roles;
 
+    
+   @Column({ type: 'boolean', default: false }) //change in ERD also
+   isSuspended: boolean;
+
+
     @Column({ type: 'date', default: () => 'CURRENT_DATE' })
     createdAt: Date;
 

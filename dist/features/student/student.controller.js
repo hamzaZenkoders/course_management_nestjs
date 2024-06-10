@@ -24,6 +24,7 @@ let StudentController = class StudentController {
     create(createStudentDto) {
         return this.studentService.register(createStudentDto);
     }
+    signIn() { }
     getData() {
         return 'working correctly';
     }
@@ -40,6 +41,12 @@ __decorate([
     __metadata("design:paramtypes", [create_student_dto_1.CreateStudentDto]),
     __metadata("design:returntype", void 0)
 ], StudentController.prototype, "create", null);
+__decorate([
+    (0, common_1.Post)('/auth/login'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], StudentController.prototype, "signIn", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),

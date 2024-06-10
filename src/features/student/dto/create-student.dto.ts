@@ -54,6 +54,9 @@ export class CreateStudentDto {
   @IsBoolean()
   isVerified: boolean = false;
 
+  @IsBoolean()
+  isSuspended: boolean = false;
+
   @IsDate()
   createdAt: Date;
 

@@ -53,6 +53,10 @@ __decorate([
     __metadata("design:type", String)
 ], Teacher.prototype, "role", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: 'boolean', default: false }),
+    __metadata("design:type", Boolean)
+], Teacher.prototype, "isSuspended", void 0);
+__decorate([
     (0, typeorm_1.Column)({ type: 'date', default: () => 'CURRENT_DATE' }),
     __metadata("design:type", Date)
 ], Teacher.prototype, "createdAt", void 0);

@@ -15,14 +15,16 @@ export declare class StudentController {
         dateOfBirth: Date;
         role: import("../enums/roles").Roles;
         isVerified: boolean;
+        isSuspended: boolean;
         createdAt: Date;
         updatedAt: Date;
         domainID: whiteListDomain;
-        otps: import("../../core/entities/otp.entity").OTP[];
+        otps: import("../../core/otp/entity/otp.entity").OTP[];
     } & import("./entities/student.entity").Student) | {
         statusCode: import("@nestjs/common").HttpStatus;
         message: string;
     }>;
+    signIn(): void;
     getData(): string;
     getDataTwo(createStudentDto: CreateStudentDto): Promise<import("./entities/student.entity").Student>;
 }

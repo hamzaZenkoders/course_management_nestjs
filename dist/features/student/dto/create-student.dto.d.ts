@@ -9,6 +9,7 @@ export declare class CreateStudentDto {
     dateOfBirth: Date;
     role: Roles;
     isVerified: boolean;
+    isSuspended: boolean;
     createdAt: Date;
     updatedAt: Date;
 }

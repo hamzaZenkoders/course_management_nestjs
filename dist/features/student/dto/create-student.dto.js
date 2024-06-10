@@ -15,6 +15,7 @@ const roles_1 = require("../../enums/roles");
 class CreateStudentDto {
     constructor() {
         this.isVerified = false;
+        this.isSuspended = false;
     }
 }
 exports.CreateStudentDto = CreateStudentDto;
@@ -61,6 +62,10 @@ __decorate([
     (0, class_validator_1.IsBoolean)(),
     __metadata("design:type", Boolean)
 ], CreateStudentDto.prototype, "isVerified", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], CreateStudentDto.prototype, "isSuspended", void 0);
 __decorate([
     (0, class_validator_1.IsDate)(),
     __metadata("design:type", Date)

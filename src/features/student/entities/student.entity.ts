@@ -9,8 +9,8 @@ import {
 
 import { Roles } from 'src/features/enums/roles';
 import { whiteListDomain } from 'src/core/entities/whitlistedDomain.entity';
-import { OTP } from 'src/core/entities/otp.entity';
 import { Transform } from 'class-transformer';
+import { OTP } from 'src/core/otp/entity/otp.entity';
 
 /* export enum StudentRole {
     admin = "ADMIN",
@@ -54,6 +54,9 @@ export class Student {
 
   @Column({ type: 'boolean', default: false }) //change in ERD also
   isVerified: boolean;
+
+  @Column({ type: 'boolean', default: false })
+  isSuspended: boolean;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

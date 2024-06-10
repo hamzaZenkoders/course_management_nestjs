@@ -12,7 +12,7 @@ import { StudentModule } from './features/student/student.module';
 import { CourseModule } from './features/course/course.module';
 import { TeacherModule } from './features/teacher/teacher.module';
 import { AuthModule } from './core/auth/auth.module';
-import { OTP } from './core/entities/otp.entity';
+import { OTP } from './core/otp/entity/otp.entity';
 import { ConfigModule } from '@nestjs/config';
 import { MailModule } from './core/mail/mail.module';
 
@@ -24,7 +24,7 @@ import { MailModule } from './core/mail/mail.module';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'dxtx998',
+      password: 'dxtx100',
       database: 'lms',
       entities: [Student, Course, Teacher, Enrollment, whiteListDomain, OTP], //entity/*.js
       synchronize: true,

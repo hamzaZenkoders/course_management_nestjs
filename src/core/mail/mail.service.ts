@@ -5,15 +5,16 @@ import { otpGen } from 'otp-gen-agent';
 export class MailService {
   constructor(@Inject('MAIL_TRANSPORTER') private readonly transporter: any) {}
 
-  async sendEmailOtp(email: string) {
-    const otp = await otpGen();
+  async sendEmailOtp(email: string,otp :number) {
+    //
 
     const info = await this.transporter.sendMail({
-      from: '"Maddison Foo Koch 👻" <hamza.zenkoders@gmail.com>', // sender address
+      from: '"Otp verifier " <hamza.zenkoders@gmail.com>', // sender address
       to: email, // list of receivers
       subject: 'Otp Verification ✔', // Subject line
       text: 'Please enter the otp to register', // plain text body
-      html: `<b>Your otp code is ${otp}</b>`, // html body
+      html: `<p>Your otp code is <b>${otp}<b></p><br><br><br><br>
+           <b> NOTE: Do not share this code with anyone </b>`, // html body 
     });
 
     console.log('Message sent: %s', info.messageId);

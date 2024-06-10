@@ -21,7 +21,7 @@ const student_module_1 = require("./features/student/student.module");
 const course_module_1 = require("./features/course/course.module");
 const teacher_module_1 = require("./features/teacher/teacher.module");
 const auth_module_1 = require("./core/auth/auth.module");
-const otp_entity_1 = require("./core/entities/otp.entity");
+const otp_entity_1 = require("./core/otp/entity/otp.entity");
 const config_1 = require("@nestjs/config");
 const mail_module_1 = require("./core/mail/mail.module");
 let AppModule = class AppModule {
@@ -36,7 +36,7 @@ exports.AppModule = AppModule = __decorate([
                 host: 'localhost',
                 port: 5432,
                 username: 'postgres',
-                password: 'dxtx998',
+                password: 'dxtx100',
                 database: 'lms',
                 entities: [student_entity_1.Student, course_entity_1.Course, teacher_entity_1.Teacher, enrollment_entity_1.Enrollment, whitlistedDomain_entity_1.whiteListDomain, otp_entity_1.OTP],
                 synchronize: true,

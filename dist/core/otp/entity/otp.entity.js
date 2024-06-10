@@ -10,8 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OTP = void 0;
-const otpEnum_1 = require("../../features/enums/otpEnum");
-const student_entity_1 = require("../../features/student/entities/student.entity");
+const otpEnum_1 = require("../../../features/enums/otpEnum");
+const student_entity_1 = require("../../../features/student/entities/student.entity");
 const typeorm_1 = require("typeorm");
 let OTP = class OTP {
 };

@@ -27,6 +27,10 @@ export class StudentController {
     return this.studentService.register(createStudentDto);
   }
 
+  @Post('/auth/login')
+  signIn(){}
+
+
   // @UseGuards(AuthGuard('local'))
   @Get()
   getData() {
