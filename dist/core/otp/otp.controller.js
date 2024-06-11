@@ -12,11 +12,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MailController = void 0;
+exports.OtpController = void 0;
 const common_1 = require("@nestjs/common");
 const otp_service_1 = require("./otp.service");
 const otp_verification_1 = require("./dto/otp.verification");
-let MailController = class MailController {
+let OtpController = class OtpController {
     constructor(otpService) {
         this.otpService = otpService;
     }
@@ -24,16 +24,16 @@ let MailController = class MailController {
         return this.otpService.OtpVerification(otpVeriferDto);
     }
 };
-exports.MailController = MailController;
+exports.OtpController = OtpController;
 __decorate([
     (0, common_1.Post)('/verifyOtp'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [otp_verification_1.OtpVerifierDto]),
     __metadata("design:returntype", void 0)
-], MailController.prototype, "verify", null);
-exports.MailController = MailController = __decorate([
+], OtpController.prototype, "verify", null);
+exports.OtpController = OtpController = __decorate([
     (0, common_1.Controller)('Otp'),
     __metadata("design:paramtypes", [otp_service_1.OtpService])
-], MailController);
+], OtpController);
 //# sourceMappingURL=otp.controller.js.map

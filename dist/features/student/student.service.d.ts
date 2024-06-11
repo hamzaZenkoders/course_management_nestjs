@@ -6,12 +6,14 @@ import { Student } from './entities/student.entity';
 import { MailService } from 'src/core/mail/mail.service';
 import { OtpService } from 'src/core/otp/otp.service';
 import { LoginInStudentDto } from './dto/login-student-dto';
+import { JwtService } from '@nestjs/jwt';
 export declare class StudentService {
     private studentRepository;
     private otpRepository;
     private readonly mailService;
     private readonly otpService;
-    constructor(studentRepository: Repository<Student>, otpRepository: Repository<OTP>, mailService: MailService, otpService: OtpService);
+    private jwtService;
+    constructor(studentRepository: Repository<Student>, otpRepository: Repository<OTP>, mailService: MailService, otpService: OtpService, jwtService: JwtService);
     register(createStudentDto: CreateStudentDto): Promise<({
         id: number;
         name: string;
@@ -32,6 +34,9 @@ export declare class StudentService {
         statusCode: HttpStatus;
         message: string;
     }>;
-    login(loginInStudentDto: LoginInStudentDto): Promise<void>;
+    login(loginInStudentDto: LoginInStudentDto): Promise<{
+        token: string;
+    }>;
     findOne(email: string): Promise<Student | undefined>;
+    updateIsVerifiedStatus(studentId: number, isVerified: boolean): Promise<void>;
 }

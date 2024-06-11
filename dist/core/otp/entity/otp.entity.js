@@ -21,8 +21,8 @@ __decorate([
     __metadata("design:type", Number)
 ], OTP.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar' }),
-    __metadata("design:type", String)
+    (0, typeorm_1.Column)({ type: 'int' }),
+    __metadata("design:type", Number)
 ], OTP.prototype, "otp", void 0);
 __decorate([
     (0, typeorm_1.Column)({

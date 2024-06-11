@@ -16,16 +16,16 @@ let MailModule = class MailModule {
 exports.MailModule = MailModule;
 exports.MailModule = MailModule = __decorate([
     (0, common_1.Module)({
-        imports: [],
+        imports: [MailModule],
         controllers: [mail_controller_1.MailController],
         providers: [
             {
                 provide: 'MAIL_TRANSPORTER',
                 useValue: mailer_config_1.transporter,
             },
-            mail_service_1.MailService,
+            mail_service_1.MailService
         ],
-        exports: [mail_service_1.MailService]
+        exports: ['MAIL_TRANSPORTER', mail_service_1.MailService]
     })
 ], MailModule);
 //# sourceMappingURL=mail.module.js.map

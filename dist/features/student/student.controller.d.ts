@@ -25,7 +25,9 @@ export declare class StudentController {
         statusCode: import("@nestjs/common").HttpStatus;
         message: string;
     }>;
-    signIn(loginInStudentDto: LoginInStudentDto): Promise<void>;
+    signIn(loginInStudentDto: LoginInStudentDto): Promise<{
+        token: string;
+    }>;
     getData(): string;
     getDataTwo(createStudentDto: CreateStudentDto): Promise<import("./entities/student.entity").Student>;
 }

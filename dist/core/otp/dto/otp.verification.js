@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OtpVerifierDto = void 0;
 const class_validator_1 = require("class-validator");
+const otpEnum_1 = require("../../../features/enums/otpEnum");
 class OtpVerifierDto {
 }
 exports.OtpVerifierDto = OtpVerifierDto;
@@ -19,4 +20,16 @@ __decorate([
     (0, class_validator_1.IsEmpty)(),
     __metadata("design:type", Number)
 ], OtpVerifierDto.prototype, "otp", void 0);
+__decorate([
+    (0, class_validator_1.IsEnum)(otpEnum_1.OtpPurpose),
+    __metadata("design:type", String)
+], OtpVerifierDto.prototype, "purpose", void 0);
+__decorate([
+    (0, class_validator_1.IsDate)(),
+    __metadata("design:type", Date)
+], OtpVerifierDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, class_validator_1.IsDate)(),
+    __metadata("design:type", Date)
+], OtpVerifierDto.prototype, "expiresAt", void 0);
 //# sourceMappingURL=otp.verification.js.map

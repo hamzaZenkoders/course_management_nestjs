@@ -24,7 +24,13 @@ const auth_module_1 = require("./core/auth/auth.module");
 const otp_entity_1 = require("./core/otp/entity/otp.entity");
 const config_1 = require("@nestjs/config");
 const mail_module_1 = require("./core/mail/mail.module");
+const verficationMiddleware_1 = require("./core/middleware/verficationMiddleware");
+const jwt_1 = require("@nestjs/jwt");
+const otp_module_1 = require("./core/otp/otp.module");
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer.apply(verficationMiddleware_1.VerificationMiddleware).forRoutes('student/auth/login');
+    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
@@ -41,12 +47,18 @@ exports.AppModule = AppModule = __decorate([
                 entities: [student_entity_1.Student, course_entity_1.Course, teacher_entity_1.Teacher, enrollment_entity_1.Enrollment, whitlistedDomain_entity_1.whiteListDomain, otp_entity_1.OTP],
                 synchronize: true,
             }),
+            jwt_1.JwtModule.register({
+                global: true,
+                secret: "secret1100",
+                signOptions: { expiresIn: '2h' },
+            }),
             auth_module_1.AuthModule,
             student_module_1.StudentModule,
             passport_1.PassportModule,
             course_module_1.CourseModule,
             teacher_module_1.TeacherModule,
             mail_module_1.MailModule,
+            otp_module_1.OtpModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

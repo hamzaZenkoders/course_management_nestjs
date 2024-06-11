@@ -1,16 +1,21 @@
 //importing built in methods
 
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository} from 'typeorm';
+import { Repository } from 'typeorm';
 
 //importing DTOs
 
 import { CreateStudentDto } from './dto/create-student.dto';
 //import { UpdateStudentDto } from './dto/update-student.dto';
 
-
-//importing bycrypt 
+//importing bycrypt
 
 import * as bcrypt from 'bcrypt';
 
@@ -28,7 +33,7 @@ import { OtpService } from 'src/core/otp/otp.service';
 import { OtpVerifierDto } from 'src/core/otp/dto/otp.verification';
 import { OtpPurpose } from '../enums/otpEnum';
 import { LoginInStudentDto } from './dto/login-student-dto';
-
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class StudentService {
@@ -38,9 +43,9 @@ export class StudentService {
     @InjectRepository(OTP)
     private otpRepository: Repository<OTP>,
 
-
     private readonly mailService: MailService,
-    private readonly otpService: OtpService
+    private readonly otpService: OtpService,
+    private jwtService: JwtService,
   ) {}
 
   async register(createStudentDto: CreateStudentDto) {
@@ -59,56 +64,70 @@ export class StudentService {
 
     const newStudent = this.studentRepository.create({
       ...createStudentDto,
+      //   createdAt: new
       password: hashedPassword,
     }); //
 
     // to make sure id comes on top
     const tempSave = { id: newStudent.id, ...newStudent };
 
-       //saving to database
+    //saving to database
     const savedStudent = await this.studentRepository.save(tempSave);
 
     //generating otp
-       const otpRecieved = await this.otpService.generateOTP();
-       const encryptedOtp = await bcrypt.hash(otpRecieved,10);
-
+    const otpRecieved = await this.otpService.generateOTP();
+    //  const encryptedOtp = await bcrypt.hash(otpRecieved,10);
 
     if (savedStudent.isVerified === false) {
-
       //saving Otp in the otp table
-      await this.otpService.saveOtp(savedStudent.id,encryptedOtp); 
+      await this.otpService.saveOtp(savedStudent.id, otpRecieved);
 
       //sending otp
-        await this.mailService.sendEmailOtp(tempSave.email,otpRecieved); //
+      await this.mailService.sendEmailOtp(tempSave.email, otpRecieved); //
       return {
         statusCode: HttpStatus.OK,
         message: 'Verification otp is sent to email',
       };
     } else {
-   
       console.log('Student is verified:', savedStudent);
 
       return savedStudent;
     }
   }
 
-  async login(loginInStudentDto: LoginInStudentDto){
-
-    const existingUser = await this.studentRepository.findOne({
+  async login(loginInStudentDto: LoginInStudentDto) {
+    const StudentFound = await this.studentRepository.findOne({
       where: { email: loginInStudentDto.email },
     });
 
-    if(!existingUser){
+    if (!StudentFound) {
       throw new NotFoundException('User not found');
     }
-/* 
-    if(existingUser.isVerified === false){
-      throw new 
-    } */
+
+    const passwordMatched = await bcrypt.compare(
+      loginInStudentDto.password,
+      StudentFound.password,
+    );
+
+    if (!passwordMatched) {
+      throw new UnauthorizedException();
+    }
+
+    const payload = { email: StudentFound.email, role: StudentFound.role }; // Include user's role in the payload
+    const token = this.jwtService.sign(payload);
+
+    return { token };
   }
 
   async findOne(email: string): Promise<Student | undefined> {
     const temp = await this.studentRepository.findOne({ where: { email } });
     return temp;
+  }
+
+  async updateIsVerifiedStatus(
+    studentId: number,
+    isVerified: boolean,
+  ): Promise<void> {
+    await this.studentRepository.update(studentId, { isVerified });
   }
 }

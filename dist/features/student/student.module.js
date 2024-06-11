@@ -15,16 +15,21 @@ const student_entity_1 = require("./entities/student.entity");
 const auth_service_1 = require("../../core/auth/auth.service");
 const whitlistedDomain_entity_1 = require("../../core/entities/whitlistedDomain.entity");
 const otp_entity_1 = require("../../core/otp/entity/otp.entity");
+const mail_service_1 = require("../../core/mail/mail.service");
 const mail_module_1 = require("../../core/mail/mail.module");
-const otp_service_1 = require("../../core/otp/otp.service");
+const otp_module_1 = require("../../core/otp/otp.module");
 let StudentModule = class StudentModule {
 };
 exports.StudentModule = StudentModule;
 exports.StudentModule = StudentModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([student_entity_1.Student, whitlistedDomain_entity_1.whiteListDomain, otp_entity_1.OTP]), mail_module_1.MailModule],
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([student_entity_1.Student, whitlistedDomain_entity_1.whiteListDomain, otp_entity_1.OTP]),
+            mail_module_1.MailModule,
+            otp_module_1.OtpModule,
+        ],
         controllers: [student_controller_1.StudentController],
-        providers: [student_service_1.StudentService, auth_service_1.AuthService, otp_service_1.OtpService],
+        providers: [student_service_1.StudentService, auth_service_1.AuthService, mail_service_1.MailService],
         exports: [student_service_1.StudentService],
     })
 ], StudentModule);

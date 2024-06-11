@@ -9,11 +9,16 @@ import { OTP } from 'src/core/otp/entity/otp.entity';
 import { MailService } from 'src/core/mail/mail.service';
 import { MailModule } from 'src/core/mail/mail.module';
 import { OtpService } from 'src/core/otp/otp.service';
+import { OtpModule } from 'src/core/otp/otp.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Student, whiteListDomain, OTP]),MailModule],
+  imports: [
+    TypeOrmModule.forFeature([Student, whiteListDomain, OTP]),
+    MailModule,
+    OtpModule,
+  ],
   controllers: [StudentController],
-  providers: [StudentService, AuthService, OtpService],
+  providers: [StudentService, AuthService, MailService],
   exports: [StudentService],
 })
 export class StudentModule {}

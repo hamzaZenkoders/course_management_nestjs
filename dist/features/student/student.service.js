@@ -21,12 +21,14 @@ const otp_entity_1 = require("../../core/otp/entity/otp.entity");
 const student_entity_1 = require("./entities/student.entity");
 const mail_service_1 = require("../../core/mail/mail.service");
 const otp_service_1 = require("../../core/otp/otp.service");
+const jwt_1 = require("@nestjs/jwt");
 let StudentService = class StudentService {
-    constructor(studentRepository, otpRepository, mailService, otpService) {
+    constructor(studentRepository, otpRepository, mailService, otpService, jwtService) {
         this.studentRepository = studentRepository;
         this.otpRepository = otpRepository;
         this.mailService = mailService;
         this.otpService = otpService;
+        this.jwtService = jwtService;
     }
     async register(createStudentDto) {
         const existingUser = await this.studentRepository.findOne({
@@ -45,9 +47,8 @@ let StudentService = class StudentService {
         const tempSave = { id: newStudent.id, ...newStudent };
         const savedStudent = await this.studentRepository.save(tempSave);
         const otpRecieved = await this.otpService.generateOTP();
-        const encryptedOtp = await bcrypt.hash(otpRecieved, 10);
         if (savedStudent.isVerified === false) {
-            await this.otpService.saveOtp(savedStudent.id, encryptedOtp);
+            await this.otpService.saveOtp(savedStudent.id, otpRecieved);
             await this.mailService.sendEmailOtp(tempSave.email, otpRecieved);
             return {
                 statusCode: common_1.HttpStatus.OK,
@@ -60,16 +61,26 @@ let StudentService = class StudentService {
         }
     }
     async login(loginInStudentDto) {
-        const existingUser = await this.studentRepository.findOne({
+        const StudentFound = await this.studentRepository.findOne({
             where: { email: loginInStudentDto.email },
         });
-        if (!existingUser) {
+        if (!StudentFound) {
             throw new common_1.NotFoundException('User not found');
         }
+        const passwordMatched = await bcrypt.compare(loginInStudentDto.password, StudentFound.password);
+        if (!passwordMatched) {
+            throw new common_1.UnauthorizedException();
+        }
+        const payload = { email: StudentFound.email, role: StudentFound.role };
+        const token = this.jwtService.sign(payload);
+        return { token };
     }
     async findOne(email) {
         const temp = await this.studentRepository.findOne({ where: { email } });
         return temp;
+    }
+    async updateIsVerifiedStatus(studentId, isVerified) {
+        await this.studentRepository.update(studentId, { isVerified });
     }
 };
 exports.StudentService = StudentService;
@@ -80,6 +91,7 @@ exports.StudentService = StudentService = __decorate([
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository,
         mail_service_1.MailService,
-        otp_service_1.OtpService])
+        otp_service_1.OtpService,
+        jwt_1.JwtService])
 ], StudentService);
 //# sourceMappingURL=student.service.js.map
