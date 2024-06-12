@@ -10,12 +10,15 @@ import { MailService } from 'src/core/mail/mail.service';
 import { MailModule } from 'src/core/mail/mail.module';
 import { OtpService } from 'src/core/otp/otp.service';
 import { OtpModule } from 'src/core/otp/otp.module';
+import { CourseModule } from '../course/course.module';
+import { CourseService } from '../course/course.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Student, whiteListDomain, OTP]),
     MailModule,
     OtpModule,
+    CourseModule,
   ],
   controllers: [StudentController],
   providers: [StudentService, AuthService, MailService],

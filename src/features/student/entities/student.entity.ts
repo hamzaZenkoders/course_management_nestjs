@@ -8,9 +8,9 @@ import {
 } from 'typeorm';
 
 import { Roles } from 'src/features/enums/roles';
-import { whiteListDomain } from 'src/core/entities/whitlistedDomain.entity';
 import { Transform } from 'class-transformer';
 import { OTP } from 'src/core/otp/entity/otp.entity';
+import { Enrollment } from 'src/features/enrollment/entities/enrollment.entity';
 
 /* export enum StudentRole {
     admin = "ADMIN",
@@ -58,20 +58,21 @@ export class Student {
   @Column({ type: 'boolean', default: false })
   isSuspended: boolean;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    type: 'timestamp',
+    //default: () => 'CURRENT_TIMESTAMP' })
+  })
   createdAt: Date;
 
   @Column({
     type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
-    onUpdate: 'CURRENT_TIMESTAMP',
+    default: null,
   })
   updatedAt: Date;
 
-  @OneToOne(() => whiteListDomain)
-  @JoinColumn()
-  domainID: whiteListDomain;
-
   @OneToMany(() => OTP, (otp) => otp.student)
   otps: OTP[];
+
+  @OneToMany(() => Enrollment, (enrollment) => enrollment.student)
+  enrollments: Enrollment[];
 }

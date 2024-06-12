@@ -1,11 +1,13 @@
-import { Teacher } from "src/features/teacher/entities/teacher.entity";
+import { Enrollment } from 'src/features/enrollment/entities/enrollment.entity';
+import { Teacher } from 'src/features/teacher/entities/teacher.entity';
 export declare class Course {
     id: number;
-    courseCode: string;
+    code: string;
     description: string;
-    courseType: string;
+    type: string;
     dropDeadline: Date;
     createdAt: Date;
     updatedAt: Date;
     teacher: Teacher;
+    enrollments: Enrollment[];
 }

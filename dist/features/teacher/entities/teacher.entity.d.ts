@@ -1,5 +1,6 @@
-import { Course } from "src/features/course/entities/course.entity";
-import { Roles } from "../../enums/roles";
+import { Course } from 'src/features/course/entities/course.entity';
+import { Roles } from '../../enums/roles';
+import { AvailableSlot } from './availableSlots.entity';
 export declare class Teacher {
     id: number;
     name: string;
@@ -10,7 +11,9 @@ export declare class Teacher {
     password: string;
     role: Roles;
     isSuspended: boolean;
+    isVerified: boolean;
     createdAt: Date;
     updatedAt: Date;
     courses: Course[];
+    availableSlots: AvailableSlot[];
 }

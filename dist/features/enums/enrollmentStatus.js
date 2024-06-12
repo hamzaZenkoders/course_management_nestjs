@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Status = void 0;
-var Status;
-(function (Status) {
-    Status["online"] = "ONLINE";
-    Status["physical"] = "PHYSICAL";
-})(Status || (exports.Status = Status = {}));
+exports.EnrollmentStatus = void 0;
+var EnrollmentStatus;
+(function (EnrollmentStatus) {
+    EnrollmentStatus["active"] = "ACTIVE";
+    EnrollmentStatus["suspended"] = "SUSPENDED";
+})(EnrollmentStatus || (exports.EnrollmentStatus = EnrollmentStatus = {}));
 //# sourceMappingURL=enrollmentStatus.js.map

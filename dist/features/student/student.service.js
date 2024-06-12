@@ -22,13 +22,15 @@ const student_entity_1 = require("./entities/student.entity");
 const mail_service_1 = require("../../core/mail/mail.service");
 const otp_service_1 = require("../../core/otp/otp.service");
 const jwt_1 = require("@nestjs/jwt");
+const course_service_1 = require("../course/course.service");
 let StudentService = class StudentService {
-    constructor(studentRepository, otpRepository, mailService, otpService, jwtService) {
+    constructor(studentRepository, otpRepository, mailService, otpService, jwtService, courseService) {
         this.studentRepository = studentRepository;
         this.otpRepository = otpRepository;
         this.mailService = mailService;
         this.otpService = otpService;
         this.jwtService = jwtService;
+        this.courseService = courseService;
     }
     async register(createStudentDto) {
         const existingUser = await this.studentRepository.findOne({
@@ -42,6 +44,7 @@ let StudentService = class StudentService {
         const hashedPassword = await bcrypt.hash(createStudentDto.password, 10);
         const newStudent = this.studentRepository.create({
             ...createStudentDto,
+            createdAt: new Date(Date.now()),
             password: hashedPassword,
         });
         const tempSave = { id: newStudent.id, ...newStudent };
@@ -75,8 +78,13 @@ let StudentService = class StudentService {
         const token = this.jwtService.sign(payload);
         return { token };
     }
+    async EnrollInCourse(createEnrollmentDto) { }
     async findOne(email) {
         const temp = await this.studentRepository.findOne({ where: { email } });
+        return temp;
+    }
+    async findByID(id) {
+        const temp = await this.studentRepository.findOne({ where: { id } });
         return temp;
     }
     async updateIsVerifiedStatus(studentId, isVerified) {
@@ -92,6 +100,7 @@ exports.StudentService = StudentService = __decorate([
         typeorm_2.Repository,
         mail_service_1.MailService,
         otp_service_1.OtpService,
-        jwt_1.JwtService])
+        jwt_1.JwtService,
+        course_service_1.CourseService])
 ], StudentService);
 //# sourceMappingURL=student.service.js.map

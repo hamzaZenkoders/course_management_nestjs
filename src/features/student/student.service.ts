@@ -34,6 +34,9 @@ import { OtpVerifierDto } from 'src/core/otp/dto/otp.verification';
 import { OtpPurpose } from '../enums/otpEnum';
 import { LoginInStudentDto } from './dto/login-student-dto';
 import { JwtService } from '@nestjs/jwt';
+import { CreateEnrollmentDto } from '../enrollment/dto/create-enrollment-dto';
+import { CourseService } from '../course/course.service';
+import { Course } from '../course/entities/course.entity';
 
 @Injectable()
 export class StudentService {
@@ -43,9 +46,13 @@ export class StudentService {
     @InjectRepository(OTP)
     private otpRepository: Repository<OTP>,
 
+    /*  @InjectRepository(Course)
+    private courseRepository: Repository<Course>, */
+
     private readonly mailService: MailService,
     private readonly otpService: OtpService,
     private jwtService: JwtService,
+    private courseService: CourseService,
   ) {}
 
   async register(createStudentDto: CreateStudentDto) {
@@ -64,7 +71,7 @@ export class StudentService {
 
     const newStudent = this.studentRepository.create({
       ...createStudentDto,
-      //   createdAt: new
+      createdAt: new Date(Date.now()),
       password: hashedPassword,
     }); //
 
@@ -119,8 +126,15 @@ export class StudentService {
     return { token };
   }
 
+  async EnrollInCourse(createEnrollmentDto: CreateEnrollmentDto) {}
+
   async findOne(email: string): Promise<Student | undefined> {
     const temp = await this.studentRepository.findOne({ where: { email } });
+    return temp;
+  }
+
+  async findByID(id: number): Promise<Student | undefined> {
+    const temp = await this.studentRepository.findOne({ where: { id } });
     return temp;
   }
 

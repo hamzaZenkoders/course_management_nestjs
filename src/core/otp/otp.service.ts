@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { MailService } from '../mail/mail.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -28,17 +28,23 @@ export class OtpService {
       relations: ['student'],
     });
 
+    console.log(findOtp);
     // if(findOtp[0].expiresAt > )
-    console.log(new Date(Date.now()));
+    const currentTime = new Date(Date.now());
 
-    if (findOtp[0].otp === otpVeriferDto.otp) {
-      await this.studentRepo.find();
-      //  await this.studentService.updateIsVerifiedStatus(findOtp[0].student.id ,true);
+    if (findOtp.length > 0 && findOtp[0].otp === otpVeriferDto.otp) {
+      if (findOtp[0].expiresAt < currentTime) {
+        throw new HttpException(
+          'Otp is expired generate new otp',
+          HttpStatus.FORBIDDEN,
+        ); //
+      }
+
       await this.studentRepo.update(findOtp[0].student.id, {
         isVerified: true,
       });
-      console.log(findOtp);
     } else {
+      throw new HttpException('Invalid OTP', HttpStatus.UNAUTHORIZED); //
     }
   }
 
@@ -53,7 +59,7 @@ export class OtpService {
       //
     });
 
-    await this.otpRepository.save(newOtp); //
+    await this.otpRepository.save(newOtp);
   }
 
   async generateOTP() {

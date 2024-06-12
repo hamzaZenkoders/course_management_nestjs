@@ -1,6 +1,5 @@
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
-import { whiteListDomain } from 'src/core/entities/whitlistedDomain.entity';
 import { LoginInStudentDto } from './dto/login-student-dto';
 export declare class StudentController {
     private readonly studentService;
@@ -19,8 +18,8 @@ export declare class StudentController {
         isSuspended: boolean;
         createdAt: Date;
         updatedAt: Date;
-        domainID: whiteListDomain;
         otps: import("../../core/otp/entity/otp.entity").OTP[];
+        enrollments: import("../enrollment/entities/enrollment.entity").Enrollment[];
     } & import("./entities/student.entity").Student) | {
         statusCode: import("@nestjs/common").HttpStatus;
         message: string;
@@ -28,6 +27,5 @@ export declare class StudentController {
     signIn(loginInStudentDto: LoginInStudentDto): Promise<{
         token: string;
     }>;
-    getData(): string;
-    getDataTwo(createStudentDto: CreateStudentDto): Promise<import("./entities/student.entity").Student>;
+    EnrollInCourse(): string;
 }

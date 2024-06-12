@@ -18,6 +18,8 @@ import { MailModule } from './core/mail/mail.module';
 import { VerificationMiddleware } from './core/middleware/verficationMiddleware';
 import { JwtModule } from '@nestjs/jwt';
 import { OtpModule } from './core/otp/otp.module';
+import { AvailableSlot } from './features/teacher/entities/availableSlots.entity';
+import { EnrollmentModule } from './features/enrollment/enrollment.module';
 
 @Module({
   imports: [
@@ -30,22 +32,30 @@ import { OtpModule } from './core/otp/otp.module';
       username: 'postgres',
       password: 'dxtx100',
       database: 'lms',
-      entities: [Student, Course, Teacher, Enrollment, whiteListDomain, OTP], //entity/*.js
+      entities: [
+        Student,
+        Course,
+        Teacher,
+        Enrollment,
+        whiteListDomain,
+        OTP,
+        AvailableSlot,
+      ], //entity/*.js
       synchronize: true,
     }),
 
     JwtModule.register({
       global: true,
-      secret: "secret1100",
+      secret: 'secret1100',
       signOptions: { expiresIn: '2h' },
     }),
-    
-    
+
     AuthModule,
     StudentModule,
     PassportModule,
     CourseModule,
     TeacherModule,
+    EnrollmentModule,
     MailModule,
     OtpModule,
   ],
@@ -53,9 +63,7 @@ import { OtpModule } from './core/otp/otp.module';
   providers: [AppService],
 })
 export class AppModule {
-
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(VerificationMiddleware).forRoutes('student/auth/login');
   }
-
 }

@@ -18,6 +18,7 @@ const otp_entity_1 = require("../../core/otp/entity/otp.entity");
 const mail_service_1 = require("../../core/mail/mail.service");
 const mail_module_1 = require("../../core/mail/mail.module");
 const otp_module_1 = require("../../core/otp/otp.module");
+const course_module_1 = require("../course/course.module");
 let StudentModule = class StudentModule {
 };
 exports.StudentModule = StudentModule;
@@ -27,6 +28,7 @@ exports.StudentModule = StudentModule = __decorate([
             typeorm_1.TypeOrmModule.forFeature([student_entity_1.Student, whitlistedDomain_entity_1.whiteListDomain, otp_entity_1.OTP]),
             mail_module_1.MailModule,
             otp_module_1.OtpModule,
+            course_module_1.CourseModule,
         ],
         controllers: [student_controller_1.StudentController],
         providers: [student_service_1.StudentService, auth_service_1.AuthService, mail_service_1.MailService],

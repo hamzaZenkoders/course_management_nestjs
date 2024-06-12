@@ -6,7 +6,7 @@ export declare class CourseController {
     constructor(courseService: CourseService);
     create(createCourseDto: CreateCourseDto): string;
     findAll(): string;
-    findOne(id: string): string;
+    findOne(id: string): Promise<import("./entities/course.entity").Course>;
     update(id: string, updateCourseDto: UpdateCourseDto): string;
     remove(id: string): string;
 }

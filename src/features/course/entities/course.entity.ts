@@ -1,30 +1,44 @@
-import { Teacher } from "src/features/teacher/entities/teacher.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Enrollment } from 'src/features/enrollment/entities/enrollment.entity';
+import { Teacher } from 'src/features/teacher/entities/teacher.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Course {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({type:'varchar'})
-    courseCode: string;
+  @Column({ type: 'varchar' })
+  code: string;
 
-    @Column({type:'varchar'})
-    description: string;
+  @Column({ type: 'varchar' })
+  description: string;
 
-    @Column({type: 'varchar'})
-    courseType: string; 
+  @Column({ type: 'varchar' })
+  type: string;
 
-    @Column({ type: 'timestamp' }) 
-    dropDeadline: Date;
+  @Column({ type: 'timestamp' })
+  dropDeadline: Date;
 
-    
-    @Column({ type: 'date', default: () => 'CURRENT_DATE' })
-    createdAt: Date;
+  @Column({ type: 'date', default: () => 'CURRENT_DATE' })
+  createdAt: Date; //
 
-    @Column({ type: 'date', default: () => 'CURRENT_DATE', onUpdate: 'CURRENT_DATE' })
-    updatedAt: Date;
+  @Column({
+    type: 'date',
+    default: null,
+    onUpdate: 'CURRENT_DATE',
+  })
+  updatedAt: Date;
 
-    @ManyToOne(() => Teacher, teacher => teacher.courses)
-    teacher: Teacher;
+  @ManyToOne(() => Teacher, (teacher) => teacher.courses)
+  teacher: Teacher;
+
+  @OneToMany(() => Enrollment, (enrollment) => enrollment.course)
+  enrollments: Enrollment[];
 }
+//

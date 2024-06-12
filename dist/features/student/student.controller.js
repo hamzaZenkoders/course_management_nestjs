@@ -28,11 +28,8 @@ let StudentController = class StudentController {
     signIn(loginInStudentDto) {
         return this.studentService.login(loginInStudentDto);
     }
-    getData() {
+    EnrollInCourse() {
         return 'working correctly';
-    }
-    getDataTwo(createStudentDto) {
-        return this.studentService.findOne(createStudentDto.email);
     }
 };
 exports.StudentController = StudentController;
@@ -52,18 +49,11 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], StudentController.prototype, "signIn", null);
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Post)('/enrollment'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], StudentController.prototype, "getData", null);
-__decorate([
-    (0, common_1.Get)('/second'),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_student_dto_1.CreateStudentDto]),
-    __metadata("design:returntype", void 0)
-], StudentController.prototype, "getDataTwo", null);
+], StudentController.prototype, "EnrollInCourse", null);
 exports.StudentController = StudentController = __decorate([
     (0, common_1.Controller)('student'),
     __metadata("design:paramtypes", [student_service_1.StudentService])

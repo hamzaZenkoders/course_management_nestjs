@@ -32,15 +32,18 @@ let OtpService = class OtpService {
             where: { otp: otpVeriferDto.otp },
             relations: ['student'],
         });
-        console.log(new Date(Date.now()));
-        if (findOtp[0].otp === otpVeriferDto.otp) {
-            await this.studentRepo.find();
+        console.log(findOtp);
+        const currentTime = new Date(Date.now());
+        if (findOtp.length > 0 && findOtp[0].otp === otpVeriferDto.otp) {
+            if (findOtp[0].expiresAt < currentTime) {
+                throw new common_1.HttpException('Otp is expired generate new otp', common_1.HttpStatus.FORBIDDEN);
+            }
             await this.studentRepo.update(findOtp[0].student.id, {
                 isVerified: true,
             });
-            console.log(findOtp);
         }
         else {
+            throw new common_1.HttpException('Invalid OTP', common_1.HttpStatus.UNAUTHORIZED);
         }
     }
     async saveOtp(linkedID, otp) {

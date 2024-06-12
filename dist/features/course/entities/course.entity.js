@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Course = void 0;
+const enrollment_entity_1 = require("../../enrollment/entities/enrollment.entity");
 const teacher_entity_1 = require("../../teacher/entities/teacher.entity");
 const typeorm_1 = require("typeorm");
 let Course = class Course {
@@ -22,7 +23,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ type: 'varchar' }),
     __metadata("design:type", String)
-], Course.prototype, "courseCode", void 0);
+], Course.prototype, "code", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'varchar' }),
     __metadata("design:type", String)
@@ -30,7 +31,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ type: 'varchar' }),
     __metadata("design:type", String)
-], Course.prototype, "courseType", void 0);
+], Course.prototype, "type", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'timestamp' }),
     __metadata("design:type", Date)
@@ -40,13 +41,21 @@ __decorate([
     __metadata("design:type", Date)
 ], Course.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'date', default: () => 'CURRENT_DATE', onUpdate: 'CURRENT_DATE' }),
+    (0, typeorm_1.Column)({
+        type: 'date',
+        default: null,
+        onUpdate: 'CURRENT_DATE',
+    }),
     __metadata("design:type", Date)
 ], Course.prototype, "updatedAt", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => teacher_entity_1.Teacher, teacher => teacher.courses),
+    (0, typeorm_1.ManyToOne)(() => teacher_entity_1.Teacher, (teacher) => teacher.courses),
     __metadata("design:type", teacher_entity_1.Teacher)
 ], Course.prototype, "teacher", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => enrollment_entity_1.Enrollment, (enrollment) => enrollment.course),
+    __metadata("design:type", Array)
+], Course.prototype, "enrollments", void 0);
 exports.Course = Course = __decorate([
     (0, typeorm_1.Entity)()
 ], Course);

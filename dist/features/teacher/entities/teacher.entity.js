@@ -13,6 +13,7 @@ exports.Teacher = void 0;
 const course_entity_1 = require("../../course/entities/course.entity");
 const typeorm_1 = require("typeorm");
 const roles_1 = require("../../enums/roles");
+const availableSlots_entity_1 = require("./availableSlots.entity");
 let Teacher = class Teacher {
 };
 exports.Teacher = Teacher;
@@ -46,7 +47,7 @@ __decorate([
 ], Teacher.prototype, "password", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        type: "enum",
+        type: 'enum',
         enum: roles_1.Roles,
         default: roles_1.Roles.teacher,
     }),
@@ -57,17 +58,29 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Teacher.prototype, "isSuspended", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'date', default: () => 'CURRENT_DATE' }),
+    (0, typeorm_1.Column)({ type: 'boolean', default: false }),
+    __metadata("design:type", Boolean)
+], Teacher.prototype, "isVerified", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'date' }),
     __metadata("design:type", Date)
 ], Teacher.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'date', default: () => 'CURRENT_DATE', onUpdate: 'CURRENT_DATE' }),
+    (0, typeorm_1.Column)({
+        type: 'date',
+        default: null,
+        onUpdate: 'CURRENT_DATE',
+    }),
     __metadata("design:type", Date)
 ], Teacher.prototype, "updatedAt", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => course_entity_1.Course, course => course.teacher),
+    (0, typeorm_1.OneToMany)(() => course_entity_1.Course, (course) => course.teacher),
     __metadata("design:type", Array)
 ], Teacher.prototype, "courses", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => availableSlots_entity_1.AvailableSlot, (slot) => slot.teacher),
+    __metadata("design:type", Array)
+], Teacher.prototype, "availableSlots", void 0);
 exports.Teacher = Teacher = __decorate([
     (0, typeorm_1.Entity)()
 ], Teacher);

@@ -16,6 +16,9 @@ import { whiteListDomain } from 'src/core/entities/whitlistedDomain.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { LoginInStudentDto } from './dto/login-student-dto';
+import { RoleAuthorizationGuard } from 'src/core/guards/roleAuthorization.guard';
+import { AuthenticationGuard } from 'src/core/guards/authentication.guard';
+import { Role } from 'src/core/decorator/roles.decorator';
 //import { UpdateStudentDto } from './dto/update-student.dto';
 
 @Controller('student')
@@ -29,20 +32,20 @@ export class StudentController {
   }
 
   @Post('/auth/login')
-  signIn(@Body() loginInStudentDto: LoginInStudentDto){
+  signIn(@Body() loginInStudentDto: LoginInStudentDto) {
     return this.studentService.login(loginInStudentDto);
   }
 
+  //VIEW ALL COURES
 
-  // @UseGuards(AuthGuard('local'))
-  @Get()
-  getData() {
+  @Post('/enrollment')
+  EnrollInCourse() {
     return 'working correctly';
   }
 
-  @Get('/second')
+  /* @Get('/second')
   getDataTwo(@Body() createStudentDto: CreateStudentDto) {
     // console.log('checkkk');
     return this.studentService.findOne(createStudentDto.email);
-  }
+  } */
 }

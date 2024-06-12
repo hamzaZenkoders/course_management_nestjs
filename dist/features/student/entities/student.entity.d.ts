@@ -1,6 +1,6 @@
 import { Roles } from 'src/features/enums/roles';
-import { whiteListDomain } from 'src/core/entities/whitlistedDomain.entity';
 import { OTP } from 'src/core/otp/entity/otp.entity';
+import { Enrollment } from 'src/features/enrollment/entities/enrollment.entity';
 export declare class Student {
     id: number;
     name: string;
@@ -15,6 +15,6 @@ export declare class Student {
     isSuspended: boolean;
     createdAt: Date;
     updatedAt: Date;
-    domainID: whiteListDomain;
     otps: OTP[];
+    enrollments: Enrollment[];
 }

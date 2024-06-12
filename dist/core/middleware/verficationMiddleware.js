@@ -18,12 +18,18 @@ let VerificationMiddleware = class VerificationMiddleware {
     }
     async use(req, res, next) {
         const { email } = req.body;
-        console.log("Inside middleware");
+        console.log('Inside middleware');
+        console.log(req.body);
+        if (!req.body) {
+            throw new common_1.HttpException('Provide email address and password', common_1.HttpStatus.FORBIDDEN);
+        }
         if (email) {
             const user = await this.studentService.findOne(email);
             if (user) {
                 if (user.isVerified === false) {
-                    res.status(common_1.HttpStatus.UNAUTHORIZED).json({ message: "Verify through otp code" });
+                    res
+                        .status(common_1.HttpStatus.UNAUTHORIZED)
+                        .json({ message: 'Verify your otp code' });
                 }
                 else {
                     next();

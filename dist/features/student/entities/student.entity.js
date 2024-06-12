@@ -12,9 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Student = void 0;
 const typeorm_1 = require("typeorm");
 const roles_1 = require("../../enums/roles");
-const whitlistedDomain_entity_1 = require("../../../core/entities/whitlistedDomain.entity");
 const class_transformer_1 = require("class-transformer");
 const otp_entity_1 = require("../../../core/otp/entity/otp.entity");
+const enrollment_entity_1 = require("../../enrollment/entities/enrollment.entity");
 let Student = class Student {
 };
 exports.Student = Student;
@@ -68,26 +68,26 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Student.prototype, "isSuspended", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }),
+    (0, typeorm_1.Column)({
+        type: 'timestamp',
+    }),
     __metadata("design:type", Date)
 ], Student.prototype, "createdAt", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         type: 'timestamp',
-        default: () => 'CURRENT_TIMESTAMP',
-        onUpdate: 'CURRENT_TIMESTAMP',
+        default: null,
     }),
     __metadata("design:type", Date)
 ], Student.prototype, "updatedAt", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => whitlistedDomain_entity_1.whiteListDomain),
-    (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", whitlistedDomain_entity_1.whiteListDomain)
-], Student.prototype, "domainID", void 0);
-__decorate([
     (0, typeorm_1.OneToMany)(() => otp_entity_1.OTP, (otp) => otp.student),
     __metadata("design:type", Array)
 ], Student.prototype, "otps", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => enrollment_entity_1.Enrollment, (enrollment) => enrollment.student),
+    __metadata("design:type", Array)
+], Student.prototype, "enrollments", void 0);
 exports.Student = Student = __decorate([
     (0, typeorm_1.Entity)()
 ], Student);

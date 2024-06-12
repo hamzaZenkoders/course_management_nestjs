@@ -1,4 +1,4 @@
-export declare enum Status {
-    online = "ONLINE",
-    physical = "PHYSICAL"
+export declare enum EnrollmentStatus {
+    active = "ACTIVE",
+    suspended = "SUSPENDED"
 }
