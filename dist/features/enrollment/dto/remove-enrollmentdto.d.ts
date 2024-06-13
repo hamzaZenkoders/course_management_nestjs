@@ -1,9 +1,8 @@
 import { EnrollmentStatus } from 'src/features/enums/enrollmentStatus';
-export declare class CreateEnrollmentDto {
+export declare class RemoveEnrollmentDto {
     EnrollmentDate: Date;
     status: EnrollmentStatus;
-    createdAt: Date;
     updatedAt: Date;
     studentId: number;
-    courseId: number;
+    courseID: number;
 }

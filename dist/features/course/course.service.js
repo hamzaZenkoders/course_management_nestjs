@@ -29,6 +29,7 @@ let CourseService = class CourseService {
     }
     async findOne(id) {
         const temp = await this.courseRepository.findOne({ where: { id } });
+        console.log('inside corse service', temp);
         return temp;
     }
     update(id, updateCourseDto) {

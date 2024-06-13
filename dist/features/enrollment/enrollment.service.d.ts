@@ -11,8 +11,9 @@ export declare class EnrollmentService {
     constructor(enrollmentRepository: Repository<Enrollment>, courseService: CourseService, studentService: StudentService);
     create(createEnrollmentDto: CreateEnrollmentDto): string;
     findAll(): string;
-    findOne(id: number): string;
     update(id: number, updateEnrollmentDto: UpdateEnrollmentDto): string;
     remove(id: number): string;
     creatEnrollment(createEnrollmentDto: CreateEnrollmentDto): Promise<Enrollment>;
+    removeEnrollment(enrollmentID: number): Promise<void>;
+    findOne(id: number): Promise<Enrollment>;
 }

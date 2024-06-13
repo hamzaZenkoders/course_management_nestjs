@@ -17,7 +17,6 @@ class CreateEnrollmentDto {
 exports.CreateEnrollmentDto = CreateEnrollmentDto;
 __decorate([
     (0, class_validator_1.IsDate)(),
-    (0, class_validator_1.IsEmpty)(),
     __metadata("design:type", Date)
 ], CreateEnrollmentDto.prototype, "EnrollmentDate", void 0);
 __decorate([
@@ -37,5 +36,5 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
-], CreateEnrollmentDto.prototype, "courseId", void 0);
+], CreateEnrollmentDto.prototype, "courseID", void 0);
 //# sourceMappingURL=create-enrollment-dto.js.map

@@ -30,14 +30,15 @@ let EnrollmentController = class EnrollmentController {
     create(createEnrollmentDto) {
         return this.enrollmentService.creatEnrollment(createEnrollmentDto);
     }
+    remove(req) {
+        const { enrollmentID } = req.body;
+        return this.enrollmentService.removeEnrollment(enrollmentID);
+    }
     findOne(id) {
         return this.enrollmentService.findOne(+id);
     }
     update(id, updateEnrollmentDto) {
         return this.enrollmentService.update(+id, updateEnrollmentDto);
-    }
-    remove(id) {
-        return this.enrollmentService.remove(+id);
     }
 };
 exports.EnrollmentController = EnrollmentController;
@@ -57,6 +58,13 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EnrollmentController.prototype, "create", null);
 __decorate([
+    (0, common_1.Delete)('/drop'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], EnrollmentController.prototype, "remove", null);
+__decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -71,13 +79,6 @@ __decorate([
     __metadata("design:paramtypes", [String, update_enrollment_dto_1.UpdateEnrollmentDto]),
     __metadata("design:returntype", void 0)
 ], EnrollmentController.prototype, "update", null);
-__decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], EnrollmentController.prototype, "remove", null);
 exports.EnrollmentController = EnrollmentController = __decorate([
     (0, common_1.Controller)('enrollment'),
     __metadata("design:paramtypes", [enrollment_service_1.EnrollmentService])

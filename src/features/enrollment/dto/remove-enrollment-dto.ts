@@ -1,8 +1,8 @@
-import { IsDate, IsEmpty, IsEnum, IsNotEmpty, IsNumber } from 'class-validator';
-import { EnrollmentStatus } from 'src/features/enums/enrollmentStatus';
+import { IsNotEmpty, IsNumber } from 'class-validator';
+//import { EnrollmentStatus } from 'src/features/enums/enrollmentStatus';
 
-export class CreateEnrollmentDto {
-  @IsDate()
+export class RemoveEnrollmentDto {
+  /*   @IsDate()
   EnrollmentDate: Date;
 
   @IsEnum(EnrollmentStatus)
@@ -10,7 +10,7 @@ export class CreateEnrollmentDto {
 
   @IsDate() //
   updatedAt: Date;
-
+ */
   @IsNumber()
   @IsNotEmpty()
   studentId: number;

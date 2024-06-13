@@ -4,5 +4,5 @@ export declare class CreateEnrollmentDto {
     status: EnrollmentStatus;
     updatedAt: Date;
     studentId: number;
-    courseId: number;
+    courseID: number;
 }

@@ -22,6 +22,7 @@ export class CourseService {
 
   async findOne(id: number): Promise<Course | undefined> {
     const temp = await this.courseRepository.findOne({ where: { id } });
+    console.log('inside corse service', temp);
     return temp;
   }
 

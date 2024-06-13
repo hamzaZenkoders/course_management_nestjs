@@ -31,9 +31,6 @@ let EnrollmentService = class EnrollmentService {
     findAll() {
         return `This action returns all enrollment`;
     }
-    findOne(id) {
-        return `This action returns a #${id} enrollment`;
-    }
     update(id, updateEnrollmentDto) {
         return `This action updates a #${id} enrollment`;
     }
@@ -41,15 +38,40 @@ let EnrollmentService = class EnrollmentService {
         return `This action removes a #${id} enrollment`;
     }
     async creatEnrollment(createEnrollmentDto) {
-        const foundCourse = await this.courseService.findOne(createEnrollmentDto.courseId);
+        console.log(createEnrollmentDto);
+        console.log(createEnrollmentDto.courseID);
+        const foundCourse = await this.courseService.findOne(createEnrollmentDto.courseID);
         if (!foundCourse) {
             throw new common_1.HttpException('Course not found', common_1.HttpStatus.NOT_FOUND);
         }
+        const studentFound = await this.studentService.findByID(createEnrollmentDto.studentId);
+        if (!studentFound) {
+            throw new common_1.HttpException('Student not found', common_1.HttpStatus.NOT_FOUND);
+        }
         const newEnrollment = this.enrollmentRepository.create({
             ...createEnrollmentDto,
+            student: studentFound,
+            course: foundCourse,
         });
         const enrollmentSaved = this.enrollmentRepository.save(newEnrollment);
         return enrollmentSaved;
+    }
+    async removeEnrollment(enrollmentID) {
+        const foundEnrollment = await this.findOne(enrollmentID);
+        console.log(foundEnrollment.course.dropDeadline);
+        console.log(new Date(Date.now()));
+        const dropDeadlineUTC = new Date(foundEnrollment.course.dropDeadline);
+        const currentDateTimeUTC = new Date();
+        if (currentDateTimeUTC > dropDeadlineUTC) {
+            throw new common_1.HttpException('Course dropped deadline has already passed', common_1.HttpStatus.FORBIDDEN);
+        }
+    }
+    async findOne(id) {
+        const result = await this.enrollmentRepository.findOne({
+            where: { id },
+            relations: ['student', 'course'],
+        });
+        return result;
     }
 };
 exports.EnrollmentService = EnrollmentService;

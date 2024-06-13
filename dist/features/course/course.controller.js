@@ -21,7 +21,8 @@ let CourseController = class CourseController {
     constructor(courseService) {
         this.courseService = courseService;
     }
-    create(createCourseDto) {
+    create(req, createCourseDto) {
+        console.log('Request Body:', req.body);
         return this.courseService.create(createCourseDto);
     }
     findAll() {
@@ -40,9 +41,9 @@ let CourseController = class CourseController {
 exports.CourseController = CourseController;
 __decorate([
     (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_course_dto_1.CreateCourseDto]),
+    __metadata("design:paramtypes", [Object, create_course_dto_1.CreateCourseDto]),
     __metadata("design:returntype", void 0)
 ], CourseController.prototype, "create", null);
 __decorate([

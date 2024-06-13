@@ -9,37 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateEnrollmentDto = void 0;
+exports.RemoveEnrollmentDto = void 0;
 const class_validator_1 = require("class-validator");
-const enrollmentStatus_1 = require("../../enums/enrollmentStatus");
-class CreateEnrollmentDto {
+class RemoveEnrollmentDto {
 }
-exports.CreateEnrollmentDto = CreateEnrollmentDto;
-__decorate([
-    (0, class_validator_1.IsDate)(),
-    (0, class_validator_1.IsEmpty)(),
-    __metadata("design:type", Date)
-], CreateEnrollmentDto.prototype, "EnrollmentDate", void 0);
-__decorate([
-    (0, class_validator_1.IsEnum)(enrollmentStatus_1.EnrollmentStatus),
-    __metadata("design:type", String)
-], CreateEnrollmentDto.prototype, "status", void 0);
-__decorate([
-    (0, class_validator_1.IsDate)(),
-    __metadata("design:type", Date)
-], CreateEnrollmentDto.prototype, "createdAt", void 0);
-__decorate([
-    (0, class_validator_1.IsDate)(),
-    __metadata("design:type", Date)
-], CreateEnrollmentDto.prototype, "updatedAt", void 0);
+exports.RemoveEnrollmentDto = RemoveEnrollmentDto;
 __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
-], CreateEnrollmentDto.prototype, "studentId", void 0);
+], RemoveEnrollmentDto.prototype, "studentId", void 0);
 __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
-], CreateEnrollmentDto.prototype, "courseId", void 0);
-//# sourceMappingURL=create-enrollment-dto.js.map
+], RemoveEnrollmentDto.prototype, "courseID", void 0);
+//# sourceMappingURL=remove-enrollment-dto.js.map
