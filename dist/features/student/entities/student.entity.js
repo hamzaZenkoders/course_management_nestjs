@@ -50,7 +50,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ type: 'timestamp' }),
     __metadata("design:type", Date)
-], Student.prototype, "dateOfBirth", void 0);
+], Student.prototype, "date_of_birth", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         type: 'enum',
@@ -62,11 +62,11 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ type: 'boolean', default: false }),
     __metadata("design:type", Boolean)
-], Student.prototype, "isVerified", void 0);
+], Student.prototype, "is_Verified", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'boolean', default: false }),
     __metadata("design:type", Boolean)
-], Student.prototype, "isSuspended", void 0);
+], Student.prototype, "is_Suspended", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         type: 'timestamp',

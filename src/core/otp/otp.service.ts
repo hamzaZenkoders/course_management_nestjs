@@ -41,8 +41,10 @@ export class OtpService {
       }
 
       await this.studentRepo.update(findOtp[0].student.id, {
-        isVerified: true,
+        is_Verified: true,
       });
+
+      // console.log(verifiedStatusChanged);
     } else {
       throw new HttpException('Invalid OTP', HttpStatus.UNAUTHORIZED); //
     }

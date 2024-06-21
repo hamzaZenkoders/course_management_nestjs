@@ -43,7 +43,7 @@ export class Student {
   contact: string;
 
   @Column({ type: 'timestamp' })
-  dateOfBirth: Date;
+  date_of_birth: Date;
 
   @Column({
     type: 'enum',
@@ -53,10 +53,10 @@ export class Student {
   role: Roles;
 
   @Column({ type: 'boolean', default: false }) //change in ERD also
-  isVerified: boolean;
+  is_Verified: boolean;
 
   @Column({ type: 'boolean', default: false })
-  isSuspended: boolean;
+  is_Suspended: boolean;
 
   @Column({
     type: 'timestamp',

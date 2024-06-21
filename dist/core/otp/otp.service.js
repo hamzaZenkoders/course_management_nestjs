@@ -39,7 +39,7 @@ let OtpService = class OtpService {
                 throw new common_1.HttpException('Otp is expired generate new otp', common_1.HttpStatus.FORBIDDEN);
             }
             await this.studentRepo.update(findOtp[0].student.id, {
-                isVerified: true,
+                is_Verified: true,
             });
         }
         else {

@@ -12,7 +12,7 @@ import { Repository } from 'typeorm';
 
 //importing DTOs
 
-import { CreateStudentDto } from './dto/create-student.dto';
+import { CreateStudentDto } from './dto/create-student.dto'; //
 //import { UpdateStudentDto } from './dto/update-student.dto';
 
 //importing bycrypt
@@ -43,19 +43,19 @@ export class StudentService {
   constructor(
     @InjectRepository(Student)
     private studentRepository: Repository<Student>,
-    @InjectRepository(OTP)
-    private otpRepository: Repository<OTP>,
+    // @InjectRepository(OTP)
+    //  private otpRepository: Repository<OTP>,
 
     /*  @InjectRepository(Course)
     private courseRepository: Repository<Course>, */
 
-    private readonly mailService: MailService,
-    private readonly otpService: OtpService,
-    private jwtService: JwtService,
-    private courseService: CourseService,
+    // private readonly mailService: MailService,
+    // private readonly otpService: OtpService,
+    //private jwtService: JwtService,
+    //private courseService: CourseService,
   ) {}
 
-  async register(createStudentDto: CreateStudentDto) {
+  /* async register(createStudentDto: CreateStudentDto) {
     //finding is student already exists
     const existingUser = await this.studentRepository.findOne({
       where: { email: createStudentDto.email },
@@ -85,7 +85,7 @@ export class StudentService {
     const otpRecieved = await this.otpService.generateOTP();
     //  const encryptedOtp = await bcrypt.hash(otpRecieved,10);
 
-    if (savedStudent.isVerified === false) {
+    if (savedStudent.is_Verified === false) {
       //saving Otp in the otp table
       await this.otpService.saveOtp(savedStudent.id, otpRecieved);
 
@@ -125,8 +125,51 @@ export class StudentService {
 
     return { token };
   }
+ */
 
-  async EnrollInCourse(createEnrollmentDto: CreateEnrollmentDto) {}
+  async studentAllEnrolledCourses(student_id: number) {
+    const studentWithCourses = await this.studentRepository
+      .createQueryBuilder('student')
+      .leftJoinAndSelect('student.enrollments', 'enrollment')
+      .leftJoinAndSelect('enrollment.course', 'course')
+      .where('student.id = :id', { id: student_id })
+      .getMany();
+
+    return studentWithCourses;
+  }
+
+  async updateStudentProfile(id: number, updatingData: Object) {
+    const tempData = await this.studentData(id);
+
+    if (!tempData) {
+      throw new NotFoundException();
+    }
+
+    const updatedStudent = { ...tempData, ...updatingData };
+
+    console.log(updatedStudent);
+
+    const result = await this.studentRepository.update(id, updatedStudent);
+
+    if (result.affected > 0) {
+      return {
+        statusCode: HttpStatus.OK,
+        message: 'Student profile updated successfully',
+      };
+    } else {
+      throw new HttpException(
+        'Failed to update student profile',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+
+    // console.log('updatedData', updatedData);
+  }
+
+  async studentData(id: number) {
+    const student = await this.studentRepository.findOne({ where: { id } });
+    return student;
+  }
 
   async findOne(email: string): Promise<Student | undefined> {
     const temp = await this.studentRepository.findOne({ where: { email } });
@@ -140,8 +183,8 @@ export class StudentService {
 
   async updateIsVerifiedStatus(
     studentId: number,
-    isVerified: boolean,
+    is_Verified: boolean,
   ): Promise<void> {
-    await this.studentRepository.update(studentId, { isVerified });
+    await this.studentRepository.update(studentId, { is_Verified });
   }
 }

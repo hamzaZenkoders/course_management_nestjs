@@ -9,10 +9,10 @@ export declare class Student {
     age: number;
     address: string;
     contact: string;
-    dateOfBirth: Date;
+    date_of_birth: Date;
     role: Roles;
-    isVerified: boolean;
-    isSuspended: boolean;
+    is_Verified: boolean;
+    is_Suspended: boolean;
     createdAt: Date;
     updatedAt: Date;
     otps: OTP[];

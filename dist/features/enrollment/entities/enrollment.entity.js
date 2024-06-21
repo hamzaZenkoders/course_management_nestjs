@@ -43,10 +43,12 @@ __decorate([
 ], Enrollment.prototype, "updatedAt", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => student_entity_1.Student, (student) => student.enrollments),
+    (0, typeorm_1.JoinColumn)({ name: 'student_id' }),
     __metadata("design:type", student_entity_1.Student)
 ], Enrollment.prototype, "student", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => course_entity_1.Course, (course) => course.enrollments),
+    (0, typeorm_1.JoinColumn)({ name: 'course_id' }),
     __metadata("design:type", course_entity_1.Course)
 ], Enrollment.prototype, "course", void 0);
 exports.Enrollment = Enrollment = __decorate([

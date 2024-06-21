@@ -8,12 +8,15 @@ import { EnrollmentStatus } from '../enums/enrollmentStatus';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { RemoveEnrollmentDto } from './dto/remove-enrollment-dto';
+import { Student } from '../student/entities/student.entity';
 
 @Injectable()
 export class EnrollmentService {
   constructor(
     @InjectRepository(Enrollment)
     private enrollmentRepository: Repository<Enrollment>,
+    @InjectRepository(Student)
+    private studentRepository: Repository<Student>,
 
     private courseService: CourseService,
     private studentService: StudentService,
@@ -41,10 +44,10 @@ export class EnrollmentService {
 
   async creatEnrollment(createEnrollmentDto: CreateEnrollmentDto) {
     console.log(createEnrollmentDto);
-    console.log(createEnrollmentDto.courseID);
+    console.log(createEnrollmentDto.course_id);
 
     const foundCourse = await this.courseService.findOne(
-      createEnrollmentDto.courseID,
+      createEnrollmentDto.course_id,
     );
 
     //console.log(foundCourse);
@@ -55,7 +58,7 @@ export class EnrollmentService {
     }
 
     const studentFound = await this.studentService.findByID(
-      createEnrollmentDto.studentId,
+      createEnrollmentDto.student_id,
     );
 
     if (!studentFound) {
@@ -74,6 +77,7 @@ export class EnrollmentService {
   }
 
   async removeEnrollment(enrollmentID: number) {
+    console.log(enrollmentID);
     const foundEnrollment = await this.findOne(enrollmentID);
 
     console.log(foundEnrollment.course.dropDeadline);
@@ -88,8 +92,26 @@ export class EnrollmentService {
         HttpStatus.FORBIDDEN,
       );
     }
+    const result = await this.enrollmentRepository.delete({ id: enrollmentID });
+
+    if (result.affected === 0) {
+      throw new HttpException('Enrollment not found', HttpStatus.NOT_FOUND);
+    }
+
+    return result;
   }
 
+  /*  async studentAllEnrolledCourses(student_id: number) {
+    const studentWithCourses = await this.studentRepository
+      .createQueryBuilder('student')
+      .leftJoinAndSelect('student.enrollments', 'enrollment')
+      .leftJoinAndSelect('enrollment.course', 'course')
+      .where('student.id = :id', { id: student_id })
+      .getMany();
+
+    return studentWithCourses;
+  }
+ */
   async findOne(id: number) {
     const result = await this.enrollmentRepository.findOne({
       where: { id },

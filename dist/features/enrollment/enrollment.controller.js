@@ -30,9 +30,8 @@ let EnrollmentController = class EnrollmentController {
     create(createEnrollmentDto) {
         return this.enrollmentService.creatEnrollment(createEnrollmentDto);
     }
-    remove(req) {
-        const { enrollmentID } = req.body;
-        return this.enrollmentService.removeEnrollment(enrollmentID);
+    remove(id) {
+        return this.enrollmentService.removeEnrollment(id);
     }
     findOne(id) {
         return this.enrollmentService.findOne(+id);
@@ -58,10 +57,12 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EnrollmentController.prototype, "create", null);
 __decorate([
-    (0, common_1.Delete)('/drop'),
-    __param(0, (0, common_1.Req)()),
+    (0, roles_decorator_1.Role)('STUDENT'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, roleAuthorization_guard_1.RoleAuthorizationGuard),
+    (0, common_1.Delete)('/drop/:id'),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], EnrollmentController.prototype, "remove", null);
 __decorate([

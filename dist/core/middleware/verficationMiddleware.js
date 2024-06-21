@@ -26,7 +26,7 @@ let VerificationMiddleware = class VerificationMiddleware {
         if (email) {
             const user = await this.studentService.findOne(email);
             if (user) {
-                if (user.isVerified === false) {
+                if (user.is_Verified === false) {
                     res
                         .status(common_1.HttpStatus.UNAUTHORIZED)
                         .json({ message: 'Verify your otp code' });

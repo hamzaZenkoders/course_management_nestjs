@@ -39,12 +39,22 @@ export class EnrollmentController {
   }
 
   //drop course enrollment
-  @Delete('/drop')
-  remove(@Req() req) {
-    const { enrollmentID } = req.body;
+  @Role('STUDENT')
+  @UseGuards(AuthenticationGuard, RoleAuthorizationGuard)
+  @Delete('/drop/:id')
+  remove(@Param('id') id: number) {
+    //const { enrollmentID } = req.params;
     //  return 'working';
-    return this.enrollmentService.removeEnrollment(enrollmentID);
+    return this.enrollmentService.removeEnrollment(id);
   }
+
+  /*  //get student all enrolled courses
+  @Role('STUDENT')
+  @UseGuards(AuthenticationGuard, RoleAuthorizationGuard)
+  @Get('/EnrolledCourses/:id')
+  AllEnrolledCourses(@Param('id') id: number) {
+    return this.enrollmentService.studentAllEnrolledCourses(+id);
+  } */
 
   @Get(':id')
   findOne(@Param('id') id: string) {

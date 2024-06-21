@@ -6,7 +6,7 @@ export declare class EnrollmentController {
     constructor(enrollmentService: EnrollmentService);
     findAll(): string;
     create(createEnrollmentDto: CreateEnrollmentDto): Promise<import("./entities/enrollment.entity").Enrollment>;
-    remove(req: any): Promise<void>;
+    remove(id: number): Promise<import("typeorm").DeleteResult>;
     findOne(id: string): Promise<import("./entities/enrollment.entity").Enrollment>;
     update(id: string, updateEnrollmentDto: UpdateEnrollmentDto): string;
 }

@@ -23,7 +23,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ type: 'varchar' }),
     __metadata("design:type", String)
-], Course.prototype, "code", void 0);
+], Course.prototype, "name", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'varchar' }),
     __metadata("design:type", String)

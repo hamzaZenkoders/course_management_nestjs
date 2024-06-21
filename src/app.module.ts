@@ -30,7 +30,7 @@ import { EnrollmentModule } from './features/enrollment/enrollment.module';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'dxtx100',
+      password: 'dxtx998',
       database: 'lms',
       entities: [
         Student,

@@ -18,6 +18,9 @@ let AuthenticationGuard = class AuthenticationGuard {
     }
     canActivate(context) {
         const request = context.switchToHttp().getRequest();
+        if (!request.headers.authorization) {
+            throw new common_1.HttpException('Jwt token not found', common_1.HttpStatus.NOT_FOUND);
+        }
         const token = request.headers.authorization.split(' ')[1];
         if (!token) {
             throw new common_1.UnauthorizedException();

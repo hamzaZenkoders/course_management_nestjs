@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
@@ -24,7 +25,7 @@ import { Role } from 'src/core/decorator/roles.decorator';
 @Controller('student')
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
-
+  /* 
   @Post('/auth/signup')
   @UseGuards(EmailAuthorizationGuard)
   create(@Body() createStudentDto: CreateStudentDto) {
@@ -34,13 +35,34 @@ export class StudentController {
   @Post('/auth/login')
   signIn(@Body() loginInStudentDto: LoginInStudentDto) {
     return this.studentService.login(loginInStudentDto);
+  } */
+
+  @Role('STUDENT')
+  @UseGuards(AuthenticationGuard, RoleAuthorizationGuard)
+  @Get('/:id')
+  GetStudentProfile(@Param('id') id: number) {
+    return this.studentService.studentData(+id);
   }
 
+  //get student all enrolled courses
+  @Role('STUDENT')
+  @UseGuards(AuthenticationGuard, RoleAuthorizationGuard)
+  @Get('/EnrolledCourses/:id')
+  AllEnrolledCourses(@Param('id') id: number) {
+    return this.studentService.studentAllEnrolledCourses(+id);
+  }
   //VIEW ALL COURES
 
   @Post('/enrollment')
   EnrollInCourse() {
     return 'working correctly';
+  }
+
+  //update profile
+  @Patch('updateProfile/:id')
+  UpdateProfile(@Param('id') id: number, @Req() request: Request) {
+    const data = request.body;
+    return this.studentService.updateStudentProfile(id, data);
   }
 
   /* @Get('/second')

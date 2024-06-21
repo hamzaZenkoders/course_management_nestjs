@@ -3,6 +3,9 @@ import {
   CanActivate,
   ExecutionContext,
   UnauthorizedException,
+  NotFoundException,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
@@ -15,6 +18,10 @@ export class AuthenticationGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
+
+    if (!request.headers.authorization) {
+      throw new HttpException('Jwt token not found', HttpStatus.NOT_FOUND);
+    }
 
     const token = request.headers.authorization.split(' ')[1];
 

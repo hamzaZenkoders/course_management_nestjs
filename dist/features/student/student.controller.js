@@ -15,45 +15,60 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudentController = void 0;
 const common_1 = require("@nestjs/common");
 const student_service_1 = require("./student.service");
-const create_student_dto_1 = require("./dto/create-student.dto");
-const emailAuthorization_guard_1 = require("../../core/guards/emailAuthorization.guard");
-const login_student_dto_1 = require("./dto/login-student-dto");
+const roleAuthorization_guard_1 = require("../../core/guards/roleAuthorization.guard");
+const authentication_guard_1 = require("../../core/guards/authentication.guard");
+const roles_decorator_1 = require("../../core/decorator/roles.decorator");
 let StudentController = class StudentController {
     constructor(studentService) {
         this.studentService = studentService;
     }
-    create(createStudentDto) {
-        return this.studentService.register(createStudentDto);
+    GetStudentProfile(id) {
+        return this.studentService.studentData(+id);
     }
-    signIn(loginInStudentDto) {
-        return this.studentService.login(loginInStudentDto);
+    AllEnrolledCourses(id) {
+        return this.studentService.studentAllEnrolledCourses(+id);
     }
     EnrollInCourse() {
         return 'working correctly';
     }
+    UpdateProfile(id, request) {
+        const data = request.body;
+        return this.studentService.updateStudentProfile(id, data);
+    }
 };
 exports.StudentController = StudentController;
 __decorate([
-    (0, common_1.Post)('/auth/signup'),
-    (0, common_1.UseGuards)(emailAuthorization_guard_1.EmailAuthorizationGuard),
-    __param(0, (0, common_1.Body)()),
+    (0, roles_decorator_1.Role)('STUDENT'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, roleAuthorization_guard_1.RoleAuthorizationGuard),
+    (0, common_1.Get)('/:id'),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_student_dto_1.CreateStudentDto]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
-], StudentController.prototype, "create", null);
+], StudentController.prototype, "GetStudentProfile", null);
 __decorate([
-    (0, common_1.Post)('/auth/login'),
-    __param(0, (0, common_1.Body)()),
+    (0, roles_decorator_1.Role)('STUDENT'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, roleAuthorization_guard_1.RoleAuthorizationGuard),
+    (0, common_1.Get)('/EnrolledCourses/:id'),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [login_student_dto_1.LoginInStudentDto]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
-], StudentController.prototype, "signIn", null);
+], StudentController.prototype, "AllEnrolledCourses", null);
 __decorate([
     (0, common_1.Post)('/enrollment'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], StudentController.prototype, "EnrollInCourse", null);
+__decorate([
+    (0, common_1.Patch)('updateProfile/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Request]),
+    __metadata("design:returntype", void 0)
+], StudentController.prototype, "UpdateProfile", null);
 exports.StudentController = StudentController = __decorate([
     (0, common_1.Controller)('student'),
     __metadata("design:paramtypes", [student_service_1.StudentService])

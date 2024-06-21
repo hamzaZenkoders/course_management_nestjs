@@ -14,7 +14,7 @@ export class Course {
   id: number;
 
   @Column({ type: 'varchar' })
-  code: string;
+  name: string;
 
   @Column({ type: 'varchar' })
   description: string;

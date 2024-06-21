@@ -31,10 +31,10 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
-], CreateEnrollmentDto.prototype, "studentId", void 0);
+], CreateEnrollmentDto.prototype, "student_id", void 0);
 __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
-], CreateEnrollmentDto.prototype, "courseID", void 0);
+], CreateEnrollmentDto.prototype, "course_id", void 0);
 //# sourceMappingURL=create-enrollment-dto.js.map

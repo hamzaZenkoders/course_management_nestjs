@@ -16,69 +16,42 @@ exports.StudentService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const bcrypt = require("bcrypt");
-const otp_entity_1 = require("../../core/otp/entity/otp.entity");
 const student_entity_1 = require("./entities/student.entity");
-const mail_service_1 = require("../../core/mail/mail.service");
-const otp_service_1 = require("../../core/otp/otp.service");
-const jwt_1 = require("@nestjs/jwt");
-const course_service_1 = require("../course/course.service");
 let StudentService = class StudentService {
-    constructor(studentRepository, otpRepository, mailService, otpService, jwtService, courseService) {
+    constructor(studentRepository) {
         this.studentRepository = studentRepository;
-        this.otpRepository = otpRepository;
-        this.mailService = mailService;
-        this.otpService = otpService;
-        this.jwtService = jwtService;
-        this.courseService = courseService;
     }
-    async register(createStudentDto) {
-        const existingUser = await this.studentRepository.findOne({
-            where: { email: createStudentDto.email },
-        });
-        console.log('check env', process.env.Sender_Email);
-        if (existingUser) {
-            throw new common_1.HttpException('Student already exists', common_1.HttpStatus.FORBIDDEN);
+    async studentAllEnrolledCourses(student_id) {
+        const studentWithCourses = await this.studentRepository
+            .createQueryBuilder('student')
+            .leftJoinAndSelect('student.enrollments', 'enrollment')
+            .leftJoinAndSelect('enrollment.course', 'course')
+            .where('student.id = :id', { id: student_id })
+            .getMany();
+        return studentWithCourses;
+    }
+    async updateStudentProfile(id, updatingData) {
+        const tempData = await this.studentData(id);
+        if (!tempData) {
+            throw new common_1.NotFoundException();
         }
-        console.log(createStudentDto);
-        const hashedPassword = await bcrypt.hash(createStudentDto.password, 10);
-        const newStudent = this.studentRepository.create({
-            ...createStudentDto,
-            createdAt: new Date(Date.now()),
-            password: hashedPassword,
-        });
-        const tempSave = { id: newStudent.id, ...newStudent };
-        const savedStudent = await this.studentRepository.save(tempSave);
-        const otpRecieved = await this.otpService.generateOTP();
-        if (savedStudent.isVerified === false) {
-            await this.otpService.saveOtp(savedStudent.id, otpRecieved);
-            await this.mailService.sendEmailOtp(tempSave.email, otpRecieved);
+        const updatedStudent = { ...tempData, ...updatingData };
+        console.log(updatedStudent);
+        const result = await this.studentRepository.update(id, updatedStudent);
+        if (result.affected > 0) {
             return {
                 statusCode: common_1.HttpStatus.OK,
-                message: 'Verification otp is sent to email',
+                message: 'Student profile updated successfully',
             };
         }
         else {
-            console.log('Student is verified:', savedStudent);
-            return savedStudent;
+            throw new common_1.HttpException('Failed to update student profile', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    async login(loginInStudentDto) {
-        const StudentFound = await this.studentRepository.findOne({
-            where: { email: loginInStudentDto.email },
-        });
-        if (!StudentFound) {
-            throw new common_1.NotFoundException('User not found');
-        }
-        const passwordMatched = await bcrypt.compare(loginInStudentDto.password, StudentFound.password);
-        if (!passwordMatched) {
-            throw new common_1.UnauthorizedException();
-        }
-        const payload = { email: StudentFound.email, role: StudentFound.role };
-        const token = this.jwtService.sign(payload);
-        return { token };
+    async studentData(id) {
+        const student = await this.studentRepository.findOne({ where: { id } });
+        return student;
     }
-    async EnrollInCourse(createEnrollmentDto) { }
     async findOne(email) {
         const temp = await this.studentRepository.findOne({ where: { email } });
         return temp;
@@ -87,20 +60,14 @@ let StudentService = class StudentService {
         const temp = await this.studentRepository.findOne({ where: { id } });
         return temp;
     }
-    async updateIsVerifiedStatus(studentId, isVerified) {
-        await this.studentRepository.update(studentId, { isVerified });
+    async updateIsVerifiedStatus(studentId, is_Verified) {
+        await this.studentRepository.update(studentId, { is_Verified });
     }
 };
 exports.StudentService = StudentService;
 exports.StudentService = StudentService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(student_entity_1.Student)),
-    __param(1, (0, typeorm_1.InjectRepository)(otp_entity_1.OTP)),
-    __metadata("design:paramtypes", [typeorm_2.Repository,
-        typeorm_2.Repository,
-        mail_service_1.MailService,
-        otp_service_1.OtpService,
-        jwt_1.JwtService,
-        course_service_1.CourseService])
+    __metadata("design:paramtypes", [typeorm_2.Repository])
 ], StudentService);
 //# sourceMappingURL=student.service.js.map

@@ -13,9 +13,9 @@ export class CreateEnrollmentDto {
 
   @IsNumber()
   @IsNotEmpty()
-  studentId: number;
+  student_id: number;
 
   @IsNumber()
   @IsNotEmpty()
-  courseID: number;
+  course_id: number;
 }

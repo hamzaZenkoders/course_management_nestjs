@@ -28,7 +28,7 @@ export class VerificationMiddleware implements NestMiddleware {
     if (email) {
       const user = await this.studentService.findOne(email);
       if (user) {
-        if (user.isVerified === false) {
+        if (user.is_Verified === false) {
           res
             .status(HttpStatus.UNAUTHORIZED)
             .json({ message: 'Verify your otp code' });

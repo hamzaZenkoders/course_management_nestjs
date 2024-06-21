@@ -19,9 +19,11 @@ const student_service_1 = require("../student/student.service");
 const enrollment_entity_1 = require("./entities/enrollment.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
+const student_entity_1 = require("../student/entities/student.entity");
 let EnrollmentService = class EnrollmentService {
-    constructor(enrollmentRepository, courseService, studentService) {
+    constructor(enrollmentRepository, studentRepository, courseService, studentService) {
         this.enrollmentRepository = enrollmentRepository;
+        this.studentRepository = studentRepository;
         this.courseService = courseService;
         this.studentService = studentService;
     }
@@ -39,12 +41,12 @@ let EnrollmentService = class EnrollmentService {
     }
     async creatEnrollment(createEnrollmentDto) {
         console.log(createEnrollmentDto);
-        console.log(createEnrollmentDto.courseID);
-        const foundCourse = await this.courseService.findOne(createEnrollmentDto.courseID);
+        console.log(createEnrollmentDto.course_id);
+        const foundCourse = await this.courseService.findOne(createEnrollmentDto.course_id);
         if (!foundCourse) {
             throw new common_1.HttpException('Course not found', common_1.HttpStatus.NOT_FOUND);
         }
-        const studentFound = await this.studentService.findByID(createEnrollmentDto.studentId);
+        const studentFound = await this.studentService.findByID(createEnrollmentDto.student_id);
         if (!studentFound) {
             throw new common_1.HttpException('Student not found', common_1.HttpStatus.NOT_FOUND);
         }
@@ -57,6 +59,7 @@ let EnrollmentService = class EnrollmentService {
         return enrollmentSaved;
     }
     async removeEnrollment(enrollmentID) {
+        console.log(enrollmentID);
         const foundEnrollment = await this.findOne(enrollmentID);
         console.log(foundEnrollment.course.dropDeadline);
         console.log(new Date(Date.now()));
@@ -65,6 +68,11 @@ let EnrollmentService = class EnrollmentService {
         if (currentDateTimeUTC > dropDeadlineUTC) {
             throw new common_1.HttpException('Course dropped deadline has already passed', common_1.HttpStatus.FORBIDDEN);
         }
+        const result = await this.enrollmentRepository.delete({ id: enrollmentID });
+        if (result.affected === 0) {
+            throw new common_1.HttpException('Enrollment not found', common_1.HttpStatus.NOT_FOUND);
+        }
+        return result;
     }
     async findOne(id) {
         const result = await this.enrollmentRepository.findOne({
@@ -78,7 +86,9 @@ exports.EnrollmentService = EnrollmentService;
 exports.EnrollmentService = EnrollmentService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(enrollment_entity_1.Enrollment)),
+    __param(1, (0, typeorm_1.InjectRepository)(student_entity_1.Student)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         course_service_1.CourseService,
         student_service_1.StudentService])
 ], EnrollmentService);
