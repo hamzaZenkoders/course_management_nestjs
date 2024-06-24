@@ -70,6 +70,11 @@ export class TeacherService {
     return temp;
   }
 
+  async findByID(id: number): Promise<Teacher | undefined> {
+    const temp = await this.teacherRepository.findOne({ where: { id } });
+    return temp;
+  }
+
   remove(id: number) {
     return `This action removes a #${id} teacher`;
   }

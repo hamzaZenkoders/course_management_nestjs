@@ -14,5 +14,6 @@ export declare class TeacherService {
     getStudentsEnrolled(courseID: number, teacherID: number): Promise<void>;
     findAll(): Promise<Teacher[]>;
     findOne(email: string): Promise<Teacher | undefined>;
+    findByID(id: number): Promise<Teacher | undefined>;
     remove(id: number): string;
 }

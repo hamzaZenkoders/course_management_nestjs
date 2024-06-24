@@ -43,4 +43,4 @@ exports.StudentVerificationMiddleware = StudentVerificationMiddleware = __decora
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [student_service_1.StudentService])
 ], StudentVerificationMiddleware);
-//# sourceMappingURL=verficationMiddleware.js.map
+//# sourceMappingURL=studentVerficationMiddleware.js.map

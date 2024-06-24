@@ -145,7 +145,7 @@ export class StudentService {
       throw new NotFoundException();
     }
 
-    const updatedStudent = { ...tempData, ...updatingData };
+    const updatedStudent = { ...tempData, ...updatingData }; 
 
     console.log(updatedStudent);
 

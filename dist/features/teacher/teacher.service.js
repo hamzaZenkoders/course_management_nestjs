@@ -58,6 +58,10 @@ let TeacherService = class TeacherService {
         const temp = await this.teacherRepository.findOne({ where: { email } });
         return temp;
     }
+    async findByID(id) {
+        const temp = await this.teacherRepository.findOne({ where: { id } });
+        return temp;
+    }
     remove(id) {
         return `This action removes a #${id} teacher`;
     }

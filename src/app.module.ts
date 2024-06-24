@@ -15,7 +15,7 @@ import { AuthModule } from './core/auth/auth.module';
 import { OTP } from './core/otp/entity/otp.entity';
 import { ConfigModule } from '@nestjs/config';
 import { MailModule } from './core/mail/mail.module';
-import { StudentVerificationMiddleware } from './core/middleware/verficationMiddleware';
+import { StudentVerificationMiddleware } from './core/middleware/studentVerficationMiddleware';
 import { JwtModule } from '@nestjs/jwt';
 import { OtpModule } from './core/otp/otp.module';
 import { AvailableSlot } from './features/teacher/entities/availableSlots.entity';
@@ -69,10 +69,10 @@ export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(StudentVerificationMiddleware)
-      .forRoutes('student/auth/login'); // Apply StudentVerificationMiddleware to '/student/auth/login' route
+      .forRoutes('auth/student/login'); // Apply StudentVerificationMiddleware to '/student/auth/login' route
 
     consumer
       .apply(TeacherVerificationMiddleware)
-      .forRoutes('teacher/auth/login'); // Apply TeacherVerificationMiddleware to '/teacher/auth/login' route
+      .forRoutes('auth/teacher/login'); // Apply TeacherVerificationMiddleware to '/teacher/auth/login' route
   }
 }

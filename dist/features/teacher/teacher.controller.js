@@ -74,7 +74,7 @@ __decorate([
 __decorate([
     (0, roles_decorator_1.Role)('TEACHER'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, roleAuthorization_guard_1.RoleAuthorizationGuard),
-    (0, common_1.Post)('/studentsEnrol'),
+    (0, common_1.Get)('/studentsEnroll'),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

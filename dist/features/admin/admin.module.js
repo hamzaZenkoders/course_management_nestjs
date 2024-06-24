@@ -12,12 +12,20 @@ const typeorm_1 = require("@nestjs/typeorm");
 const admin_controller_1 = require("./admin.controller");
 const admin_service_1 = require("./admin.service");
 const admin_entity_1 = require("./entities/admin.entity");
+const teacher_module_1 = require("../teacher/teacher.module");
+const teacher_entity_1 = require("../teacher/entities/teacher.entity");
+const student_entity_1 = require("../student/entities/student.entity");
+const student_module_1 = require("../student/student.module");
 let AdminModule = class AdminModule {
 };
 exports.AdminModule = AdminModule;
 exports.AdminModule = AdminModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([admin_entity_1.Admin])],
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([admin_entity_1.Admin, teacher_entity_1.Teacher, student_entity_1.Student]),
+            teacher_module_1.TeacherModule,
+            student_module_1.StudentModule,
+        ],
         controllers: [admin_controller_1.AdminController],
         providers: [admin_service_1.AdminService],
         exports: [admin_service_1.AdminService, typeorm_1.TypeOrmModule],

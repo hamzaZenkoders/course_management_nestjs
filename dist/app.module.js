@@ -24,7 +24,7 @@ const auth_module_1 = require("./core/auth/auth.module");
 const otp_entity_1 = require("./core/otp/entity/otp.entity");
 const config_1 = require("@nestjs/config");
 const mail_module_1 = require("./core/mail/mail.module");
-const verficationMiddleware_1 = require("./core/middleware/verficationMiddleware");
+const studentVerficationMiddleware_1 = require("./core/middleware/studentVerficationMiddleware");
 const jwt_1 = require("@nestjs/jwt");
 const otp_module_1 = require("./core/otp/otp.module");
 const availableSlots_entity_1 = require("./features/teacher/entities/availableSlots.entity");
@@ -34,11 +34,11 @@ const admin_entity_1 = require("./features/admin/entities/admin.entity");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer
-            .apply(verficationMiddleware_1.StudentVerificationMiddleware)
-            .forRoutes('student/auth/login');
+            .apply(studentVerficationMiddleware_1.StudentVerificationMiddleware)
+            .forRoutes('auth/student/login');
         consumer
             .apply(teacherVerificationMiddleware_1.TeacherVerificationMiddleware)
-            .forRoutes('teacher/auth/login');
+            .forRoutes('auth/teacher/login');
     }
 };
 exports.AppModule = AppModule;

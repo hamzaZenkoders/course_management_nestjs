@@ -28,10 +28,16 @@ let TeacherVerificationMiddleware = class TeacherVerificationMiddleware {
             if (!user) {
                 throw new common_1.HttpException('Teacher not found', common_1.HttpStatus.NOT_FOUND);
             }
+            console.log('inside teacher verification guard');
             if (!user.is_Verified) {
                 return res
                     .status(common_1.HttpStatus.UNAUTHORIZED)
                     .json({ message: 'Verify your OTP code' });
+            }
+            if (user.is_Suspended === true) {
+                return res
+                    .status(common_1.HttpStatus.UNAUTHORIZED)
+                    .json({ message: 'Teacher is suspended and cannot login' });
             }
             next();
         }
