@@ -7,8 +7,8 @@ export class MailController {
 
   @Get()
   async getEmail() {
-   // const hold = await this.mailService.sendEmailOtp(
-     // 'm.hamza.siddiqui100@gmail.com',
+    // const hold = await this.mailService.sendEmailOtp(
+    // 'm.hamza.siddiqui100@gmail.com',
     //);
     //console.log(hold);
     return 'Email sent successfully';

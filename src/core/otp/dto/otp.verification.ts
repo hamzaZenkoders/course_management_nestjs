@@ -1,22 +1,27 @@
-import { isDate, IsDate, IsEmpty, IsEnum, IsInt, IsNumber, IsString, IsTimeZone } from "class-validator";
-import { OtpPurpose } from "src/features/enums/otpEnum";
-import { Column, Timestamp } from "typeorm";
-
-
+import {
+  isDate,
+  IsDate,
+  IsEmpty,
+  IsEnum,
+  IsInt,
+  IsNumber,
+  IsString,
+  IsTimeZone,
+} from 'class-validator';
+import { OtpPurpose } from 'src/features/enums/otpEnum';
+import { Column, Timestamp } from 'typeorm';
 
 export class OtpVerifierDto {
-    @IsInt()
-    @IsEmpty()
-    otp: number;
-  
-    @IsEnum(OtpPurpose)
-    purpose: OtpPurpose;
+  @IsInt()
+  @IsEmpty()
+  otp: number;
 
-    @IsDate()
-    createdAt: Date;
+  @IsEnum(OtpPurpose)
+  purpose: OtpPurpose;
 
-    @IsDate()
-    expiresAt: Date;
-  
+  @IsDate()
+  createdAt: Date;
+
+  @IsDate()
+  expiresAt: Date;
 }
-  

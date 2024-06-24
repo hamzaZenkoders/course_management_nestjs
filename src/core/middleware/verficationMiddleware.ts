@@ -9,7 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 import { StudentService } from 'src/features/student/student.service';
 
 @Injectable()
-export class VerificationMiddleware implements NestMiddleware {
+export class StudentVerificationMiddleware implements NestMiddleware {
   constructor(private readonly studentService: StudentService) {}
 
   async use(req: Request, res: Response, next: NextFunction) {

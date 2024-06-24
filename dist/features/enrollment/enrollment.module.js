@@ -22,9 +22,9 @@ exports.EnrollmentModule = EnrollmentModule;
 exports.EnrollmentModule = EnrollmentModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            (0, common_1.forwardRef)(() => course_module_1.CourseModule),
+            (0, common_1.forwardRef)(() => student_module_1.StudentModule),
             typeorm_1.TypeOrmModule.forFeature([enrollment_entity_1.Enrollment, student_entity_1.Student, course_entity_1.Course]),
-            student_module_1.StudentModule,
-            course_module_1.CourseModule,
         ],
         controllers: [enrollment_controller_1.EnrollmentController],
         providers: [enrollment_service_1.EnrollmentService],

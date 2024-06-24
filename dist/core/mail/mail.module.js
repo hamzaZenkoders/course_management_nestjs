@@ -23,9 +23,9 @@ exports.MailModule = MailModule = __decorate([
                 provide: 'MAIL_TRANSPORTER',
                 useValue: mailer_config_1.transporter,
             },
-            mail_service_1.MailService
+            mail_service_1.MailService,
         ],
-        exports: ['MAIL_TRANSPORTER', mail_service_1.MailService]
+        exports: ['MAIL_TRANSPORTER', mail_service_1.MailService],
     })
 ], MailModule);
 //# sourceMappingURL=mail.module.js.map

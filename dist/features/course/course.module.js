@@ -12,14 +12,23 @@ const course_service_1 = require("./course.service");
 const course_controller_1 = require("./course.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const course_entity_1 = require("./entities/course.entity");
+const student_module_1 = require("../student/student.module");
+const student_entity_1 = require("../student/entities/student.entity");
+const enrollment_entity_1 = require("../enrollment/entities/enrollment.entity");
+const enrollment_module_1 = require("../enrollment/enrollment.module");
+const enrollment_service_1 = require("../enrollment/enrollment.service");
 let CourseModule = class CourseModule {
 };
 exports.CourseModule = CourseModule;
 exports.CourseModule = CourseModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([course_entity_1.Course])],
+        imports: [
+            (0, common_1.forwardRef)(() => enrollment_module_1.EnrollmentModule),
+            (0, common_1.forwardRef)(() => student_module_1.StudentModule),
+            typeorm_1.TypeOrmModule.forFeature([course_entity_1.Course, enrollment_entity_1.Enrollment, student_entity_1.Student]),
+        ],
         controllers: [course_controller_1.CourseController],
-        providers: [course_service_1.CourseService],
+        providers: [course_service_1.CourseService, enrollment_service_1.EnrollmentService],
         exports: [course_service_1.CourseService],
     })
 ], CourseModule);

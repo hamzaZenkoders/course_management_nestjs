@@ -10,8 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OTP = void 0;
+const admin_entity_1 = require("../../../features/admin/entities/admin.entity");
 const otpEnum_1 = require("../../../features/enums/otpEnum");
 const student_entity_1 = require("../../../features/student/entities/student.entity");
+const teacher_entity_1 = require("../../../features/teacher/entities/teacher.entity");
 const typeorm_1 = require("typeorm");
 let OTP = class OTP {
 };
@@ -45,6 +47,14 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => student_entity_1.Student, (student) => student.otps),
     __metadata("design:type", student_entity_1.Student)
 ], OTP.prototype, "student", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => teacher_entity_1.Teacher, (teacher) => teacher.otps),
+    __metadata("design:type", teacher_entity_1.Teacher)
+], OTP.prototype, "teacher", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => admin_entity_1.Admin, (admin) => admin.otps),
+    __metadata("design:type", admin_entity_1.Admin)
+], OTP.prototype, "admin", void 0);
 exports.OTP = OTP = __decorate([
     (0, typeorm_1.Entity)()
 ], OTP);

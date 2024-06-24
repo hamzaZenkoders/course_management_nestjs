@@ -21,38 +21,45 @@ const otp_entity_1 = require("./entity/otp.entity");
 const otpEnum_1 = require("../../features/enums/otpEnum");
 const otp_gen_agent_1 = require("otp-gen-agent");
 const student_entity_1 = require("../../features/student/entities/student.entity");
+const teacher_entity_1 = require("../../features/teacher/entities/teacher.entity");
 let OtpService = class OtpService {
-    constructor(mailService, studentRepo, otpRepository) {
+    constructor(mailService, studentRepo, teacherRepo, otpRepository) {
         this.mailService = mailService;
         this.studentRepo = studentRepo;
+        this.teacherRepo = teacherRepo;
         this.otpRepository = otpRepository;
     }
-    async OtpVerification(otpVeriferDto) {
-        const findOtp = await this.otpRepository.find({
-            where: { otp: otpVeriferDto.otp },
-            relations: ['student'],
+    async saveOtp(id, otp, userType) {
+        const expiryTime = new Date(Date.now() + 5 * 60 * 1000);
+        console.log(id);
+        let user;
+        if (userType === 'student') {
+            user = await this.studentRepo.findOne({ where: { id } });
+            if (!user)
+                throw new common_1.HttpException('Student not found', common_1.HttpStatus.NOT_FOUND);
+        }
+        else if (userType === 'teacher') {
+            user = await this.teacherRepo.findOne({ where: { id } });
+            console.log(user);
+            if (!user)
+                throw new common_1.HttpException('Teacher not found', common_1.HttpStatus.NOT_FOUND);
+        }
+        const newOtp = this.otpRepository.create({
+            otp: otp,
+            purpose: otpEnum_1.OtpPurpose.signup,
+            expiresAt: expiryTime,
+            student: userType === 'student' ? user : null,
+            teacher: userType === 'teacher' ? user : null,
         });
-        console.log(findOtp);
-        const currentTime = new Date(Date.now());
-        if (findOtp.length > 0 && findOtp[0].otp === otpVeriferDto.otp) {
-            if (findOtp[0].expiresAt < currentTime) {
-                throw new common_1.HttpException('Otp is expired generate new otp', common_1.HttpStatus.FORBIDDEN);
-            }
-            await this.studentRepo.update(findOtp[0].student.id, {
-                is_Verified: true,
-            });
-        }
-        else {
-            throw new common_1.HttpException('Invalid OTP', common_1.HttpStatus.UNAUTHORIZED);
-        }
+        await this.otpRepository.save(newOtp);
     }
-    async saveOtp(linkedID, otp) {
+    async saveOtpAdmin(linkedID, otp) {
         const expiryTime = new Date(Date.now() + 5 * 60 * 1000);
         const newOtp = this.otpRepository.create({
             otp: otp,
             purpose: otpEnum_1.OtpPurpose.signup,
             expiresAt: expiryTime,
-            student: { id: linkedID },
+            admin: { id: linkedID },
         });
         await this.otpRepository.save(newOtp);
     }
@@ -60,13 +67,42 @@ let OtpService = class OtpService {
         const otp = await (0, otp_gen_agent_1.otpGen)();
         return otp;
     }
+    async OtpVerification(otpVeriferDto) {
+        const findOtp = await this.otpRepository.find({
+            where: { otp: otpVeriferDto.otp },
+            relations: ['student', 'teacher'],
+        });
+        console.log(findOtp);
+        const currentTime = new Date(Date.now());
+        if (findOtp.length > 0 && findOtp[0].otp === otpVeriferDto.otp) {
+            if (findOtp[0].expiresAt < currentTime) {
+                throw new common_1.HttpException('Otp is expired generate new otp', common_1.HttpStatus.FORBIDDEN);
+            }
+            console.log(findOtp);
+            if (findOtp[0].student) {
+                await this.studentRepo.update(findOtp[0].student.id, {
+                    is_Verified: true,
+                });
+            }
+            else if (findOtp[0].teacher) {
+                await this.teacherRepo.update(findOtp[0].teacher.id, {
+                    is_Verified: true,
+                });
+            }
+        }
+        else {
+            throw new common_1.HttpException('Invalid OTP', common_1.HttpStatus.UNAUTHORIZED);
+        }
+    }
 };
 exports.OtpService = OtpService;
 exports.OtpService = OtpService = __decorate([
     (0, common_1.Injectable)(),
     __param(1, (0, typeorm_1.InjectRepository)(student_entity_1.Student)),
-    __param(2, (0, typeorm_1.InjectRepository)(otp_entity_1.OTP)),
+    __param(2, (0, typeorm_1.InjectRepository)(teacher_entity_1.Teacher)),
+    __param(3, (0, typeorm_1.InjectRepository)(otp_entity_1.OTP)),
     __metadata("design:paramtypes", [mail_service_1.MailService,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository])
 ], OtpService);

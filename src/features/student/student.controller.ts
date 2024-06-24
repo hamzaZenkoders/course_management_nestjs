@@ -37,6 +37,7 @@ export class StudentController {
     return this.studentService.login(loginInStudentDto);
   } */
 
+  //get student profile
   @Role('STUDENT')
   @UseGuards(AuthenticationGuard, RoleAuthorizationGuard)
   @Get('/:id')
@@ -59,10 +60,21 @@ export class StudentController {
   }
 
   //update profile
+  @Role('STUDENT')
+  @UseGuards(AuthenticationGuard, RoleAuthorizationGuard)
   @Patch('updateProfile/:id')
   UpdateProfile(@Param('id') id: number, @Req() request: Request) {
     const data = request.body;
     return this.studentService.updateStudentProfile(id, data);
+  }
+
+  //view all students
+
+  @Role('ADMIN')
+  @UseGuards(AuthenticationGuard, RoleAuthorizationGuard)
+  @Get()
+  GetAllStudents() {
+    return this.studentService.findAll();
   }
 
   /* @Get('/second')

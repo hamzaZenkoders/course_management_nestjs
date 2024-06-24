@@ -5,8 +5,6 @@ import {
   IsEmpty,
   IsEnum,
   IsInt,
-  isInt,
-  IsNumber,
   IsPhoneNumber,
   IsString,
 } from 'class-validator';

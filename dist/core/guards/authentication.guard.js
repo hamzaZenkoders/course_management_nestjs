@@ -27,6 +27,7 @@ let AuthenticationGuard = class AuthenticationGuard {
         }
         try {
             request.user = this.jwtService.verify(token);
+            console.log('checking req.user', request.user);
         }
         catch (err) {
             console.log(err);

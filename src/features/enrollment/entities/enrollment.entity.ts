@@ -38,6 +38,6 @@ export class Enrollment {
   student: Student;
 
   @ManyToOne(() => Course, (course) => course.enrollments) //
-  @JoinColumn({ name: 'course_id' })
+  @JoinColumn({ name: 'course_id' }) //courseID
   course: Course;
 }

@@ -168,7 +168,16 @@ export class StudentService {
 
   async studentData(id: number) {
     const student = await this.studentRepository.findOne({ where: { id } });
+
+    if (!student) {
+      throw new NotFoundException();
+    }
     return student;
+  }
+
+  async findAll() {
+    const allStudentResult = await this.studentRepository.find();
+    return allStudentResult;
   }
 
   async findOne(email: string): Promise<Student | undefined> {

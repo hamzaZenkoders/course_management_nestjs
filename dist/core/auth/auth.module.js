@@ -18,17 +18,29 @@ const otp_entity_1 = require("../otp/entity/otp.entity");
 const mail_module_1 = require("../mail/mail.module");
 const otp_module_1 = require("../otp/otp.module");
 const course_module_1 = require("../../features/course/course.module");
+const teacher_entity_1 = require("../../features/teacher/entities/teacher.entity");
+const teacher_module_1 = require("../../features/teacher/teacher.module");
+const admin_entity_1 = require("../../features/admin/entities/admin.entity");
+const admin_module_1 = require("../../features/admin/admin.module");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
 exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([student_entity_1.Student, whitlistedDomain_entity_1.whiteListDomain, otp_entity_1.OTP]),
+            typeorm_1.TypeOrmModule.forFeature([
+                admin_entity_1.Admin,
+                student_entity_1.Student,
+                whitlistedDomain_entity_1.whiteListDomain,
+                otp_entity_1.OTP,
+                teacher_entity_1.Teacher,
+            ]),
             mail_module_1.MailModule,
             otp_module_1.OtpModule,
             course_module_1.CourseModule,
             student_module_1.StudentModule,
+            admin_module_1.AdminModule,
+            teacher_module_1.TeacherModule,
         ],
         controllers: [auth_controller_1.AuthController],
         providers: [auth_service_1.AuthService],

@@ -52,7 +52,7 @@ let EnrollmentService = class EnrollmentService {
         }
         const newEnrollment = this.enrollmentRepository.create({
             ...createEnrollmentDto,
-            student: studentFound,
+            student: { id: createEnrollmentDto.student_id },
             course: foundCourse,
         });
         const enrollmentSaved = this.enrollmentRepository.save(newEnrollment);
@@ -74,6 +74,12 @@ let EnrollmentService = class EnrollmentService {
         }
         return result;
     }
+    async hasEnrollments(courseId) {
+        const enrollment = await this.enrollmentRepository.findOne({
+            where: { course: { id: courseId } },
+        });
+        return !!enrollment;
+    }
     async findOne(id) {
         const result = await this.enrollmentRepository.findOne({
             where: { id },
@@ -87,6 +93,7 @@ exports.EnrollmentService = EnrollmentService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(enrollment_entity_1.Enrollment)),
     __param(1, (0, typeorm_1.InjectRepository)(student_entity_1.Student)),
+    __param(2, (0, common_1.Inject)((0, common_1.forwardRef)(() => course_service_1.CourseService))),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository,
         course_service_1.CourseService,

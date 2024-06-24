@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  forwardRef,
+} from '@nestjs/common';
 import { UpdateEnrollmentDto } from './dto/update-enrollment.dto';
 import { CourseService } from '../course/course.service';
 import { StudentService } from '../student/student.service';
@@ -7,7 +13,7 @@ import { Enrollment } from './entities/enrollment.entity';
 import { EnrollmentStatus } from '../enums/enrollmentStatus';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { RemoveEnrollmentDto } from './dto/remove-enrollment-dto';
+//import { RemoveEnrollmentDto } from './dto/remove-enrollment-dto';
 import { Student } from '../student/entities/student.entity';
 
 @Injectable()
@@ -18,7 +24,9 @@ export class EnrollmentService {
     @InjectRepository(Student)
     private studentRepository: Repository<Student>,
 
+    @Inject(forwardRef(() => CourseService))
     private courseService: CourseService,
+
     private studentService: StudentService,
   ) {}
 
@@ -67,7 +75,7 @@ export class EnrollmentService {
 
     const newEnrollment = this.enrollmentRepository.create({
       ...createEnrollmentDto,
-      student: studentFound,
+      student: { id: createEnrollmentDto.student_id },
       course: foundCourse,
     });
 
@@ -112,6 +120,15 @@ export class EnrollmentService {
     return studentWithCourses;
   }
  */
+
+  //to check if a course id exists in enrollments
+  async hasEnrollments(courseId: number): Promise<boolean> {
+    const enrollment = await this.enrollmentRepository.findOne({
+      where: { course: { id: courseId } },
+    });
+    return !!enrollment;
+  }
+
   async findOne(id: number) {
     const result = await this.enrollmentRepository.findOne({
       where: { id },

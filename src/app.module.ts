@@ -15,11 +15,13 @@ import { AuthModule } from './core/auth/auth.module';
 import { OTP } from './core/otp/entity/otp.entity';
 import { ConfigModule } from '@nestjs/config';
 import { MailModule } from './core/mail/mail.module';
-import { VerificationMiddleware } from './core/middleware/verficationMiddleware';
+import { StudentVerificationMiddleware } from './core/middleware/verficationMiddleware';
 import { JwtModule } from '@nestjs/jwt';
 import { OtpModule } from './core/otp/otp.module';
 import { AvailableSlot } from './features/teacher/entities/availableSlots.entity';
 import { EnrollmentModule } from './features/enrollment/enrollment.module';
+import { TeacherVerificationMiddleware } from './core/middleware/teacherVerificationMiddleware';
+import { Admin } from './features/admin/entities/admin.entity';
 
 @Module({
   imports: [
@@ -38,6 +40,7 @@ import { EnrollmentModule } from './features/enrollment/enrollment.module';
         Teacher,
         Enrollment,
         whiteListDomain,
+        Admin,
         OTP,
         AvailableSlot,
       ], //entity/*.js
@@ -64,6 +67,12 @@ import { EnrollmentModule } from './features/enrollment/enrollment.module';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(VerificationMiddleware).forRoutes('student/auth/login');
+    consumer
+      .apply(StudentVerificationMiddleware)
+      .forRoutes('student/auth/login'); // Apply StudentVerificationMiddleware to '/student/auth/login' route
+
+    consumer
+      .apply(TeacherVerificationMiddleware)
+      .forRoutes('teacher/auth/login'); // Apply TeacherVerificationMiddleware to '/teacher/auth/login' route
   }
 }

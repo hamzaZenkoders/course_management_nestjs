@@ -29,9 +29,16 @@ const jwt_1 = require("@nestjs/jwt");
 const otp_module_1 = require("./core/otp/otp.module");
 const availableSlots_entity_1 = require("./features/teacher/entities/availableSlots.entity");
 const enrollment_module_1 = require("./features/enrollment/enrollment.module");
+const teacherVerificationMiddleware_1 = require("./core/middleware/teacherVerificationMiddleware");
+const admin_entity_1 = require("./features/admin/entities/admin.entity");
 let AppModule = class AppModule {
     configure(consumer) {
-        consumer.apply(verficationMiddleware_1.VerificationMiddleware).forRoutes('student/auth/login');
+        consumer
+            .apply(verficationMiddleware_1.StudentVerificationMiddleware)
+            .forRoutes('student/auth/login');
+        consumer
+            .apply(teacherVerificationMiddleware_1.TeacherVerificationMiddleware)
+            .forRoutes('teacher/auth/login');
     }
 };
 exports.AppModule = AppModule;
@@ -52,6 +59,7 @@ exports.AppModule = AppModule = __decorate([
                     teacher_entity_1.Teacher,
                     enrollment_entity_1.Enrollment,
                     whitlistedDomain_entity_1.whiteListDomain,
+                    admin_entity_1.Admin,
                     otp_entity_1.OTP,
                     availableSlots_entity_1.AvailableSlot,
                 ],

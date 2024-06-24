@@ -14,14 +14,17 @@ const typeorm_1 = require("@nestjs/typeorm");
 const otp_entity_1 = require("./entity/otp.entity");
 const student_entity_1 = require("../../features/student/entities/student.entity");
 const mail_module_1 = require("../mail/mail.module");
+const teacher_entity_1 = require("../../features/teacher/entities/teacher.entity");
+const teacher_module_1 = require("../../features/teacher/teacher.module");
 let OtpModule = class OtpModule {
 };
 exports.OtpModule = OtpModule;
 exports.OtpModule = OtpModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([otp_entity_1.OTP, student_entity_1.Student]),
+            typeorm_1.TypeOrmModule.forFeature([otp_entity_1.OTP, student_entity_1.Student, teacher_entity_1.Teacher]),
             mail_module_1.MailModule,
+            teacher_module_1.TeacherModule,
         ],
         controllers: [otp_controller_1.OtpController],
         providers: [otp_service_1.OtpService],

@@ -2,6 +2,7 @@ import { Course } from 'src/features/course/entities/course.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Roles } from '../../enums/roles';
 import { AvailableSlot } from './availableSlots.entity';
+import { OTP } from 'src/core/otp/entity/otp.entity';
 
 @Entity()
 export class Teacher {
@@ -34,10 +35,10 @@ export class Teacher {
   role: Roles;
 
   @Column({ type: 'boolean', default: false }) //change in ERD also
-  isSuspended: boolean;
+  is_Suspended: boolean;
 
   @Column({ type: 'boolean', default: false }) //change in ERD also
-  isVerified: boolean;
+  is_Verified: boolean;
 
   @Column({ type: 'date' })
   createdAt: Date;
@@ -54,4 +55,7 @@ export class Teacher {
 
   @OneToMany(() => AvailableSlot, (slot) => slot.teacher) //  one-to-many relation with AvailableSlot
   availableSlots: AvailableSlot[];
+
+  @OneToMany(() => OTP, (otp) => otp.teacher)
+  otps: OTP[];
 }

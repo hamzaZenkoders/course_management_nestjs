@@ -38,7 +38,7 @@ export class EmailAuthorizationGuard implements CanActivate {
     console.log('INSIDE AUTHORIZATION GUARD');
 
     const domainExists = await this.whitelistedDomainRepository.findOne({
-      where: { domain: splittedEmail[1] }, 
+      where: { domain: splittedEmail[1] },
     });
 
     console.log(domainExists);
@@ -52,6 +52,5 @@ export class EmailAuthorizationGuard implements CanActivate {
       response.status(HttpStatus.FORBIDDEN).json({ message: errorMessage });
       return false;
     }
-
   }
 }

@@ -9,4 +9,5 @@ export declare class StudentController {
         statusCode: import("@nestjs/common").HttpStatus;
         message: string;
     }>;
+    GetAllStudents(): Promise<import("./entities/student.entity").Student[]>;
 }

@@ -12,16 +12,22 @@ import { OtpService } from 'src/core/otp/otp.service';
 import { OtpModule } from 'src/core/otp/otp.module';
 import { CourseModule } from '../course/course.module';
 import { CourseService } from '../course/course.service';
+import { Teacher } from '../teacher/entities/teacher.entity';
+import { TeacherModule } from '../teacher/teacher.module';
+import { Admin } from 'typeorm';
+import { AdminModule } from '../admin/admin.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Student, whiteListDomain, OTP]),
+    TypeOrmModule.forFeature([Student, whiteListDomain, OTP, Teacher]),
     MailModule,
     OtpModule,
     CourseModule,
+    TeacherModule,
+    // AdminModule,
   ],
   controllers: [StudentController],
-  providers: [StudentService, AuthService, MailService],
+  providers: [StudentService, MailService],
   exports: [StudentService],
 })
 export class StudentModule {}

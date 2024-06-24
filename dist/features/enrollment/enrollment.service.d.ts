@@ -17,5 +17,6 @@ export declare class EnrollmentService {
     remove(id: number): string;
     creatEnrollment(createEnrollmentDto: CreateEnrollmentDto): Promise<Enrollment>;
     removeEnrollment(enrollmentID: number): Promise<import("typeorm").DeleteResult>;
+    hasEnrollments(courseId: number): Promise<boolean>;
     findOne(id: number): Promise<Enrollment>;
 }

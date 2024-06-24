@@ -10,6 +10,7 @@ export declare class StudentService {
         message: string;
     }>;
     studentData(id: number): Promise<Student>;
+    findAll(): Promise<Student[]>;
     findOne(email: string): Promise<Student | undefined>;
     findByID(id: number): Promise<Student | undefined>;
     updateIsVerifiedStatus(studentId: number, is_Verified: boolean): Promise<void>;

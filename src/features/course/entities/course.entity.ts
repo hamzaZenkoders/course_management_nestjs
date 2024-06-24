@@ -3,6 +3,7 @@ import { Teacher } from 'src/features/teacher/entities/teacher.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -36,6 +37,7 @@ export class Course {
   updatedAt: Date;
 
   @ManyToOne(() => Teacher, (teacher) => teacher.courses)
+  @JoinColumn({ name: 'teacher_id' })
   teacher: Teacher;
 
   @OneToMany(() => Enrollment, (enrollment) => enrollment.course)

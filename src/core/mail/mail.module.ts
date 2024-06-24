@@ -10,11 +10,11 @@ import { OtpModule } from '../otp/otp.module';
   controllers: [MailController],
   providers: [
     {
-      provide: 'MAIL_TRANSPORTER', 
+      provide: 'MAIL_TRANSPORTER',
       useValue: transporter,
     },
-    MailService
+    MailService,
   ],
-  exports: ['MAIL_TRANSPORTER',MailService]
+  exports: ['MAIL_TRANSPORTER', MailService],
 })
 export class MailModule {}

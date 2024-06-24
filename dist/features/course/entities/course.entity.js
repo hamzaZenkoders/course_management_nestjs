@@ -50,6 +50,7 @@ __decorate([
 ], Course.prototype, "updatedAt", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => teacher_entity_1.Teacher, (teacher) => teacher.courses),
+    (0, typeorm_1.JoinColumn)({ name: 'teacher_id' }),
     __metadata("design:type", teacher_entity_1.Teacher)
 ], Course.prototype, "teacher", void 0);
 __decorate([

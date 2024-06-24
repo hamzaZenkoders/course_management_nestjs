@@ -4,9 +4,14 @@ import { UpdateCourseDto } from './dto/update-course.dto';
 export declare class CourseController {
     private readonly courseService;
     constructor(courseService: CourseService);
-    create(req: any, createCourseDto: CreateCourseDto): string;
-    findAll(): string;
+    create(createCourseDto: CreateCourseDto): Promise<import("./entities/course.entity").Course>;
+    GetAllCourses(): Promise<import("./entities/course.entity").Course[]>;
+    UpdateCourse(courseId: string, request: Request): Promise<{
+        statusCode: import("@nestjs/common").HttpStatus;
+        message: string;
+    }>;
+    removeCourse(id: string): Promise<void>;
+    GetCourseFind(): Promise<boolean>;
     findOne(id: string): Promise<import("./entities/course.entity").Course>;
     update(id: string, updateCourseDto: UpdateCourseDto): string;
-    remove(id: string): string;
 }

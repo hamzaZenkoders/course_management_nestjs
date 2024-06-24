@@ -66,6 +66,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EnrollmentController.prototype, "remove", null);
 __decorate([
+    (0, roles_decorator_1.Role)('TEACHER'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, roleAuthorization_guard_1.RoleAuthorizationGuard),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),

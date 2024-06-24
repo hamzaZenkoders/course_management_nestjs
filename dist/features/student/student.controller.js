@@ -35,6 +35,9 @@ let StudentController = class StudentController {
         const data = request.body;
         return this.studentService.updateStudentProfile(id, data);
     }
+    GetAllStudents() {
+        return this.studentService.findAll();
+    }
 };
 exports.StudentController = StudentController;
 __decorate([
@@ -62,6 +65,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], StudentController.prototype, "EnrollInCourse", null);
 __decorate([
+    (0, roles_decorator_1.Role)('STUDENT'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, roleAuthorization_guard_1.RoleAuthorizationGuard),
     (0, common_1.Patch)('updateProfile/:id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Req)()),
@@ -69,6 +74,14 @@ __decorate([
     __metadata("design:paramtypes", [Number, Request]),
     __metadata("design:returntype", void 0)
 ], StudentController.prototype, "UpdateProfile", null);
+__decorate([
+    (0, roles_decorator_1.Role)('ADMIN'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, roleAuthorization_guard_1.RoleAuthorizationGuard),
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], StudentController.prototype, "GetAllStudents", null);
 exports.StudentController = StudentController = __decorate([
     (0, common_1.Controller)('student'),
     __metadata("design:paramtypes", [student_service_1.StudentService])

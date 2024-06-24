@@ -9,37 +9,61 @@ import { JwtService } from '@nestjs/jwt';
 import { CourseService } from 'src/features/course/course.service';
 import { CreateStudentDto } from 'src/features/student/dto/create-student.dto';
 import { LoginInStudentDto } from 'src/features/student/dto/login-student-dto';
+import { CreateTeacherDto } from 'src/features/teacher/dto/create-teacher.dto';
+import { Teacher } from 'src/features/teacher/entities/teacher.entity';
+import { TeacherService } from 'src/features/teacher/teacher.service';
+import { LoginInTeacherDto } from 'src/features/teacher/dto/login-teacher-dto';
+import { CreateAdminDto } from 'src/features/admin/dto/create-admin.dto';
+import { Admin } from 'src/features/admin/entities/admin.entity';
+import { LoginInAdminDto } from 'src/features/admin/dto/login-admin-dto';
 export declare class AuthService {
     private studentService;
+    private readonly adminRepository;
     private studentRepository;
     private otpRepository;
+    private readonly teacherRepository;
     private readonly mailService;
     private readonly otpService;
+    private readonly teacherService;
     private jwtService;
     private courseService;
-    constructor(studentService: StudentService, studentRepository: Repository<Student>, otpRepository: Repository<OTP>, mailService: MailService, otpService: OtpService, jwtService: JwtService, courseService: CourseService);
+    constructor(studentService: StudentService, adminRepository: Repository<Admin>, studentRepository: Repository<Student>, otpRepository: Repository<OTP>, teacherRepository: Repository<Teacher>, mailService: MailService, otpService: OtpService, teacherService: TeacherService, jwtService: JwtService, courseService: CourseService);
     validateUser(email: string, password: string): Promise<any>;
-    register(createStudentDto: CreateStudentDto): Promise<({
-        id: number;
-        name: string;
-        email: string;
-        password: string;
-        age: number;
-        address: string;
-        contact: string;
-        date_of_birth: Date;
-        role: import("../../features/enums/roles").Roles;
-        is_Verified: boolean;
-        is_Suspended: boolean;
-        createdAt: Date;
-        updatedAt: Date;
-        otps: OTP[];
-        enrollments: import("../../features/enrollment/entities/enrollment.entity").Enrollment[];
-    } & Student) | {
+    register(createStudentDto: CreateStudentDto): Promise<Student | {
         statusCode: HttpStatus;
         message: string;
     }>;
     login(loginInStudentDto: LoginInStudentDto): Promise<{
+        token: string;
+    }>;
+    registerTeacher(createTeacherDto: CreateTeacherDto): Promise<({
+        id: number;
+        name: string;
+        email: string;
+        address: string;
+        contact: string;
+        designation: string;
+        password: string;
+        role: import("../../features/enums/roles").Roles;
+        is_Suspended: boolean;
+        is_Verified: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+        courses: import("../../features/course/entities/course.entity").Course[];
+        availableSlots: import("../../features/teacher/entities/availableSlots.entity").AvailableSlot[];
+        otps: OTP[];
+    } & Teacher) | {
+        statusCode: HttpStatus;
+        message: string;
+    }>;
+    signInTeacher(loginTeacherDto: LoginInTeacherDto): Promise<{
+        token: string;
+    }>;
+    registerAdmin(createAdminDto: CreateAdminDto): Promise<Admin | {
+        statusCode: HttpStatus;
+        message: string;
+    }>;
+    signInAdmin(loginAdminDto: LoginInAdminDto): Promise<{
         token: string;
     }>;
 }

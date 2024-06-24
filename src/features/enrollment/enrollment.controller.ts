@@ -56,6 +56,8 @@ export class EnrollmentController {
     return this.enrollmentService.studentAllEnrolledCourses(+id);
   } */
 
+  @Role('TEACHER')
+  @UseGuards(AuthenticationGuard, RoleAuthorizationGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.enrollmentService.findOne(+id);
