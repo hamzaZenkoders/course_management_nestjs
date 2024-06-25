@@ -11,6 +11,7 @@ import { Roles } from 'src/features/enums/roles';
 import { Transform } from 'class-transformer';
 import { OTP } from 'src/core/otp/entity/otp.entity';
 import { Enrollment } from 'src/features/enrollment/entities/enrollment.entity';
+import { MeetingSchedule } from 'src/features/MeetingSchedule/entity/meetingSchedule.entity';
 
 /* export enum StudentRole {
     admin = "ADMIN",
@@ -75,4 +76,10 @@ export class Student {
 
   @OneToMany(() => Enrollment, (enrollment) => enrollment.student)
   enrollments: Enrollment[];
+
+  @OneToMany(
+    () => MeetingSchedule,
+    (meetingSchedule) => meetingSchedule.student,
+  )
+  meetingSchedules: MeetingSchedule[];
 }

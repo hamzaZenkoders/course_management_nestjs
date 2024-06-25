@@ -27,10 +27,13 @@ const mail_module_1 = require("./core/mail/mail.module");
 const studentVerficationMiddleware_1 = require("./core/middleware/studentVerficationMiddleware");
 const jwt_1 = require("@nestjs/jwt");
 const otp_module_1 = require("./core/otp/otp.module");
-const availableSlots_entity_1 = require("./features/teacher/entities/availableSlots.entity");
+const availableSlots_entity_1 = require("./features/availableSlots/entity/availableSlots.entity");
 const enrollment_module_1 = require("./features/enrollment/enrollment.module");
 const teacherVerificationMiddleware_1 = require("./core/middleware/teacherVerificationMiddleware");
 const admin_entity_1 = require("./features/admin/entities/admin.entity");
+const availableSlot_module_1 = require("./features/availableSlots/availableSlot.module");
+const meetingSchedule_module_1 = require("./features/MeetingSchedule/meetingSchedule.module");
+const meetingSchedule_entity_1 = require("./features/MeetingSchedule/entity/meetingSchedule.entity");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer
@@ -62,6 +65,7 @@ exports.AppModule = AppModule = __decorate([
                     admin_entity_1.Admin,
                     otp_entity_1.OTP,
                     availableSlots_entity_1.AvailableSlot,
+                    meetingSchedule_entity_1.MeetingSchedule,
                 ],
                 synchronize: true,
             }),
@@ -78,6 +82,8 @@ exports.AppModule = AppModule = __decorate([
             enrollment_module_1.EnrollmentModule,
             mail_module_1.MailModule,
             otp_module_1.OtpModule,
+            availableSlot_module_1.AvailableSlotModule,
+            meetingSchedule_module_1.meetingScheduleModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

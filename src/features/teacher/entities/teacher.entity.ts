@@ -1,7 +1,7 @@
 import { Course } from 'src/features/course/entities/course.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Roles } from '../../enums/roles';
-import { AvailableSlot } from './availableSlots.entity';
+import { AvailableSlot } from '../../availableSlots/entity/availableSlots.entity';
 import { OTP } from 'src/core/otp/entity/otp.entity';
 
 @Entity()

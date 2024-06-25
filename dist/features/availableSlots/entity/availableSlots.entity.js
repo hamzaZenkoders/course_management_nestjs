@@ -11,8 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AvailableSlot = void 0;
 const typeorm_1 = require("typeorm");
-const teacher_entity_1 = require("./teacher.entity");
-const days_1 = require("../../enums/days");
+const teacher_entity_1 = require("../../teacher/entities/teacher.entity");
 let AvailableSlot = class AvailableSlot {
 };
 exports.AvailableSlot = AvailableSlot;
@@ -23,17 +22,22 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ type: 'timestamp', nullable: false }),
     __metadata("design:type", Date)
-], AvailableSlot.prototype, "time", void 0);
+], AvailableSlot.prototype, "slot_start", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'enum', enum: days_1.daysEnum }),
-    __metadata("design:type", String)
-], AvailableSlot.prototype, "day", void 0);
+    (0, typeorm_1.Column)({ type: 'timestamp', nullable: false }),
+    __metadata("design:type", Date)
+], AvailableSlot.prototype, "slot_end", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'boolean', default: false }),
+    __metadata("design:type", Boolean)
+], AvailableSlot.prototype, "is_booked", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'boolean', default: true }),
     __metadata("design:type", Boolean)
 ], AvailableSlot.prototype, "availability", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => teacher_entity_1.Teacher, (teacher) => teacher.availableSlots),
+    (0, typeorm_1.JoinColumn)({ name: 'teacher_id' }),
     __metadata("design:type", teacher_entity_1.Teacher)
 ], AvailableSlot.prototype, "teacher", void 0);
 exports.AvailableSlot = AvailableSlot = __decorate([

@@ -13,7 +13,7 @@ exports.Teacher = void 0;
 const course_entity_1 = require("../../course/entities/course.entity");
 const typeorm_1 = require("typeorm");
 const roles_1 = require("../../enums/roles");
-const availableSlots_entity_1 = require("./availableSlots.entity");
+const availableSlots_entity_1 = require("../../availableSlots/entity/availableSlots.entity");
 const otp_entity_1 = require("../../../core/otp/entity/otp.entity");
 let Teacher = class Teacher {
 };

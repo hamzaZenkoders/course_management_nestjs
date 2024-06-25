@@ -1,6 +1,6 @@
 import { Course } from 'src/features/course/entities/course.entity';
 import { Roles } from '../../enums/roles';
-import { AvailableSlot } from './availableSlots.entity';
+import { AvailableSlot } from '../../availableSlots/entity/availableSlots.entity';
 import { OTP } from 'src/core/otp/entity/otp.entity';
 export declare class Teacher {
     id: number;

@@ -29,7 +29,7 @@ export declare class AuthController {
         createdAt: Date;
         updatedAt: Date;
         courses: import("../../features/course/entities/course.entity").Course[];
-        availableSlots: import("../../features/teacher/entities/availableSlots.entity").AvailableSlot[];
+        availableSlots: import("../../features/availableSlots/entity/availableSlots.entity").AvailableSlot[];
         otps: import("../otp/entity/otp.entity").OTP[];
     } & import("../../features/teacher/entities/teacher.entity").Teacher) | {
         statusCode: import("@nestjs/common").HttpStatus;
