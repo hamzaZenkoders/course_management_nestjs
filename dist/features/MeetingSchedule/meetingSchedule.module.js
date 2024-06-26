@@ -12,16 +12,13 @@ const typeorm_1 = require("@nestjs/typeorm");
 const meetingSchedule_entity_1 = require("./entity/meetingSchedule.entity");
 const meetingSchedule_controller_1 = require("./meetingSchedule.controller");
 const meetingSchedule_service_1 = require("./meetingSchedule.service");
-const availableSlots_entity_1 = require("../availableSlots/entity/availableSlots.entity");
 const student_entity_1 = require("../student/entities/student.entity");
 let meetingScheduleModule = class meetingScheduleModule {
 };
 exports.meetingScheduleModule = meetingScheduleModule;
 exports.meetingScheduleModule = meetingScheduleModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            typeorm_1.TypeOrmModule.forFeature([meetingSchedule_entity_1.MeetingSchedule, availableSlots_entity_1.AvailableSlot, student_entity_1.Student]),
-        ],
+        imports: [typeorm_1.TypeOrmModule.forFeature([meetingSchedule_entity_1.MeetingSchedule, student_entity_1.Student])],
         controllers: [meetingSchedule_controller_1.meetingScheduleController],
         providers: [meetingSchedule_service_1.meetingScheduleService],
         exports: [meetingSchedule_service_1.meetingScheduleService],

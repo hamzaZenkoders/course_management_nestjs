@@ -7,9 +7,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Teacher } from 'src/features/teacher/entities/teacher.entity';
-import { daysEnum } from '../../enums/days';
 import { Student } from 'src/features/student/entities/student.entity';
-import { AvailableSlot } from 'src/features/availableSlots/entity/availableSlots.entity';
+
 import { MeetingStatus } from 'src/features/enums/meetingStatus';
 
 @Entity()
@@ -24,11 +23,17 @@ export class MeetingSchedule {
   })
   status: MeetingStatus;
 
-  @OneToOne(() => AvailableSlot)
-  @JoinColumn({ name: 'availableSlot_id' })
-  availableSlot: AvailableSlot;
+  @Column({ type: 'timestamp' })
+  slot_start: Date;
+
+  @Column({ type: 'timestamp' })
+  slot_end: Date;
 
   @ManyToOne(() => Student, (student) => student.meetingSchedules)
   @JoinColumn({ name: 'student_id' })
   student: Student;
+
+  @ManyToOne(() => Teacher, (teacher) => teacher.meetingSchedules)
+  @JoinColumn({ name: 'teacher_id' })
+  teacher: Teacher;
 }

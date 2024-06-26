@@ -9,29 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BookSlotDto = void 0;
+exports.MeetingConfirmationDto = void 0;
 const class_validator_1 = require("class-validator");
-class BookSlotDto {
+const meetingStatus_1 = require("../../enums/meetingStatus");
+class MeetingConfirmationDto {
 }
-exports.BookSlotDto = BookSlotDto;
-__decorate([
-    (0, class_validator_1.IsDate)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Date)
-], BookSlotDto.prototype, "slot_start", void 0);
-__decorate([
-    (0, class_validator_1.IsDate)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Date)
-], BookSlotDto.prototype, "slot_end", void 0);
+exports.MeetingConfirmationDto = MeetingConfirmationDto;
 __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
-], BookSlotDto.prototype, "student_id", void 0);
+], MeetingConfirmationDto.prototype, "meetingSchedule_id", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Number)
-], BookSlotDto.prototype, "teacher_id", void 0);
-//# sourceMappingURL=bookslot-dto.js.map
+    (0, class_validator_1.IsEnum)(meetingStatus_1.MeetingStatus),
+    __metadata("design:type", String)
+], MeetingConfirmationDto.prototype, "confirmation_status", void 0);
+//# sourceMappingURL=meetingConfirmation-dto.js.map

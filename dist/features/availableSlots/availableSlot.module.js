@@ -8,8 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AvailableSlotModule = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
-const availableSlots_entity_1 = require("./entity/availableSlots.entity");
 const availableSlot_service_1 = require("./availableSlot.service");
 const availableSlot_controller_1 = require("./availableSlot.controller");
 const teacher_module_1 = require("../teacher/teacher.module");
@@ -18,7 +16,7 @@ let AvailableSlotModule = class AvailableSlotModule {
 exports.AvailableSlotModule = AvailableSlotModule;
 exports.AvailableSlotModule = AvailableSlotModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([availableSlots_entity_1.AvailableSlot]), teacher_module_1.TeacherModule],
+        imports: [teacher_module_1.TeacherModule],
         controllers: [availableSlot_controller_1.AvailableSlotController],
         providers: [availableSlot_service_1.AvailableSlotService],
         exports: [availableSlot_service_1.AvailableSlotService],

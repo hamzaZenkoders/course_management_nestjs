@@ -9,29 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BookSlotDto = void 0;
+exports.AvailableSlotDto = void 0;
 const class_validator_1 = require("class-validator");
-class BookSlotDto {
+class AvailableSlotDto {
 }
-exports.BookSlotDto = BookSlotDto;
+exports.AvailableSlotDto = AvailableSlotDto;
 __decorate([
     (0, class_validator_1.IsDate)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Date)
-], BookSlotDto.prototype, "slot_start", void 0);
+], AvailableSlotDto.prototype, "slot_start", void 0);
 __decorate([
     (0, class_validator_1.IsDate)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Date)
-], BookSlotDto.prototype, "slot_end", void 0);
-__decorate([
-    (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Number)
-], BookSlotDto.prototype, "student_id", void 0);
-__decorate([
-    (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Number)
-], BookSlotDto.prototype, "teacher_id", void 0);
-//# sourceMappingURL=bookslot-dto.js.map
+], AvailableSlotDto.prototype, "slot_end", void 0);
+//# sourceMappingURL=create-availableSlot-dto.js.map

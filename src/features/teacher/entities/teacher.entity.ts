@@ -1,8 +1,9 @@
 import { Course } from 'src/features/course/entities/course.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Roles } from '../../enums/roles';
-import { AvailableSlot } from '../../availableSlots/entity/availableSlots.entity';
+
 import { OTP } from 'src/core/otp/entity/otp.entity';
+import { MeetingSchedule } from 'src/features/MeetingSchedule/entity/meetingSchedule.entity';
 
 @Entity()
 export class Teacher {
@@ -53,9 +54,12 @@ export class Teacher {
   @OneToMany(() => Course, (course) => course.teacher)
   courses: Course[];
 
-  @OneToMany(() => AvailableSlot, (slot) => slot.teacher) //  one-to-many relation with AvailableSlot
-  availableSlots: AvailableSlot[];
-
   @OneToMany(() => OTP, (otp) => otp.teacher)
   otps: OTP[];
+
+  @OneToMany(
+    () => MeetingSchedule,
+    (meetingSchedule) => meetingSchedule.teacher,
+  )
+  meetingSchedules: MeetingSchedule[];
 }

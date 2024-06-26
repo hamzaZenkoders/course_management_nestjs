@@ -50,8 +50,8 @@ export declare class AuthService {
         createdAt: Date;
         updatedAt: Date;
         courses: import("../../features/course/entities/course.entity").Course[];
-        availableSlots: import("../../features/availableSlots/entity/availableSlots.entity").AvailableSlot[];
         otps: OTP[];
+        meetingSchedules: import("../../features/MeetingSchedule/entity/meetingSchedule.entity").MeetingSchedule[];
     } & Teacher) | {
         statusCode: HttpStatus;
         message: string;

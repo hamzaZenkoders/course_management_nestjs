@@ -8,20 +8,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AvailableSlotService = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
-const typeorm_2 = require("typeorm");
 const teacher_service_1 = require("../teacher/teacher.service");
-const availableSlots_entity_1 = require("./entity/availableSlots.entity");
 let AvailableSlotService = class AvailableSlotService {
-    constructor(teacherService, availableSlotRepository) {
+    constructor(teacherService) {
         this.teacherService = teacherService;
-        this.availableSlotRepository = availableSlotRepository;
     }
     async getAvailableSlotSerivce(teacherID) {
         const teacherFound = await this.teacherService.findByID(teacherID);
@@ -37,8 +30,6 @@ let AvailableSlotService = class AvailableSlotService {
 exports.AvailableSlotService = AvailableSlotService;
 exports.AvailableSlotService = AvailableSlotService = __decorate([
     (0, common_1.Injectable)(),
-    __param(1, (0, typeorm_1.InjectRepository)(availableSlots_entity_1.AvailableSlot)),
-    __metadata("design:paramtypes", [teacher_service_1.TeacherService,
-        typeorm_2.Repository])
+    __metadata("design:paramtypes", [teacher_service_1.TeacherService])
 ], AvailableSlotService);
 //# sourceMappingURL=availableSlot.service.js.map

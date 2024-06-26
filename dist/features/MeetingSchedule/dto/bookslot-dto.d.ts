@@ -1,4 +1,6 @@
 export declare class BookSlotDto {
-    availableSlot_id: number;
+    slot_start: Date;
+    slot_end: Date;
     student_id: number;
+    teacher_id: number;
 }

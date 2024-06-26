@@ -13,8 +13,8 @@ exports.Teacher = void 0;
 const course_entity_1 = require("../../course/entities/course.entity");
 const typeorm_1 = require("typeorm");
 const roles_1 = require("../../enums/roles");
-const availableSlots_entity_1 = require("../../availableSlots/entity/availableSlots.entity");
 const otp_entity_1 = require("../../../core/otp/entity/otp.entity");
+const meetingSchedule_entity_1 = require("../../MeetingSchedule/entity/meetingSchedule.entity");
 let Teacher = class Teacher {
 };
 exports.Teacher = Teacher;
@@ -79,13 +79,13 @@ __decorate([
     __metadata("design:type", Array)
 ], Teacher.prototype, "courses", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => availableSlots_entity_1.AvailableSlot, (slot) => slot.teacher),
-    __metadata("design:type", Array)
-], Teacher.prototype, "availableSlots", void 0);
-__decorate([
     (0, typeorm_1.OneToMany)(() => otp_entity_1.OTP, (otp) => otp.teacher),
     __metadata("design:type", Array)
 ], Teacher.prototype, "otps", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => meetingSchedule_entity_1.MeetingSchedule, (meetingSchedule) => meetingSchedule.teacher),
+    __metadata("design:type", Array)
+], Teacher.prototype, "meetingSchedules", void 0);
 exports.Teacher = Teacher = __decorate([
     (0, typeorm_1.Entity)()
 ], Teacher);

@@ -1,7 +1,7 @@
 import { Course } from 'src/features/course/entities/course.entity';
 import { Roles } from '../../enums/roles';
-import { AvailableSlot } from '../../availableSlots/entity/availableSlots.entity';
 import { OTP } from 'src/core/otp/entity/otp.entity';
+import { MeetingSchedule } from 'src/features/MeetingSchedule/entity/meetingSchedule.entity';
 export declare class Teacher {
     id: number;
     name: string;
@@ -16,6 +16,6 @@ export declare class Teacher {
     createdAt: Date;
     updatedAt: Date;
     courses: Course[];
-    availableSlots: AvailableSlot[];
     otps: OTP[];
+    meetingSchedules: MeetingSchedule[];
 }

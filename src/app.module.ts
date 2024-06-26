@@ -18,11 +18,9 @@ import { MailModule } from './core/mail/mail.module';
 import { StudentVerificationMiddleware } from './core/middleware/studentVerficationMiddleware';
 import { JwtModule } from '@nestjs/jwt';
 import { OtpModule } from './core/otp/otp.module';
-import { AvailableSlot } from './features/availableSlots/entity/availableSlots.entity';
 import { EnrollmentModule } from './features/enrollment/enrollment.module';
 import { TeacherVerificationMiddleware } from './core/middleware/teacherVerificationMiddleware';
 import { Admin } from './features/admin/entities/admin.entity';
-import { AvailableSlotModule } from './features/availableSlots/availableSlot.module';
 import { meetingScheduleModule } from './features/MeetingSchedule/meetingSchedule.module';
 import { MeetingSchedule } from './features/MeetingSchedule/entity/meetingSchedule.entity';
 
@@ -45,7 +43,7 @@ import { MeetingSchedule } from './features/MeetingSchedule/entity/meetingSchedu
         whiteListDomain,
         Admin,
         OTP,
-        AvailableSlot,
+
         MeetingSchedule,
       ], //entity/*.js
       synchronize: true,
@@ -65,7 +63,6 @@ import { MeetingSchedule } from './features/MeetingSchedule/entity/meetingSchedu
     EnrollmentModule,
     MailModule,
     OtpModule,
-    AvailableSlotModule,
     meetingScheduleModule,
   ],
   controllers: [AppController],

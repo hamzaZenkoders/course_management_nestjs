@@ -11,8 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MeetingSchedule = void 0;
 const typeorm_1 = require("typeorm");
+const teacher_entity_1 = require("../../teacher/entities/teacher.entity");
 const student_entity_1 = require("../../student/entities/student.entity");
-const availableSlots_entity_1 = require("../../availableSlots/entity/availableSlots.entity");
 const meetingStatus_1 = require("../../enums/meetingStatus");
 let MeetingSchedule = class MeetingSchedule {
 };
@@ -30,15 +30,23 @@ __decorate([
     __metadata("design:type", String)
 ], MeetingSchedule.prototype, "status", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => availableSlots_entity_1.AvailableSlot),
-    (0, typeorm_1.JoinColumn)({ name: 'availableSlot_id' }),
-    __metadata("design:type", availableSlots_entity_1.AvailableSlot)
-], MeetingSchedule.prototype, "availableSlot", void 0);
+    (0, typeorm_1.Column)({ type: 'timestamp' }),
+    __metadata("design:type", Date)
+], MeetingSchedule.prototype, "slot_start", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'timestamp' }),
+    __metadata("design:type", Date)
+], MeetingSchedule.prototype, "slot_end", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => student_entity_1.Student, (student) => student.meetingSchedules),
     (0, typeorm_1.JoinColumn)({ name: 'student_id' }),
     __metadata("design:type", student_entity_1.Student)
 ], MeetingSchedule.prototype, "student", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => teacher_entity_1.Teacher, (teacher) => teacher.meetingSchedules),
+    (0, typeorm_1.JoinColumn)({ name: 'teacher_id' }),
+    __metadata("design:type", teacher_entity_1.Teacher)
+], MeetingSchedule.prototype, "teacher", void 0);
 exports.MeetingSchedule = MeetingSchedule = __decorate([
     (0, typeorm_1.Entity)()
 ], MeetingSchedule);
