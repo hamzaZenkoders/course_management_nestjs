@@ -4,6 +4,8 @@ import { Roles } from '../../enums/roles';
 
 import { OTP } from 'src/core/otp/entity/otp.entity';
 import { MeetingSchedule } from 'src/features/MeetingSchedule/entity/meetingSchedule.entity';
+import { ChatMessage } from 'src/core/chat/entity/chatMessage.entity';
+import { Chat } from 'src/core/chat/entity/chat.entity';
 
 @Entity()
 export class Teacher {
@@ -62,4 +64,7 @@ export class Teacher {
     (meetingSchedule) => meetingSchedule.teacher,
   )
   meetingSchedules: MeetingSchedule[];
+
+  @OneToMany(() => Chat, (chat) => chat.teacher)
+  chats: Chat[];
 }

@@ -17,9 +17,6 @@ const common_1 = require("@nestjs/common");
 const meetingSchedule_service_1 = require("./meetingSchedule.service");
 const bookslot_dto_1 = require("./dto/bookslot-dto");
 const meetingConfirmation_dto_1 = require("./dto/meetingConfirmation-dto");
-const roles_decorator_1 = require("../../core/decorator/roles.decorator");
-const authentication_guard_1 = require("../../core/guards/authentication.guard");
-const roleAuthorization_guard_1 = require("../../core/guards/roleAuthorization.guard");
 let meetingScheduleController = class meetingScheduleController {
     constructor(meetingScheduleService) {
         this.meetingScheduleService = meetingScheduleService;
@@ -33,8 +30,6 @@ let meetingScheduleController = class meetingScheduleController {
 };
 exports.meetingScheduleController = meetingScheduleController;
 __decorate([
-    (0, roles_decorator_1.Role)('STUDENT'),
-    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, roleAuthorization_guard_1.RoleAuthorizationGuard),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),

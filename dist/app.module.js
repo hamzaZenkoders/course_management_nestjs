@@ -32,6 +32,11 @@ const teacherVerificationMiddleware_1 = require("./core/middleware/teacherVerifi
 const admin_entity_1 = require("./features/admin/entities/admin.entity");
 const meetingSchedule_module_1 = require("./features/MeetingSchedule/meetingSchedule.module");
 const meetingSchedule_entity_1 = require("./features/MeetingSchedule/entity/meetingSchedule.entity");
+const chatMessage_entity_1 = require("./core/chat/entity/chatMessage.entity");
+const chat_entity_1 = require("./core/chat/entity/chat.entity");
+const chat_module_1 = require("./core/chat/chat.module");
+const student_gateway_1 = require("./core/chat/gateways/student.gateway");
+const teacher_gateway_1 = require("./core/chat/gateways/teacher.gateway");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer
@@ -62,6 +67,8 @@ exports.AppModule = AppModule = __decorate([
                     whitlistedDomain_entity_1.whiteListDomain,
                     admin_entity_1.Admin,
                     otp_entity_1.OTP,
+                    chatMessage_entity_1.ChatMessage,
+                    chat_entity_1.Chat,
                     meetingSchedule_entity_1.MeetingSchedule,
                 ],
                 synchronize: true,
@@ -80,9 +87,10 @@ exports.AppModule = AppModule = __decorate([
             mail_module_1.MailModule,
             otp_module_1.OtpModule,
             meetingSchedule_module_1.meetingScheduleModule,
+            chat_module_1.ChatModule,
         ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        providers: [app_service_1.AppService, student_gateway_1.StudentGateway, teacher_gateway_1.TeacherGateway],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

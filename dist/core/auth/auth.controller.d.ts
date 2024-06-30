@@ -31,6 +31,7 @@ export declare class AuthController {
         courses: import("../../features/course/entities/course.entity").Course[];
         otps: import("../otp/entity/otp.entity").OTP[];
         meetingSchedules: import("../../features/MeetingSchedule/entity/meetingSchedule.entity").MeetingSchedule[];
+        chats: import("../chat/entity/chat.entity").Chat[];
     } & import("../../features/teacher/entities/teacher.entity").Teacher) | {
         statusCode: import("@nestjs/common").HttpStatus;
         message: string;

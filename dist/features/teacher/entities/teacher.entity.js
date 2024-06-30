@@ -15,6 +15,7 @@ const typeorm_1 = require("typeorm");
 const roles_1 = require("../../enums/roles");
 const otp_entity_1 = require("../../../core/otp/entity/otp.entity");
 const meetingSchedule_entity_1 = require("../../MeetingSchedule/entity/meetingSchedule.entity");
+const chat_entity_1 = require("../../../core/chat/entity/chat.entity");
 let Teacher = class Teacher {
 };
 exports.Teacher = Teacher;
@@ -86,6 +87,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => meetingSchedule_entity_1.MeetingSchedule, (meetingSchedule) => meetingSchedule.teacher),
     __metadata("design:type", Array)
 ], Teacher.prototype, "meetingSchedules", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => chat_entity_1.Chat, (chat) => chat.teacher),
+    __metadata("design:type", Array)
+], Teacher.prototype, "chats", void 0);
 exports.Teacher = Teacher = __decorate([
     (0, typeorm_1.Entity)()
 ], Teacher);

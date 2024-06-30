@@ -4,6 +4,7 @@ import {
   IsEmpty,
   IsEnum,
   IsInt,
+  IsNotEmpty,
   IsNumber,
   IsString,
   IsTimeZone,
@@ -12,8 +13,7 @@ import { OtpPurpose } from 'src/features/enums/otpEnum';
 import { Column, Timestamp } from 'typeorm';
 
 export class OtpVerifierDto {
-  @IsInt()
-  @IsEmpty()
+  @IsNotEmpty()
   otp: number;
 
   @IsEnum(OtpPurpose)

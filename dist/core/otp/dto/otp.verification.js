@@ -16,8 +16,7 @@ class OtpVerifierDto {
 }
 exports.OtpVerifierDto = OtpVerifierDto;
 __decorate([
-    (0, class_validator_1.IsInt)(),
-    (0, class_validator_1.IsEmpty)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], OtpVerifierDto.prototype, "otp", void 0);
 __decorate([

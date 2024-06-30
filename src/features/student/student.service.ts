@@ -43,6 +43,7 @@ export class StudentService {
   constructor(
     @InjectRepository(Student)
     private studentRepository: Repository<Student>,
+
     // @InjectRepository(OTP)
     //  private otpRepository: Repository<OTP>,
 
@@ -145,7 +146,7 @@ export class StudentService {
       throw new NotFoundException();
     }
 
-    const updatedStudent = { ...tempData, ...updatingData }; 
+    const updatedStudent = { ...tempData, ...updatingData };
 
     console.log(updatedStudent);
 

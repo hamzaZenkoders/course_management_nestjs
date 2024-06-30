@@ -12,6 +12,8 @@ import { Transform } from 'class-transformer';
 import { OTP } from 'src/core/otp/entity/otp.entity';
 import { Enrollment } from 'src/features/enrollment/entities/enrollment.entity';
 import { MeetingSchedule } from 'src/features/MeetingSchedule/entity/meetingSchedule.entity';
+import { ChatMessage } from 'src/core/chat/entity/chatMessage.entity';
+import { Chat } from 'src/core/chat/entity/chat.entity';
 
 /* export enum StudentRole {
     admin = "ADMIN",
@@ -82,4 +84,7 @@ export class Student {
     (meetingSchedule) => meetingSchedule.student,
   )
   meetingSchedules: MeetingSchedule[];
+
+  @OneToMany(() => Chat, (chat) => chat.student)
+  chats: Chat[];
 }

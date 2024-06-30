@@ -82,4 +82,5 @@ export class StudentController {
     // console.log('checkkk');
     return this.studentService.findOne(createStudentDto.email);
   } */
+ 
 }

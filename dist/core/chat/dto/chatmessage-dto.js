@@ -9,19 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AvailableSlotDto = void 0;
+exports.ChatMessageDto = void 0;
 const class_validator_1 = require("class-validator");
-class AvailableSlotDto {
+class ChatMessageDto {
 }
-exports.AvailableSlotDto = AvailableSlotDto;
+exports.ChatMessageDto = ChatMessageDto;
 __decorate([
-    (0, class_validator_1.IsDate)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Date)
-], AvailableSlotDto.prototype, "slot_start", void 0);
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], ChatMessageDto.prototype, "message", void 0);
 __decorate([
-    (0, class_validator_1.IsDate)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Date)
-], AvailableSlotDto.prototype, "slot_end", void 0);
-//# sourceMappingURL=create-availableSlot-dto.js.map
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], ChatMessageDto.prototype, "teacherId", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], ChatMessageDto.prototype, "studentId", void 0);
+//# sourceMappingURL=chatmessage-dto.js.map

@@ -16,6 +16,7 @@ const class_transformer_1 = require("class-transformer");
 const otp_entity_1 = require("../../../core/otp/entity/otp.entity");
 const enrollment_entity_1 = require("../../enrollment/entities/enrollment.entity");
 const meetingSchedule_entity_1 = require("../../MeetingSchedule/entity/meetingSchedule.entity");
+const chat_entity_1 = require("../../../core/chat/entity/chat.entity");
 let Student = class Student {
 };
 exports.Student = Student;
@@ -93,6 +94,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => meetingSchedule_entity_1.MeetingSchedule, (meetingSchedule) => meetingSchedule.student),
     __metadata("design:type", Array)
 ], Student.prototype, "meetingSchedules", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => chat_entity_1.Chat, (chat) => chat.student),
+    __metadata("design:type", Array)
+], Student.prototype, "chats", void 0);
 exports.Student = Student = __decorate([
     (0, typeorm_1.Entity)()
 ], Student);

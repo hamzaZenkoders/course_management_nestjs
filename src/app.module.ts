@@ -23,6 +23,13 @@ import { TeacherVerificationMiddleware } from './core/middleware/teacherVerifica
 import { Admin } from './features/admin/entities/admin.entity';
 import { meetingScheduleModule } from './features/MeetingSchedule/meetingSchedule.module';
 import { MeetingSchedule } from './features/MeetingSchedule/entity/meetingSchedule.entity';
+//import { GatewayModule } from './core/gateway/gateway.module';
+import { ChatMessage } from './core/chat/entity/chatMessage.entity';
+import { Chat } from './core/chat/entity/chat.entity';
+import { ChatModule } from './core/chat/chat.module';
+import { StudentGateway } from './core/chat/gateways/student.gateway';
+import { TeacherGateway } from './core/chat/gateways/teacher.gateway';
+//import { MyGateway } from './core/gateway/gateway';
 
 @Module({
   imports: [
@@ -43,7 +50,8 @@ import { MeetingSchedule } from './features/MeetingSchedule/entity/meetingSchedu
         whiteListDomain,
         Admin,
         OTP,
-
+        ChatMessage,
+        Chat,
         MeetingSchedule,
       ], //entity/*.js
       synchronize: true,
@@ -64,9 +72,12 @@ import { MeetingSchedule } from './features/MeetingSchedule/entity/meetingSchedu
     MailModule,
     OtpModule,
     meetingScheduleModule,
+    ChatModule,
+
+    //   GatewayModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, StudentGateway, TeacherGateway], // MyGateway],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

@@ -6,11 +6,18 @@ import { meetingScheduleController } from './meetingSchedule.controller';
 import { meetingScheduleService } from './meetingSchedule.service';
 
 import { Student } from '../student/entities/student.entity';
+import { Teacher } from '../teacher/entities/teacher.entity';
+import { TeacherModule } from '../teacher/teacher.module';
+import { StudentModule } from '../student/student.module';
 
 //import { TeacherModule } from '../teacher/teacher.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([MeetingSchedule, Student])],
+  imports: [
+    TypeOrmModule.forFeature([MeetingSchedule, Student, Teacher]),
+    TeacherModule,
+    StudentModule,
+  ],
   controllers: [meetingScheduleController],
   providers: [meetingScheduleService],
   exports: [meetingScheduleService],

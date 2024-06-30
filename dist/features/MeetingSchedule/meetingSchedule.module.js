@@ -13,12 +13,19 @@ const meetingSchedule_entity_1 = require("./entity/meetingSchedule.entity");
 const meetingSchedule_controller_1 = require("./meetingSchedule.controller");
 const meetingSchedule_service_1 = require("./meetingSchedule.service");
 const student_entity_1 = require("../student/entities/student.entity");
+const teacher_entity_1 = require("../teacher/entities/teacher.entity");
+const teacher_module_1 = require("../teacher/teacher.module");
+const student_module_1 = require("../student/student.module");
 let meetingScheduleModule = class meetingScheduleModule {
 };
 exports.meetingScheduleModule = meetingScheduleModule;
 exports.meetingScheduleModule = meetingScheduleModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([meetingSchedule_entity_1.MeetingSchedule, student_entity_1.Student])],
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([meetingSchedule_entity_1.MeetingSchedule, student_entity_1.Student, teacher_entity_1.Teacher]),
+            teacher_module_1.TeacherModule,
+            student_module_1.StudentModule,
+        ],
         controllers: [meetingSchedule_controller_1.meetingScheduleController],
         providers: [meetingSchedule_service_1.meetingScheduleService],
         exports: [meetingSchedule_service_1.meetingScheduleService],

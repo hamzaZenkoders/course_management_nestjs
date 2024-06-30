@@ -24,6 +24,7 @@ import { AdminModule } from '../admin/admin.module';
     OtpModule,
     CourseModule,
     TeacherModule,
+
     // AdminModule,
   ],
   controllers: [StudentController],

@@ -52,6 +52,7 @@ export declare class AuthService {
         courses: import("../../features/course/entities/course.entity").Course[];
         otps: OTP[];
         meetingSchedules: import("../../features/MeetingSchedule/entity/meetingSchedule.entity").MeetingSchedule[];
+        chats: import("../chat/entity/chat.entity").Chat[];
     } & Teacher) | {
         statusCode: HttpStatus;
         message: string;

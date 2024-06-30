@@ -158,7 +158,7 @@ export class OtpService {
         throw new HttpException(
           'Otp is expired generate new otp',
           HttpStatus.FORBIDDEN,
-        ); //
+        );
       }
 
       console.log(findOtp);
