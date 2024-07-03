@@ -4,6 +4,7 @@ import { Student } from 'src/features/student/entities/student.entity';
 
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -16,7 +17,7 @@ export class Enrollment {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'date' })
+  @CreateDateColumn()
   enrollmentDate: Date;
 
   @Column({

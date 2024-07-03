@@ -106,8 +106,8 @@ export class StudentService {
 
       if (search) {
         query.where(
-          'student.username LIKE :search OR student.email LIKE :search',
-          { search: `%${search}%` },
+          'student.username ILIKE :search OR student.email ILIKE :search',
+          { search: `%${search}%`.toLowerCase() },
         );
       }
 

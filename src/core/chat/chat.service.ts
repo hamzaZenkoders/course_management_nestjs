@@ -46,7 +46,7 @@ export class ChatService {
     });
   }
 
-  ////////////////////////////to see if already chat exists among teacher and student///////////////////
+  ////////////////////////////to see if already chat exists among teacher and student//////////////////
   async findChat(teacherId: number, studentId: number): Promise<Chat> {
     return await this.chatRepository.findOne({
       where: { teacher: { id: teacherId }, student: { id: studentId } },

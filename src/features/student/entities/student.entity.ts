@@ -5,6 +5,8 @@ import {
   OneToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 import { Roles } from 'src/features/enums/roles';
@@ -61,16 +63,10 @@ export class Student {
   @Column({ type: 'boolean', default: false })
   is_Suspended: boolean;
 
-  @Column({
-    type: 'timestamp',
-    //default: () => 'CURRENT_TIMESTAMP' })
-  })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column({
-    type: 'timestamp',
-    default: null,
-  })
+  @UpdateDateColumn()
   updatedAt: Date;
 
   @OneToMany(() => OTP, (otp) => otp.student)

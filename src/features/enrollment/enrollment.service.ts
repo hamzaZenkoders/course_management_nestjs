@@ -67,7 +67,6 @@ export class EnrollmentService {
     }
 
     const newEnrollment = this.enrollmentRepository.create({
-      enrollmentDate: new Date(Date.now()),
       ...createEnrollmentDto,
       student: { id: createEnrollmentDto.student_id },
       course: foundCourse,

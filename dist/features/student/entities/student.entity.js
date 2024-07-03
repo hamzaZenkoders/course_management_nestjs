@@ -70,16 +70,11 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Student.prototype, "is_Suspended", void 0);
 __decorate([
-    (0, typeorm_1.Column)({
-        type: 'timestamp',
-    }),
+    (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], Student.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)({
-        type: 'timestamp',
-        default: null,
-    }),
+    (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Student.prototype, "updatedAt", void 0);
 __decorate([

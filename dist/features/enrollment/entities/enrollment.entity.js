@@ -22,7 +22,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Enrollment.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'date' }),
+    (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], Enrollment.prototype, "enrollmentDate", void 0);
 __decorate([

@@ -83,7 +83,6 @@ export class AuthService {
 
     const newStudent = this.studentRepository.create({
       ...createStudentDto,
-      createdAt: new Date(Date.now()),
       password: hashedPassword,
     }); //
 

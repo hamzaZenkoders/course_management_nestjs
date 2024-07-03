@@ -33,7 +33,6 @@ export class TeacherGateway {
     console.log(body);
     console.log('Client id: ' + client.id);
 
-    //saving in database
     await this.chatService.createMessage(body);
 
     this.socket.emit('replyToStudent', body.message);
