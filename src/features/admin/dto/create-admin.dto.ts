@@ -5,6 +5,7 @@ import {
   IsEmpty,
   IsEnum,
   IsInt,
+  IsNotEmpty,
   IsPhoneNumber,
   IsString,
 } from 'class-validator';
@@ -12,15 +13,15 @@ import { Roles } from 'src/features/enums/roles';
 
 export class CreateAdminDto {
   @IsString()
-  @IsEmpty()
+  @IsNotEmpty()
   name: string;
 
   @IsEmail()
-  @IsEmpty()
+  @IsNotEmpty()
   email: string;
 
   @IsString()
-  @IsEmpty()
+  @IsNotEmpty()
   password: string;
   //
   @IsEnum(Roles, {

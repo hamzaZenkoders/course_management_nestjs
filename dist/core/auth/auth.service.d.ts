@@ -36,24 +36,7 @@ export declare class AuthService {
     login(loginInStudentDto: LoginInStudentDto): Promise<{
         token: string;
     }>;
-    registerTeacher(createTeacherDto: CreateTeacherDto): Promise<({
-        id: number;
-        name: string;
-        email: string;
-        address: string;
-        contact: string;
-        designation: string;
-        password: string;
-        role: import("../../features/enums/roles").Roles;
-        is_Suspended: boolean;
-        is_Verified: boolean;
-        createdAt: Date;
-        updatedAt: Date;
-        courses: import("../../features/course/entities/course.entity").Course[];
-        otps: OTP[];
-        meetingSchedules: import("../../features/MeetingSchedule/entity/meetingSchedule.entity").MeetingSchedule[];
-        chats: import("../chat/entity/chat.entity").Chat[];
-    } & Teacher) | {
+    registerTeacher(createTeacherDto: CreateTeacherDto): Promise<Teacher | {
         statusCode: HttpStatus;
         message: string;
     }>;

@@ -10,11 +10,12 @@ import {
   Query,
 } from '@nestjs/common';
 import { TeacherService } from './teacher.service';
-import { CreateTeacherDto } from './dto/create-teacher.dto';
+
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { Role } from 'src/core/decorator/roles.decorator';
 import { AuthenticationGuard } from 'src/core/guards/authentication.guard';
 import { RoleAuthorizationGuard } from 'src/core/guards/roleAuthorization.guard';
+import { PaginationSearchDto } from '../admin/dto/paginationSearch-dto';
 
 interface TeacherQueryParams {
   teacher_id: string;
@@ -25,11 +26,6 @@ interface TeacherQueryParams {
 export class TeacherController {
   constructor(private readonly teacherService: TeacherService) {}
 
-  @Post()
-  create(@Body() createTeacherDto: CreateTeacherDto) {
-    return this.teacherService.create(createTeacherDto);
-  }
-
   //Get teacher profile
   @Role('TEACHER')
   @UseGuards(AuthenticationGuard, RoleAuthorizationGuard)
@@ -37,11 +33,6 @@ export class TeacherController {
   GetTeacherProfile(@Param('id') id: number) {
     return this.teacherService.TeacherData(+id);
   }
-
-  /*   @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.teacherService.findOne(+id);
-  } */
 
   //update teacher profile
   @Role('TEACHER')
@@ -59,7 +50,6 @@ export class TeacherController {
   getTeacherCourseStudents(@Query() query: TeacherQueryParams) {
     console.log(query.course_id);
     return 'workings';
-    // return `Teacher ID: ${teacher_id}, Course ID: ${course_id}`;
   }
 
   //view all teachers
@@ -67,12 +57,7 @@ export class TeacherController {
   @Role('ADMIN')
   @UseGuards(AuthenticationGuard, RoleAuthorizationGuard)
   @Get('/allteachers')
-  GetAllStudents() {
-    return this.teacherService.findAll();
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.teacherService.remove(+id);
+  GetAllTeacher(@Query() paginationSearchDto: PaginationSearchDto) {
+    return this.teacherService.findAllTeachers(paginationSearchDto);
   }
 }

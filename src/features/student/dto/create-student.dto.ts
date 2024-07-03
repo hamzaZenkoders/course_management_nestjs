@@ -5,37 +5,31 @@ import {
   IsEmpty,
   IsEnum,
   IsInt,
+  IsNotEmpty,
   IsPhoneNumber,
   IsString,
 } from 'class-validator';
 import { Roles } from 'src/features/enums/roles';
 
-/* export enum StudentRole {
-    admin = "ADMIN",
-    teacher = "TEACHER",
-    student = "STUDENT",
-  
-} */
-
 export class CreateStudentDto {
   @IsString()
-  @IsEmpty()
+  @IsNotEmpty()
   name: string;
 
   @IsEmail()
-  @IsEmpty()
+  @IsNotEmpty()
   email: string;
 
   @IsString()
-  @IsEmpty()
+  @IsNotEmpty()
   password: string;
 
   @IsInt()
-  @IsEmpty()
+  @IsNotEmpty()
   age: number;
 
   @IsString()
-  @IsEmpty()
+  @IsNotEmpty()
   address: string;
 
   @IsPhoneNumber()

@@ -15,24 +15,7 @@ export declare class AuthController {
     signIn(loginInStudentDto: LoginInStudentDto): Promise<{
         token: string;
     }>;
-    TeacherSignUp(createTeacherDto: CreateTeacherDto): Promise<({
-        id: number;
-        name: string;
-        email: string;
-        address: string;
-        contact: string;
-        designation: string;
-        password: string;
-        role: import("../../features/enums/roles").Roles;
-        is_Suspended: boolean;
-        is_Verified: boolean;
-        createdAt: Date;
-        updatedAt: Date;
-        courses: import("../../features/course/entities/course.entity").Course[];
-        otps: import("../otp/entity/otp.entity").OTP[];
-        meetingSchedules: import("../../features/MeetingSchedule/entity/meetingSchedule.entity").MeetingSchedule[];
-        chats: import("../chat/entity/chat.entity").Chat[];
-    } & import("../../features/teacher/entities/teacher.entity").Teacher) | {
+    TeacherSignUp(createTeacherDto: CreateTeacherDto): Promise<import("../../features/teacher/entities/teacher.entity").Teacher | {
         statusCode: import("@nestjs/common").HttpStatus;
         message: string;
     }>;

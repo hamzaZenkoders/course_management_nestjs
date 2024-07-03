@@ -11,10 +11,11 @@ import { Student } from 'src/features/student/entities/student.entity';
 import { MailModule } from '../mail/mail.module';
 import { Teacher } from 'src/features/teacher/entities/teacher.entity';
 import { TeacherModule } from 'src/features/teacher/teacher.module';
+import { Admin } from 'src/features/admin/entities/admin.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([OTP, Student, Teacher]),
+    TypeOrmModule.forFeature([OTP, Student, Teacher, Admin]),
     MailModule,
     TeacherModule,
     //  StudentModule,

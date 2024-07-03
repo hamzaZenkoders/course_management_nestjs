@@ -46,15 +46,4 @@ export class AuthController {
   AdminSignIn(@Body() loginAdminDto: LoginInAdminDto) {
     return this.authService.signInAdmin(loginAdminDto);
   }
-
-  /*   @Post('/student/login')
-  TeachersignIn(@Body() loginInStudentDto: LoginInStudentDto) {
-    return this.authService.login(loginInStudentDto);
-  } */
-
-  /* @Post('/verifyOtp')
-  verify(@Body() otpVeriferDto: OtpVerifierDto) {
-    //return this.otpService.OtpVerification(otpVeriferDto);
-  }
-} */
 }

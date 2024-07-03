@@ -16,13 +16,14 @@ const student_entity_1 = require("../../features/student/entities/student.entity
 const mail_module_1 = require("../mail/mail.module");
 const teacher_entity_1 = require("../../features/teacher/entities/teacher.entity");
 const teacher_module_1 = require("../../features/teacher/teacher.module");
+const admin_entity_1 = require("../../features/admin/entities/admin.entity");
 let OtpModule = class OtpModule {
 };
 exports.OtpModule = OtpModule;
 exports.OtpModule = OtpModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([otp_entity_1.OTP, student_entity_1.Student, teacher_entity_1.Teacher]),
+            typeorm_1.TypeOrmModule.forFeature([otp_entity_1.OTP, student_entity_1.Student, teacher_entity_1.Teacher, admin_entity_1.Admin]),
             mail_module_1.MailModule,
             teacher_module_1.TeacherModule,
         ],

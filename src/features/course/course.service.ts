@@ -107,24 +107,6 @@ export class CourseService {
     }
   }
 
-  /* async getCoursesWithoutEnrollments(courseId: number) {
-    const courses = await this.courseRepository
-      .createQueryBuilder('course')
-      .where('course.id = :courseId', { courseId })
-      .andWhere((qb) => {
-        const subQuery = qb
-          .subQuery()
-          .select('1')
-          .from(Enrollment, 'enrollment')
-          .where('enrollment.course_id = course.id')
-          .getQuery();
-        return `NOT EXISTS (${subQuery})`;
-      })
-      .getMany();
-
-    return courses;
-  }
- */
   async courseExists(courseName: string): Promise<boolean> {
     const course = await this.courseRepository.findOne({
       where: { name: courseName },

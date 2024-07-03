@@ -20,15 +20,15 @@ export class meetingScheduleController {
     private readonly meetingScheduleService: meetingScheduleService,
   ) {}
 
-  //@Role('STUDENT')
-  //  @UseGuards(AuthenticationGuard, RoleAuthorizationGuard) //to book meeting
+  @Role('STUDENT')
+  @UseGuards(AuthenticationGuard, RoleAuthorizationGuard) //to book meeting
   @Post()
   bookSlot(@Body() bookSlotDto: BookSlotDto) {
     return this.meetingScheduleService.bookMeetinngSlot(bookSlotDto);
   }
 
-  //   @Role('TEACHER')
-  //@UseGuards(AuthenticationGuard, RoleAuthorizationGuard) //to approve or reject
+  @Role('TEACHER')
+  @UseGuards(AuthenticationGuard, RoleAuthorizationGuard) //to approve or reject
   @Post('/confirmation')
   ApproveRejectMeeting(@Body() meetingConfirmationDto: MeetingConfirmationDto) {
     return this.meetingScheduleService.approveReject(meetingConfirmationDto);

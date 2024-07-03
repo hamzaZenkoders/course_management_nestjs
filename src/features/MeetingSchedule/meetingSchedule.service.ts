@@ -26,9 +26,6 @@ export class meetingScheduleService {
     private readonly teacherService: TeacherService,
     private readonly studentService: StudentService,
 
-    //   @InjectRepository(AvailableSlot)
-    // private readonly availableSlotrepository: Repository<AvailableSlot>,
-
     @InjectRepository(Student)
     private readonly studentrepository: Repository<Student>,
 
@@ -36,6 +33,7 @@ export class meetingScheduleService {
     private readonly teacherrepository: Repository<Teacher>,
   ) {}
 
+  //book meeting slot
   async bookMeetinngSlot(bookSlotDto: BookSlotDto) {
     const teacher = await this.teacherService.findByID(bookSlotDto.teacher_id);
 
@@ -49,15 +47,6 @@ export class meetingScheduleService {
       throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
     }
 
-    /*     const meeting = {
-      status: MeetingStatus.pending,
-      ...bookSlotDto,
-    };
-
-    console.log(meeting);
-    const meetingCreated = this.meetingSchedulepository.create(meeting);
-    console.log(meetingCreated);
- */
     const slotStart = new Date(bookSlotDto.slot_start);
     const slotEnd = new Date(bookSlotDto.slot_end);
 
@@ -73,25 +62,11 @@ export class meetingScheduleService {
     const meetingSaved =
       await this.meetingSchedulepository.save(meetingCreated);
 
-    //now change the slot status to booked
-
-    //slot.is_booked = true;
-    //await this.availableSlotrepository.save(slot);
-
     return meetingSaved;
-    /*  const meetingSaved =
-      await this.meetingSchedulepository.save(meetingCreated);
-
-    slot.is_booked = true;
-    await this.availableSlotrepository.save(slot);
-
-   */
   }
 
+  //approve and reject meeting
   async approveReject(meetingConfirmationDto: MeetingConfirmationDto) {
-    // console.log(meetingConfirmationDto.meetingSchedule_id);
-    // console.log(meetingConfirmationDto.confirmation_status);
-
     const meetingScheduleFound = await this.meetingSchedulepository.findOne({
       where: { id: meetingConfirmationDto.meetingSchedule_id },
     });

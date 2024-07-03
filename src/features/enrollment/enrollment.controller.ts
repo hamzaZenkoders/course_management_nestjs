@@ -30,11 +30,6 @@ export class EnrollmentController {
   @UseGuards(AuthenticationGuard, RoleAuthorizationGuard)
   @Post('/create')
   create(@Body() createEnrollmentDto: CreateEnrollmentDto) {
-    // const { studentId, courseId } = req.body;
-    // const passData = createEnrollmentDto;
-
-    // return 'working fine';
-
     return this.enrollmentService.creatEnrollment(createEnrollmentDto);
   }
 
@@ -44,7 +39,7 @@ export class EnrollmentController {
   @Delete('/drop/:id')
   remove(@Param('id') id: number) {
     //const { enrollmentID } = req.params;
-    //  return 'working';
+
     return this.enrollmentService.removeEnrollment(id);
   }
 
@@ -59,15 +54,7 @@ export class EnrollmentController {
   @Role('TEACHER')
   @UseGuards(AuthenticationGuard, RoleAuthorizationGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOneEnrollment(@Param('id') id: string) {
     return this.enrollmentService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateEnrollmentDto: UpdateEnrollmentDto,
-  ) {
-    return this.enrollmentService.update(+id, updateEnrollmentDto);
   }
 }

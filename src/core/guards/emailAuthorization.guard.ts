@@ -9,14 +9,12 @@ import { Observable } from 'rxjs';
 import { whiteListDomain } from '../entities/whitlistedDomain.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-//import { AuthService } from '../auth/auth.service';
-//import { ROLES_KEY } from 'src/decorators/roles.decorators';
 
 @Injectable()
 export class EmailAuthorizationGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
-    // private readonly authService: AuthService,
+
     @InjectRepository(whiteListDomain)
     private whitelistedDomainRepository: Repository<whiteListDomain>,
   ) {}

@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EnrollmentController = void 0;
 const common_1 = require("@nestjs/common");
 const enrollment_service_1 = require("./enrollment.service");
-const update_enrollment_dto_1 = require("./dto/update-enrollment.dto");
 const create_enrollment_dto_1 = require("./dto/create-enrollment-dto");
 const authentication_guard_1 = require("../../core/guards/authentication.guard");
 const roleAuthorization_guard_1 = require("../../core/guards/roleAuthorization.guard");
@@ -33,11 +32,8 @@ let EnrollmentController = class EnrollmentController {
     remove(id) {
         return this.enrollmentService.removeEnrollment(id);
     }
-    findOne(id) {
+    findOneEnrollment(id) {
         return this.enrollmentService.findOne(+id);
-    }
-    update(id, updateEnrollmentDto) {
-        return this.enrollmentService.update(+id, updateEnrollmentDto);
     }
 };
 exports.EnrollmentController = EnrollmentController;
@@ -73,15 +69,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], EnrollmentController.prototype, "findOne", null);
-__decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_enrollment_dto_1.UpdateEnrollmentDto]),
-    __metadata("design:returntype", void 0)
-], EnrollmentController.prototype, "update", null);
+], EnrollmentController.prototype, "findOneEnrollment", null);
 exports.EnrollmentController = EnrollmentController = __decorate([
     (0, common_1.Controller)('enrollment'),
     __metadata("design:paramtypes", [enrollment_service_1.EnrollmentService])

@@ -42,10 +42,6 @@ export class EnrollmentService {
     return `This action returns a #${id} enrollment`;
   } */
 
-  update(id: number, updateEnrollmentDto: UpdateEnrollmentDto) {
-    return `This action updates a #${id} enrollment`;
-  }
-
   remove(id: number) {
     return `This action removes a #${id} enrollment`;
   }
@@ -57,9 +53,6 @@ export class EnrollmentService {
     const foundCourse = await this.courseService.findOne(
       createEnrollmentDto.course_id,
     );
-
-    //console.log(foundCourse);
-    // console.log('IDDD', createEnrollmentDto.courseID);
 
     if (!foundCourse) {
       throw new HttpException('Course not found', HttpStatus.NOT_FOUND);
@@ -74,6 +67,7 @@ export class EnrollmentService {
     }
 
     const newEnrollment = this.enrollmentRepository.create({
+      enrollmentDate: new Date(Date.now()),
       ...createEnrollmentDto,
       student: { id: createEnrollmentDto.student_id },
       course: foundCourse,

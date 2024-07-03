@@ -36,7 +36,7 @@ export class AuthenticationGuard implements CanActivate {
       console.log(err);
       throw new UnauthorizedException();
     }
-    //   console.log("inside the guard");
+
     return true;
   }
 }

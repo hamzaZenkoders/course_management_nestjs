@@ -6,6 +6,7 @@ import {
   IsEnum,
   IsInt,
   isInt,
+  IsNotEmpty,
   IsNumber,
   IsPhoneNumber,
   IsString,
@@ -14,26 +15,26 @@ import { Roles } from 'src/features/enums/roles';
 
 export class CreateTeacherDto {
   @IsString()
-  @IsEmpty()
+  @IsNotEmpty()
   name: string;
 
   @IsEmail()
-  @IsEmpty()
+  @IsNotEmpty()
   email: string;
 
   @IsString()
-  @IsEmpty()
+  @IsNotEmpty()
   address: string;
 
   @IsPhoneNumber()
   contact: string;
 
   @IsString()
-  @IsEmpty()
+  @IsNotEmpty()
   designation: string;
 
   @IsString()
-  @IsEmpty()
+  @IsNotEmpty()
   password: string;
 
   @IsDate()

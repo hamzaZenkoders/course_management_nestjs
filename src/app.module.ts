@@ -13,7 +13,7 @@ import { CourseModule } from './features/course/course.module';
 import { TeacherModule } from './features/teacher/teacher.module';
 import { AuthModule } from './core/auth/auth.module';
 import { OTP } from './core/otp/entity/otp.entity';
-import { ConfigModule } from '@nestjs/config';
+
 import { MailModule } from './core/mail/mail.module';
 import { StudentVerificationMiddleware } from './core/middleware/studentVerficationMiddleware';
 import { JwtModule } from '@nestjs/jwt';
@@ -23,17 +23,16 @@ import { TeacherVerificationMiddleware } from './core/middleware/teacherVerifica
 import { Admin } from './features/admin/entities/admin.entity';
 import { meetingScheduleModule } from './features/MeetingSchedule/meetingSchedule.module';
 import { MeetingSchedule } from './features/MeetingSchedule/entity/meetingSchedule.entity';
-//import { GatewayModule } from './core/gateway/gateway.module';
 import { ChatMessage } from './core/chat/entity/chatMessage.entity';
 import { Chat } from './core/chat/entity/chat.entity';
 import { ChatModule } from './core/chat/chat.module';
 import { StudentGateway } from './core/chat/gateways/student.gateway';
 import { TeacherGateway } from './core/chat/gateways/teacher.gateway';
-//import { MyGateway } from './core/gateway/gateway';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot(),
 
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -53,7 +52,7 @@ import { TeacherGateway } from './core/chat/gateways/teacher.gateway';
         ChatMessage,
         Chat,
         MeetingSchedule,
-      ], //entity/*.js
+      ],
       synchronize: true,
     }),
 
@@ -73,21 +72,18 @@ import { TeacherGateway } from './core/chat/gateways/teacher.gateway';
     OtpModule,
     meetingScheduleModule,
     ChatModule,
-
-    //   GatewayModule,
   ],
   controllers: [AppController],
-  providers: [AppService, StudentGateway, TeacherGateway], // MyGateway],
+  providers: [AppService, StudentGateway, TeacherGateway],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(StudentVerificationMiddleware)
-      .forRoutes('auth/student/login'); // Apply StudentVerificationMiddleware to '/student/auth/login' route
+      .forRoutes('auth/student/login'); // Applying StudentVerificationMiddleware to '/student/auth/login' route
 
     consumer
       .apply(TeacherVerificationMiddleware)
-      .forRoutes('auth/teacher/login'); // Apply TeacherVerificationMiddleware to '/teacher/auth/login' route
+      .forRoutes('auth/teacher/login'); // Applying TeacherVerificationMiddleware to '/teacher/auth/login' route
   }
 }
-//

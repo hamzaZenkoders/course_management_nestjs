@@ -2,13 +2,10 @@ import { IsDate, IsEmpty, IsEnum, IsNotEmpty, IsNumber } from 'class-validator';
 import { EnrollmentStatus } from 'src/features/enums/enrollmentStatus';
 
 export class CreateEnrollmentDto {
-  @IsDate()
-  EnrollmentDate: Date;
-
   @IsEnum(EnrollmentStatus)
   status: EnrollmentStatus;
 
-  @IsDate() //
+  @IsDate()
   updatedAt: Date;
 
   @IsNumber()

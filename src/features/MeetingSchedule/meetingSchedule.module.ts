@@ -10,8 +10,6 @@ import { Teacher } from '../teacher/entities/teacher.entity';
 import { TeacherModule } from '../teacher/teacher.module';
 import { StudentModule } from '../student/student.module';
 
-//import { TeacherModule } from '../teacher/teacher.module';
-
 @Module({
   imports: [
     TypeOrmModule.forFeature([MeetingSchedule, Student, Teacher]),

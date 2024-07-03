@@ -8,34 +8,17 @@ import {
   Delete,
   UseGuards,
   Req,
+  Query,
 } from '@nestjs/common';
 import { StudentService } from './student.service';
-import { CreateStudentDto } from './dto/create-student.dto';
-import { AuthGuard } from '@nestjs/passport';
-import { EmailAuthorizationGuard } from 'src/core/guards/emailAuthorization.guard';
-import { whiteListDomain } from 'src/core/entities/whitlistedDomain.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { LoginInStudentDto } from './dto/login-student-dto';
 import { RoleAuthorizationGuard } from 'src/core/guards/roleAuthorization.guard';
 import { AuthenticationGuard } from 'src/core/guards/authentication.guard';
 import { Role } from 'src/core/decorator/roles.decorator';
-//import { UpdateStudentDto } from './dto/update-student.dto';
+import { PaginationSearchDto } from '../admin/dto/paginationSearch-dto';
 
 @Controller('student')
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
-  /* 
-  @Post('/auth/signup')
-  @UseGuards(EmailAuthorizationGuard)
-  create(@Body() createStudentDto: CreateStudentDto) {
-    return this.studentService.register(createStudentDto);
-  }
-
-  @Post('/auth/login')
-  signIn(@Body() loginInStudentDto: LoginInStudentDto) {
-    return this.studentService.login(loginInStudentDto);
-  } */
 
   //get student profile
   @Role('STUDENT')
@@ -52,12 +35,6 @@ export class StudentController {
   AllEnrolledCourses(@Param('id') id: number) {
     return this.studentService.studentAllEnrolledCourses(+id);
   }
-  //VIEW ALL COURES
-
-  @Post('/enrollment')
-  EnrollInCourse() {
-    return 'working correctly';
-  }
 
   //update profile
   @Role('STUDENT')
@@ -70,17 +47,10 @@ export class StudentController {
 
   //view all students
 
-  @Role('ADMIN')
+  @Role('ADMIN', 'STUDENT')
   @UseGuards(AuthenticationGuard, RoleAuthorizationGuard)
   @Get()
-  GetAllStudents() {
-    return this.studentService.findAll();
+  GetAllStudents(@Query() paginationSearchDto: PaginationSearchDto) {
+    return this.studentService.getAllStudents(paginationSearchDto);
   }
-
-  /* @Get('/second')
-  getDataTwo(@Body() createStudentDto: CreateStudentDto) {
-    // console.log('checkkk');
-    return this.studentService.findOne(createStudentDto.email);
-  } */
- 
 }

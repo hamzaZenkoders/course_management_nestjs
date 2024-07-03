@@ -17,17 +17,17 @@ class CreateAdminDto {
 exports.CreateAdminDto = CreateAdminDto;
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsEmpty)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateAdminDto.prototype, "name", void 0);
 __decorate([
     (0, class_validator_1.IsEmail)(),
-    (0, class_validator_1.IsEmpty)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateAdminDto.prototype, "email", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsEmpty)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateAdminDto.prototype, "password", void 0);
 __decorate([

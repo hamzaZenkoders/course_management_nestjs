@@ -27,7 +27,6 @@ export class CourseController {
   @Post('/createCourse')
   create(@Body() createCourseDto: CreateCourseDto) {
     console.log(createCourseDto);
-    // console.log('Request Body:', req.body);
     return this.courseService.create(createCourseDto);
   }
 
@@ -58,25 +57,5 @@ export class CourseController {
   @Delete(':id')
   removeCourse(@Param('id') id: string) {
     return this.courseService.deleteCourse(+id);
-  }
-
-  @Get('/courseCheck')
-  GetCourseFind() {
-    return this.courseService.courseExists('Course4');
-  }
-
-  /*   @Get('checking/:id')
-  Aiwen(@Param('id') id: string) {
-    return this.courseService.getCoursesWithoutEnrollments(+id);
-  } */
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.courseService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCourseDto: UpdateCourseDto) {
-    return this.courseService.update(+id, updateCourseDto);
   }
 }

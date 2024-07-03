@@ -96,7 +96,7 @@ export class AuthService {
 
     if (savedStudent.is_Verified === false) {
       //saving Otp in the otp table
-      //  await this.otpService.saveOtp(savedStudent.id, otpRecieved);
+
       await this.otpService.saveOtp(savedStudent.id, otpRecieved, 'student');
       //sending otp
       await this.mailService.sendEmailOtp(savedStudent.email, otpRecieved); //
@@ -157,24 +157,20 @@ export class AuthService {
       password: hashedPassword,
     }); //
 
-    // to make sure id comes on top
-    const tempSave = { id: newTeacher.id, ...newTeacher };
-
     //saving to database
-    const savedTeacher = await this.teacherRepository.save(tempSave);
+    const savedTeacher = await this.teacherRepository.save(newTeacher);
 
     //generating otp
     const otpRecieved = await this.otpService.generateOTP();
-    //  const encryptedOtp = await bcrypt.hash(otpRecieved,10);
 
     console.log(otpRecieved);
     if (savedTeacher.is_Verified === false) {
       //saving Otp in the otp table
-      //   await this.otpService.saveOtp(savedTeacher.id, otpRecieved);
+
       await this.otpService.saveOtp(savedTeacher.id, otpRecieved, 'teacher');
 
       //sending otp
-      await this.mailService.sendEmailOtp(tempSave.email, otpRecieved); //
+      await this.mailService.sendEmailOtp(newTeacher.email, otpRecieved); //
       return {
         statusCode: HttpStatus.OK,
         message: 'Verification otp is sent to email',
@@ -232,9 +228,6 @@ export class AuthService {
       password: hashedPassword,
     }); //
 
-    // to make sure id comes on top
-    // const tempSave = { id: newStudent.id, ...newStudent };
-
     //saving to database
     const savedAdmin = await this.adminRepository.save(newAdmin); //
 
@@ -279,7 +272,7 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const payload = { email: AdminFound.email, role: AdminFound.role }; // Include user's role in the payload
+    const payload = { email: AdminFound.email, role: AdminFound.role };
     const token = this.jwtService.sign(payload);
 
     return { token };

@@ -21,17 +21,17 @@ class CreateTeacherDto {
 exports.CreateTeacherDto = CreateTeacherDto;
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsEmpty)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateTeacherDto.prototype, "name", void 0);
 __decorate([
     (0, class_validator_1.IsEmail)(),
-    (0, class_validator_1.IsEmpty)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateTeacherDto.prototype, "email", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsEmpty)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateTeacherDto.prototype, "address", void 0);
 __decorate([
@@ -40,12 +40,12 @@ __decorate([
 ], CreateTeacherDto.prototype, "contact", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsEmpty)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateTeacherDto.prototype, "designation", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsEmpty)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateTeacherDto.prototype, "password", void 0);
 __decorate([

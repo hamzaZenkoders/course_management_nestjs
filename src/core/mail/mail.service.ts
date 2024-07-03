@@ -20,23 +20,5 @@ export class MailService {
     console.log('Message sent: %s', info.messageId);
 
     return info;
-    // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
   }
-  /* 
-  async sendConfirmationScheduleMeeting(email: string) {
-    
-    const info = await this.transporter.sendMail({
-      from: '"Otp verifier " <hamza.zenkoders@gmail.com>', // sender address
-      to: email, // list of receivers
-      subject: 'Otp Verification ✔', // Subject line
-      text: 'Please enter the otp to register', // plain text body
-      html: `<p>Your otp code is <b>${otp}<b></p><br><br><br><br>
-           <b> NOTE: Do not share this code with anyone </b>`, // html body
-    });
-
-    console.log('Message sent: %s', info.messageId);
-
-    return info;
-
-  } */
 }

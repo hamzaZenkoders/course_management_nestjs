@@ -22,7 +22,6 @@ const course_module_1 = require("./features/course/course.module");
 const teacher_module_1 = require("./features/teacher/teacher.module");
 const auth_module_1 = require("./core/auth/auth.module");
 const otp_entity_1 = require("./core/otp/entity/otp.entity");
-const config_1 = require("@nestjs/config");
 const mail_module_1 = require("./core/mail/mail.module");
 const studentVerficationMiddleware_1 = require("./core/middleware/studentVerficationMiddleware");
 const jwt_1 = require("@nestjs/jwt");
@@ -37,6 +36,7 @@ const chat_entity_1 = require("./core/chat/entity/chat.entity");
 const chat_module_1 = require("./core/chat/chat.module");
 const student_gateway_1 = require("./core/chat/gateways/student.gateway");
 const teacher_gateway_1 = require("./core/chat/gateways/teacher.gateway");
+const config_1 = require("@nestjs/config");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer
@@ -51,7 +51,7 @@ exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            config_1.ConfigModule.forRoot({ isGlobal: true }),
+            config_1.ConfigModule.forRoot(),
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'postgres',
                 host: 'localhost',
