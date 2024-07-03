@@ -44,8 +44,8 @@ export class TeacherController {
 
   //teacher can see student in enrolled course
 
-  @Role('TEACHER')
-  @UseGuards(AuthenticationGuard, RoleAuthorizationGuard)
+  //@Role('TEACHER')
+  //@UseGuards(AuthenticationGuard, RoleAuthorizationGuard)
   @Get('/studentsEnroll') //http://localhost:3000/studentsEnrolled?teacher_id=1&course_id=2
   getTeacherCourseStudents(@Query() query: TeacherQueryParams) {
     console.log(query.course_id);
