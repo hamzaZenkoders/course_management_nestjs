@@ -17,6 +17,8 @@ const otp_entity_1 = require("../../../core/otp/entity/otp.entity");
 const enrollment_entity_1 = require("../../enrollment/entities/enrollment.entity");
 const meetingSchedule_entity_1 = require("../../MeetingSchedule/entity/meetingSchedule.entity");
 const chat_entity_1 = require("../../../core/chat/entity/chat.entity");
+const purchaseHistor_entity_1 = require("../../purchase-history/entities/purchaseHistor.entity");
+const class_validator_1 = require("class-validator");
 let Student = class Student {
 };
 exports.Student = Student;
@@ -51,6 +53,7 @@ __decorate([
 ], Student.prototype, "contact", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'timestamp' }),
+    (0, class_validator_1.IsDate)(),
     __metadata("design:type", Date)
 ], Student.prototype, "date_of_birth", void 0);
 __decorate([
@@ -93,6 +96,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => chat_entity_1.Chat, (chat) => chat.student),
     __metadata("design:type", Array)
 ], Student.prototype, "chats", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => purchaseHistor_entity_1.PurchaseHistory, (purchase) => purchase.student),
+    __metadata("design:type", Array)
+], Student.prototype, "purchases", void 0);
 exports.Student = Student = __decorate([
     (0, typeorm_1.Entity)()
 ], Student);

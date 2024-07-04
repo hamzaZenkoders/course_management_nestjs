@@ -15,14 +15,20 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 //import { RemoveEnrollmentDto } from './dto/remove-enrollment-dto';
 import { Student } from '../student/entities/student.entity';
+import { PurchaseHistory } from '../purchase-history/entities/purchaseHistor.entity';
+import { Course } from '../course/entities/course.entity';
 
 @Injectable()
 export class EnrollmentService {
   constructor(
     @InjectRepository(Enrollment)
     private enrollmentRepository: Repository<Enrollment>,
+
     @InjectRepository(Student)
     private studentRepository: Repository<Student>,
+
+    @InjectRepository(PurchaseHistory)
+    private purchasehistoryRepository: Repository<PurchaseHistory>,
 
     @Inject(forwardRef(() => CourseService))
     private courseService: CourseService,
@@ -65,6 +71,19 @@ export class EnrollmentService {
     if (!studentFound) {
       throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
     }
+
+    /*   //checking if student has purchased the course
+    const isCoursePurchased = await this.checkPurchaseHistory(
+      studentFound.id,
+      foundCourse.id,
+    );
+
+    if (!isCoursePurchased) {
+      throw new HttpException(
+        'Course is paid,Buy course to register',
+        HttpStatus.BAD_REQUEST,
+      );
+    } */
 
     const newEnrollment = this.enrollmentRepository.create({
       ...createEnrollmentDto,
@@ -121,6 +140,22 @@ export class EnrollmentService {
     });
     return !!enrollment;
   }
+
+  //to check purchase history of a student with course
+
+  /*  async checkPurchaseHistory(
+    studentID: number,
+    courseID: number,
+  ): Promise<boolean> {
+    const purchase = await this.purchasehistoryRepository.findOne({
+      where: {
+        student: { id: studentID }, // Assuming `student` is the relationship field in PurchaseHistory entity
+        course: { id: courseID }, // Assuming `course` is the relationship field in PurchaseHistory entity
+      },
+    });
+
+    return !!purchase;
+  } */
 
   async findOne(id: number) {
     const result = await this.enrollmentRepository.findOne({

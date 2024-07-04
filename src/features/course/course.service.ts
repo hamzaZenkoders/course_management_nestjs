@@ -107,6 +107,8 @@ export class CourseService {
     }
   }
 
+  /////////////////buy course////////////////
+
   async courseExists(courseName: string): Promise<boolean> {
     const course = await this.courseRepository.findOne({
       where: { name: courseName },

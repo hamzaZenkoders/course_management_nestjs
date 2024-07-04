@@ -5,6 +5,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
@@ -37,7 +40,13 @@ const chat_module_1 = require("./core/chat/chat.module");
 const student_gateway_1 = require("./core/chat/gateways/student.gateway");
 const teacher_gateway_1 = require("./core/chat/gateways/teacher.gateway");
 const config_1 = require("@nestjs/config");
+const stripe_module_1 = require("./core/stripe/stripe.module");
+const purchaseHistor_entity_1 = require("./features/purchase-history/entities/purchaseHistor.entity");
+const purchase_history_module_1 = require("./features/purchase-history/purchase-history.module");
 let AppModule = class AppModule {
+    constructor(configService) {
+        this.configService = configService;
+    }
     configure(consumer) {
         consumer
             .apply(studentVerficationMiddleware_1.StudentVerificationMiddleware)
@@ -51,14 +60,17 @@ exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            config_1.ConfigModule,
+            config_1.ConfigModule.forRoot({
+                isGlobal: true,
+                cache: true,
+            }),
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'postgres',
                 host: 'localhost',
                 port: 5432,
                 username: 'postgres',
-                password: 'dxtx998',
-                database: 'lms',
+                password: process.env.DATABASE_PASSWORD,
+                database: process.env.DATABASE_NAME,
                 entities: [
                     student_entity_1.Student,
                     course_entity_1.Course,
@@ -70,6 +82,7 @@ exports.AppModule = AppModule = __decorate([
                     chatMessage_entity_1.ChatMessage,
                     chat_entity_1.Chat,
                     meetingSchedule_entity_1.MeetingSchedule,
+                    purchaseHistor_entity_1.PurchaseHistory,
                 ],
                 synchronize: true,
             }),
@@ -88,9 +101,12 @@ exports.AppModule = AppModule = __decorate([
             otp_module_1.OtpModule,
             meetingSchedule_module_1.meetingScheduleModule,
             chat_module_1.ChatModule,
+            stripe_module_1.StripeModule,
+            purchase_history_module_1.PurchaseHistoryModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, student_gateway_1.StudentGateway, teacher_gateway_1.TeacherGateway],
-    })
+    }),
+    __metadata("design:paramtypes", [config_1.ConfigService])
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

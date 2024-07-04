@@ -28,19 +28,25 @@ import { Chat } from './core/chat/entity/chat.entity';
 import { ChatModule } from './core/chat/chat.module';
 import { StudentGateway } from './core/chat/gateways/student.gateway';
 import { TeacherGateway } from './core/chat/gateways/teacher.gateway';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { StripeModule } from './core/stripe/stripe.module';
+import { PurchaseHistory } from './features/purchase-history/entities/purchaseHistor.entity';
+import { PurchaseHistoryModule } from './features/purchase-history/purchase-history.module';
 
 @Module({
   imports: [
-    ConfigModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      cache: true,
+    }),
 
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'dxtx998',
-      database: 'lms',
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
       entities: [
         Student,
         Course,
@@ -52,6 +58,7 @@ import { ConfigModule } from '@nestjs/config';
         ChatMessage,
         Chat,
         MeetingSchedule,
+        PurchaseHistory,
       ],
       synchronize: true,
     }),
@@ -72,11 +79,15 @@ import { ConfigModule } from '@nestjs/config';
     OtpModule,
     meetingScheduleModule,
     ChatModule,
+    StripeModule,
+    PurchaseHistoryModule,
   ],
   controllers: [AppController],
   providers: [AppService, StudentGateway, TeacherGateway],
 })
 export class AppModule {
+  constructor(private readonly configService: ConfigService) {}
+
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(StudentVerificationMiddleware)

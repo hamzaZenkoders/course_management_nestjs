@@ -3,6 +3,7 @@ import { OTP } from 'src/core/otp/entity/otp.entity';
 import { Enrollment } from 'src/features/enrollment/entities/enrollment.entity';
 import { MeetingSchedule } from 'src/features/MeetingSchedule/entity/meetingSchedule.entity';
 import { Chat } from 'src/core/chat/entity/chat.entity';
+import { PurchaseHistory } from 'src/features/purchase-history/entities/purchaseHistor.entity';
 export declare class Student {
     id: number;
     name: string;
@@ -21,4 +22,5 @@ export declare class Student {
     enrollments: Enrollment[];
     meetingSchedules: MeetingSchedule[];
     chats: Chat[];
+    purchases: PurchaseHistory[];
 }

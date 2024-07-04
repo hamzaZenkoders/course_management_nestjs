@@ -17,6 +17,8 @@ const student_entity_1 = require("../student/entities/student.entity");
 const enrollment_entity_1 = require("../enrollment/entities/enrollment.entity");
 const enrollment_module_1 = require("../enrollment/enrollment.module");
 const enrollment_service_1 = require("../enrollment/enrollment.service");
+const purchaseHistor_entity_1 = require("../purchase-history/entities/purchaseHistor.entity");
+const stripe_module_1 = require("../../core/stripe/stripe.module");
 let CourseModule = class CourseModule {
 };
 exports.CourseModule = CourseModule;
@@ -25,7 +27,8 @@ exports.CourseModule = CourseModule = __decorate([
         imports: [
             (0, common_1.forwardRef)(() => enrollment_module_1.EnrollmentModule),
             (0, common_1.forwardRef)(() => student_module_1.StudentModule),
-            typeorm_1.TypeOrmModule.forFeature([course_entity_1.Course, enrollment_entity_1.Enrollment, student_entity_1.Student]),
+            typeorm_1.TypeOrmModule.forFeature([course_entity_1.Course, enrollment_entity_1.Enrollment, student_entity_1.Student, purchaseHistor_entity_1.PurchaseHistory]),
+            stripe_module_1.StripeModule,
         ],
         controllers: [course_controller_1.CourseController],
         providers: [course_service_1.CourseService, enrollment_service_1.EnrollmentService],

@@ -16,10 +16,15 @@ import { UpdateCourseDto } from './dto/update-course.dto';
 import { Role } from 'src/core/decorator/roles.decorator';
 import { AuthenticationGuard } from 'src/core/guards/authentication.guard';
 import { RoleAuthorizationGuard } from 'src/core/guards/roleAuthorization.guard';
+import { StripeService } from 'src/core/stripe/stripe.service';
+import CustomRequest from './req.interface';
 
 @Controller('course')
 export class CourseController {
-  constructor(private readonly courseService: CourseService) {}
+  constructor(
+    private readonly courseService: CourseService,
+    private readonly stripeService: StripeService,
+  ) {}
 
   // Create Course
   @Role('TEACHER')
@@ -57,5 +62,30 @@ export class CourseController {
   @Delete(':id')
   removeCourse(@Param('id') id: string) {
     return this.courseService.deleteCourse(+id);
+  }
+
+  //buyCourse
+
+  @Role('STUDENT')
+  @UseGuards(AuthenticationGuard, RoleAuthorizationGuard)
+  @Post(':courseId/purchase')
+  async purchaseCourse(
+    @Param('courseId') courseId: string,
+    @Body('price') price: number,
+    @Req() req: CustomRequest,
+  ) {
+    console.log(req.user);
+    /*  const session = await this.stripeService.createCheckoutSession(
+      courseId,
+      price,
+    );
+    return { session, sessionUrl: session.url }; */
+    return 'working';
+  }
+
+  @Get('/aaaaa')
+  check() {
+    console.log(process.env.DATABASE_PASSWORD);
+    return 'working';
   }
 }

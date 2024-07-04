@@ -8,6 +8,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { PurchaseHistory } from '../../purchase-history/entities/purchaseHistor.entity';
 
 @Entity()
 export class Course {
@@ -26,8 +27,11 @@ export class Course {
   @Column({ type: 'timestamp' })
   dropDeadline: Date;
 
+  @Column({ type: 'integer' })
+  price: number;
+
   @Column({ type: 'date', default: () => 'CURRENT_DATE' })
-  createdAt: Date; //
+  createdAt: Date;
 
   @Column({
     type: 'date',
@@ -42,5 +46,7 @@ export class Course {
 
   @OneToMany(() => Enrollment, (enrollment) => enrollment.course)
   enrollments: Enrollment[];
+
+  @OneToMany(() => PurchaseHistory, (purchase) => purchase.course)
+  purchases: PurchaseHistory[];
 }
-//

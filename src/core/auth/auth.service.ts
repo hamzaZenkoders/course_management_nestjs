@@ -70,6 +70,8 @@ export class AuthService {
 
   async register(createStudentDto: CreateStudentDto) {
     //finding is student already exists
+
+    console.log(createStudentDto);
     const existingUser = await this.studentRepository.findOne({
       where: { email: createStudentDto.email },
     });
@@ -128,7 +130,11 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const payload = { email: StudentFound.email, role: StudentFound.role }; // Include user's role in the payload
+    const payload = {
+      id: StudentFound.id,
+      email: StudentFound.email,
+      role: StudentFound.role,
+    };
     const token = this.jwtService.sign(payload);
 
     return { token };
@@ -201,7 +207,11 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const payload = { email: TeacherFound.email, role: TeacherFound.role }; // Include user's role in the payload
+    const payload = {
+      id: TeacherFound.id,
+      email: TeacherFound.email,
+      role: TeacherFound.role,
+    }; // Include user's role in the payload
     const token = this.jwtService.sign(payload);
 
     return { token };
@@ -271,7 +281,11 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const payload = { email: AdminFound.email, role: AdminFound.role };
+    const payload = {
+      id: AdminFound.id,
+      email: AdminFound.email,
+      role: AdminFound.role,
+    };
     const token = this.jwtService.sign(payload);
 
     return { token };

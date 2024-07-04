@@ -13,6 +13,7 @@ exports.Course = void 0;
 const enrollment_entity_1 = require("../../enrollment/entities/enrollment.entity");
 const teacher_entity_1 = require("../../teacher/entities/teacher.entity");
 const typeorm_1 = require("typeorm");
+const purchaseHistor_entity_1 = require("../../purchase-history/entities/purchaseHistor.entity");
 let Course = class Course {
 };
 exports.Course = Course;
@@ -37,6 +38,10 @@ __decorate([
     __metadata("design:type", Date)
 ], Course.prototype, "dropDeadline", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: 'integer' }),
+    __metadata("design:type", Number)
+], Course.prototype, "price", void 0);
+__decorate([
     (0, typeorm_1.Column)({ type: 'date', default: () => 'CURRENT_DATE' }),
     __metadata("design:type", Date)
 ], Course.prototype, "createdAt", void 0);
@@ -57,6 +62,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => enrollment_entity_1.Enrollment, (enrollment) => enrollment.course),
     __metadata("design:type", Array)
 ], Course.prototype, "enrollments", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => purchaseHistor_entity_1.PurchaseHistory, (purchase) => purchase.course),
+    __metadata("design:type", Array)
+], Course.prototype, "purchases", void 0);
 exports.Course = Course = __decorate([
     (0, typeorm_1.Entity)()
 ], Course);

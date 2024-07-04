@@ -16,12 +16,8 @@ import { Enrollment } from 'src/features/enrollment/entities/enrollment.entity';
 import { MeetingSchedule } from 'src/features/MeetingSchedule/entity/meetingSchedule.entity';
 import { ChatMessage } from 'src/core/chat/entity/chatMessage.entity';
 import { Chat } from 'src/core/chat/entity/chat.entity';
-
-/* export enum StudentRole {
-    admin = "ADMIN",
-    teacher = "TEACHER",
-    student = "STUDENT",
-} */
+import { PurchaseHistory } from 'src/features/purchase-history/entities/purchaseHistor.entity';
+import { IsDate } from 'class-validator';
 
 @Entity()
 export class Student {
@@ -48,6 +44,7 @@ export class Student {
   contact: string;
 
   @Column({ type: 'timestamp' })
+  @IsDate()
   date_of_birth: Date;
 
   @Column({
@@ -83,4 +80,7 @@ export class Student {
 
   @OneToMany(() => Chat, (chat) => chat.student)
   chats: Chat[];
+
+  @OneToMany(() => PurchaseHistory, (purchase) => purchase.student)
+  purchases: PurchaseHistory[];
 }
