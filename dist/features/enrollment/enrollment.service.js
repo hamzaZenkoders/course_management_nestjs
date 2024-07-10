@@ -20,12 +20,10 @@ const enrollment_entity_1 = require("./entities/enrollment.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const student_entity_1 = require("../student/entities/student.entity");
-const purchaseHistor_entity_1 = require("../purchase-history/entities/purchaseHistor.entity");
 let EnrollmentService = class EnrollmentService {
-    constructor(enrollmentRepository, studentRepository, purchasehistoryRepository, courseService, studentService) {
+    constructor(enrollmentRepository, studentRepository, courseService, studentService) {
         this.enrollmentRepository = enrollmentRepository;
         this.studentRepository = studentRepository;
-        this.purchasehistoryRepository = purchasehistoryRepository;
         this.courseService = courseService;
         this.studentService = studentService;
     }
@@ -86,16 +84,19 @@ let EnrollmentService = class EnrollmentService {
         });
         return result;
     }
+    async findCourseEnrollment(courseId, studentId) {
+        return await this.enrollmentRepository.findOne({
+            where: { course: { id: courseId }, student: { id: studentId } },
+        });
+    }
 };
 exports.EnrollmentService = EnrollmentService;
 exports.EnrollmentService = EnrollmentService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(enrollment_entity_1.Enrollment)),
     __param(1, (0, typeorm_1.InjectRepository)(student_entity_1.Student)),
-    __param(2, (0, typeorm_1.InjectRepository)(purchaseHistor_entity_1.PurchaseHistory)),
-    __param(3, (0, common_1.Inject)((0, common_1.forwardRef)(() => course_service_1.CourseService))),
+    __param(2, (0, common_1.Inject)((0, common_1.forwardRef)(() => course_service_1.CourseService))),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        typeorm_2.Repository,
         typeorm_2.Repository,
         course_service_1.CourseService,
         student_service_1.StudentService])

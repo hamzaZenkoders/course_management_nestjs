@@ -18,10 +18,12 @@ const course_entity_1 = require("./entities/course.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const enrollment_service_1 = require("../enrollment/enrollment.service");
+const stripe_service_1 = require("../../core/stripe/stripe.service");
 let CourseService = class CourseService {
-    constructor(courseRepository, enrollmentService) {
+    constructor(courseRepository, enrollmentService, stripeService) {
         this.courseRepository = courseRepository;
         this.enrollmentService = enrollmentService;
+        this.stripeService = stripeService;
     }
     async create(createCourseDto) {
         const courseExists = await this.courseExists(createCourseDto.name);
@@ -71,6 +73,20 @@ let CourseService = class CourseService {
             throw new common_1.HttpException('Course deleted', common_1.HttpStatus.OK);
         }
     }
+    async buyPaidCourse(courseId, studentId, studentEmail, price) {
+        const courseFound = await this.findOne(+courseId);
+        if (!courseFound) {
+            throw new common_1.HttpException('Course dose not exist', common_1.HttpStatus.BAD_REQUEST);
+        }
+        const courseEnrollment = await this.enrollmentService.findCourseEnrollment(+courseId, studentId);
+        console.log('Checkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
+        console.log(courseEnrollment);
+        if (courseEnrollment) {
+            throw new common_1.HttpException('Course is already bought', common_1.HttpStatus.FORBIDDEN);
+        }
+        const session = await this.stripeService.createCheckoutSession(courseId, studentId, studentEmail, price, courseFound.name);
+        return session;
+    }
     async courseExists(courseName) {
         const course = await this.courseRepository.findOne({
             where: { name: courseName },
@@ -95,6 +111,7 @@ exports.CourseService = CourseService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(course_entity_1.Course)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        enrollment_service_1.EnrollmentService])
+        enrollment_service_1.EnrollmentService,
+        stripe_service_1.StripeService])
 ], CourseService);
 //# sourceMappingURL=course.service.js.map

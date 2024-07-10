@@ -8,6 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StripeController = void 0;
 const common_1 = require("@nestjs/common");
@@ -19,8 +22,15 @@ let StripeController = class StripeController {
     create() {
         return 'working';
     }
-    check() {
-        return 'this is working';
+    async webhook(req, signature) {
+        try {
+            const event = await this.stripeService.handleWebhookEvent(req.rawBody, signature);
+            return { received: true, event };
+        }
+        catch (error) {
+            console.error('Error handling webhook:', error.message);
+            return { received: false, error: error.message };
+        }
     }
 };
 exports.StripeController = StripeController;
@@ -31,11 +41,13 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], StripeController.prototype, "create", null);
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Post)('/webhook'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Headers)('stripe-signature')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], StripeController.prototype, "check", null);
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], StripeController.prototype, "webhook", null);
 exports.StripeController = StripeController = __decorate([
     (0, common_1.Controller)('stripe'),
     __metadata("design:paramtypes", [stripe_service_1.StripeService])

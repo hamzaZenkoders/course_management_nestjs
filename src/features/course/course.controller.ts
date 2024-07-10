@@ -74,13 +74,18 @@ export class CourseController {
     @Body('price') price: number,
     @Req() req: CustomRequest,
   ) {
-    console.log(req.user);
-    /*  const session = await this.stripeService.createCheckoutSession(
+    const student = req.user;
+    //console.log();
+    const sessionHold = await this.courseService.buyPaidCourse(
       courseId,
+      student.id,
+      student.email,
       price,
     );
-    return { session, sessionUrl: session.url }; */
-    return 'working';
+
+    console.log('sessionnnnnnnnnnnnnnnnn', sessionHold);
+    return { sessionHold, sessionUrl: sessionHold.url };
+    // return 'working';
   }
 
   @Get('/aaaaa')
@@ -89,3 +94,4 @@ export class CourseController {
     return 'working';
   }
 }
+///

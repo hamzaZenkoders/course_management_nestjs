@@ -13,6 +13,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Enrollment } from '../enrollment/entities/enrollment.entity';
 import { EnrollmentService } from '../enrollment/enrollment.service';
+import { StripeService } from 'src/core/stripe/stripe.service';
 
 @Injectable()
 export class CourseService {
@@ -21,6 +22,7 @@ export class CourseService {
     private courseRepository: Repository<Course>,
 
     private enrollmentService: EnrollmentService,
+    private readonly stripeService: StripeService,
   ) {}
 
   async create(createCourseDto: CreateCourseDto) {
@@ -108,6 +110,41 @@ export class CourseService {
   }
 
   /////////////////buy course////////////////
+
+  async buyPaidCourse(
+    courseId: string,
+    studentId: number,
+    studentEmail: string,
+    price: number,
+  ) {
+    const courseFound = await this.findOne(+courseId);
+
+    if (!courseFound) {
+      throw new HttpException('Course dose not exist', HttpStatus.BAD_REQUEST);
+    }
+
+    const courseEnrollment = await this.enrollmentService.findCourseEnrollment(
+      +courseId,
+      studentId,
+    );
+
+    console.log('Checkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
+    console.log(courseEnrollment);
+
+    if (courseEnrollment) {
+      throw new HttpException('Course is already bought', HttpStatus.FORBIDDEN);
+    }
+
+    const session = await this.stripeService.createCheckoutSession(
+      courseId,
+      studentId,
+      studentEmail,
+      price,
+      courseFound.name,
+    );
+
+    return session;
+  }
 
   async courseExists(courseName: string): Promise<boolean> {
     const course = await this.courseRepository.findOne({

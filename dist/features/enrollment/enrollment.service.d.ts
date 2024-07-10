@@ -4,14 +4,12 @@ import { CreateEnrollmentDto } from './dto/create-enrollment-dto';
 import { Enrollment } from './entities/enrollment.entity';
 import { Repository } from 'typeorm';
 import { Student } from '../student/entities/student.entity';
-import { PurchaseHistory } from '../purchase-history/entities/purchaseHistor.entity';
 export declare class EnrollmentService {
     private enrollmentRepository;
     private studentRepository;
-    private purchasehistoryRepository;
     private courseService;
     private studentService;
-    constructor(enrollmentRepository: Repository<Enrollment>, studentRepository: Repository<Student>, purchasehistoryRepository: Repository<PurchaseHistory>, courseService: CourseService, studentService: StudentService);
+    constructor(enrollmentRepository: Repository<Enrollment>, studentRepository: Repository<Student>, courseService: CourseService, studentService: StudentService);
     create(createEnrollmentDto: CreateEnrollmentDto): string;
     findAll(): string;
     remove(id: number): string;
@@ -19,4 +17,5 @@ export declare class EnrollmentService {
     removeEnrollment(enrollmentID: number): Promise<import("typeorm").DeleteResult>;
     hasEnrollments(courseId: number): Promise<boolean>;
     findOne(id: number): Promise<Enrollment>;
+    findCourseEnrollment(courseId: number, studentId: number): Promise<Enrollment>;
 }

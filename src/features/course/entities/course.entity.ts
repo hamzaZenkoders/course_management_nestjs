@@ -9,6 +9,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { PurchaseHistory } from '../../purchase-history/entities/purchaseHistor.entity';
+import { CourseStatus } from 'src/features/enums/courseStatus';
 
 @Entity()
 export class Course {
@@ -29,6 +30,12 @@ export class Course {
 
   @Column({ type: 'integer' })
   price: number;
+
+  @Column({
+    type: 'enum',
+    enum: CourseStatus,
+  })
+  courseStatus: CourseStatus;
 
   @Column({ type: 'date', default: () => 'CURRENT_DATE' })
   createdAt: Date;

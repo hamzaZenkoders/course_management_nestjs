@@ -10,11 +10,20 @@ exports.StripeModule = void 0;
 const common_1 = require("@nestjs/common");
 const stripe_service_1 = require("./stripe.service");
 const stripe_controller_1 = require("./stripe.controller");
+const typeorm_1 = require("@nestjs/typeorm");
+const course_entity_1 = require("../../features/course/entities/course.entity");
+const purchaseHistor_entity_1 = require("../../features/purchase-history/entities/purchaseHistor.entity");
+const enrollment_entity_1 = require("../../features/enrollment/entities/enrollment.entity");
+const mail_module_1 = require("../mail/mail.module");
 let StripeModule = class StripeModule {
 };
 exports.StripeModule = StripeModule;
 exports.StripeModule = StripeModule = __decorate([
     (0, common_1.Module)({
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([course_entity_1.Course, purchaseHistor_entity_1.PurchaseHistory, enrollment_entity_1.Enrollment]),
+            mail_module_1.MailModule,
+        ],
         controllers: [stripe_controller_1.StripeController],
         providers: [stripe_service_1.StripeService],
         exports: [stripe_service_1.StripeService],

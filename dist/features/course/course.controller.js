@@ -41,8 +41,10 @@ let CourseController = class CourseController {
         return this.courseService.deleteCourse(+id);
     }
     async purchaseCourse(courseId, price, req) {
-        console.log(req.user);
-        return 'working';
+        const student = req.user;
+        const sessionHold = await this.courseService.buyPaidCourse(courseId, student.id, student.email, price);
+        console.log('sessionnnnnnnnnnnnnnnnn', sessionHold);
+        return { sessionHold, sessionUrl: sessionHold.url };
     }
     check() {
         console.log(process.env.DATABASE_PASSWORD);

@@ -14,6 +14,7 @@ const enrollment_entity_1 = require("../../enrollment/entities/enrollment.entity
 const teacher_entity_1 = require("../../teacher/entities/teacher.entity");
 const typeorm_1 = require("typeorm");
 const purchaseHistor_entity_1 = require("../../purchase-history/entities/purchaseHistor.entity");
+const courseStatus_1 = require("../../enums/courseStatus");
 let Course = class Course {
 };
 exports.Course = Course;
@@ -41,6 +42,13 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'integer' }),
     __metadata("design:type", Number)
 ], Course.prototype, "price", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: courseStatus_1.CourseStatus,
+    }),
+    __metadata("design:type", String)
+], Course.prototype, "courseStatus", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'date', default: () => 'CURRENT_DATE' }),
     __metadata("design:type", Date)

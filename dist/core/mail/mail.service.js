@@ -30,6 +30,26 @@ let MailService = class MailService {
         console.log('Message sent: %s', info.messageId);
         return info;
     }
+    async sendCourseEmail(email, courseName) {
+        const info = await this.transporter.sendMail({
+            from: '"ZenAcademy " <hamza.zenkoders@gmail.com>',
+            to: email,
+            subject: 'Course Payment Successful ✔',
+            html: `<p>You have successfully purchased <b>${courseName}</b></p><br><br><br><br>`,
+        });
+        console.log('Message sent: %s', info.messageId);
+        return info;
+    }
+    async sendFailedTransactionEmail(email) {
+        const info = await this.transporter.sendMail({
+            from: '"ZenAcademy " <hamza.zenkoders@gmail.com>',
+            to: email,
+            subject: 'Course Payment Unsuccessful ',
+            html: `<p>Unfortunately, the transaction did not succeed, resulting in no purchase of the course.</p>`,
+        });
+        console.log('Message sent: %s', info.messageId);
+        return info;
+    }
 };
 exports.MailService = MailService;
 exports.MailService = MailService = __decorate([

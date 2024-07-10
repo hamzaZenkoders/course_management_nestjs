@@ -13,6 +13,7 @@ exports.PurchaseHistory = void 0;
 const typeorm_1 = require("typeorm");
 const course_entity_1 = require("../../course/entities/course.entity");
 const student_entity_1 = require("../../student/entities/student.entity");
+const purchaseStatus_1 = require("../../enums/purchaseStatus");
 let PurchaseHistory = class PurchaseHistory {
 };
 exports.PurchaseHistory = PurchaseHistory;
@@ -28,6 +29,17 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => course_entity_1.Course, (course) => course.purchases),
     __metadata("design:type", course_entity_1.Course)
 ], PurchaseHistory.prototype, "course", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: purchaseStatus_1.PurchaseStatus,
+    }),
+    __metadata("design:type", String)
+], PurchaseHistory.prototype, "purchase_status", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'bigint' }),
+    __metadata("design:type", Number)
+], PurchaseHistory.prototype, "price", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)

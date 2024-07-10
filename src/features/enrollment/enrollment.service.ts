@@ -15,8 +15,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 //import { RemoveEnrollmentDto } from './dto/remove-enrollment-dto';
 import { Student } from '../student/entities/student.entity';
-import { PurchaseHistory } from '../purchase-history/entities/purchaseHistor.entity';
+
 import { Course } from '../course/entities/course.entity';
+
+import { PurchaseStatus } from '../enums/purchaseStatus';
 
 @Injectable()
 export class EnrollmentService {
@@ -26,9 +28,6 @@ export class EnrollmentService {
 
     @InjectRepository(Student)
     private studentRepository: Repository<Student>,
-
-    @InjectRepository(PurchaseHistory)
-    private purchasehistoryRepository: Repository<PurchaseHistory>,
 
     @Inject(forwardRef(() => CourseService))
     private courseService: CourseService,
@@ -71,6 +70,11 @@ export class EnrollmentService {
     if (!studentFound) {
       throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
     }
+
+    /*  //checking if student has purchased the course
+    const isCoursePurchased = await this.purchaseHistoryService.findCourseHistory(foundCourse.id,studentFound.id);
+
+    if(isCoursePurchased.purchase_status === PurchaseStatus.purchased){} */
 
     /*   //checking if student has purchased the course
     const isCoursePurchased = await this.checkPurchaseHistory(
@@ -163,5 +167,14 @@ export class EnrollmentService {
       relations: ['student', 'course'],
     });
     return result;
+  }
+
+  async findCourseEnrollment(
+    courseId: number,
+    studentId: number,
+  ): Promise<Enrollment> {
+    return await this.enrollmentRepository.findOne({
+      where: { course: { id: courseId }, student: { id: studentId } },
+    });
   }
 }

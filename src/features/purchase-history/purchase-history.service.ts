@@ -1,9 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePurchaseHistoryDto } from './dto/create-purchase-history.dto';
 import { UpdatePurchaseHistoryDto } from './dto/update-purchase-history.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { PurchaseHistory } from './entities/purchaseHistor.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PurchaseHistoryService {
+  constructor(
+    @InjectRepository(PurchaseHistory)
+    private purchasehistoryRespository: Repository<PurchaseHistory>,
+  ) {}
+
   create(createPurchaseHistoryDto: CreatePurchaseHistoryDto) {
     return 'This action adds a new purchaseHistory';
   }
@@ -22,5 +30,14 @@ export class PurchaseHistoryService {
 
   remove(id: number) {
     return `This action removes a #${id} purchaseHistory`;
+  }
+
+  async findCourseHistory(
+    courseId: number,
+    studentId: number,
+  ): Promise<PurchaseHistory> {
+    return await this.purchasehistoryRespository.findOne({
+      where: { course: { id: courseId }, student: { id: studentId } },
+    });
   }
 }

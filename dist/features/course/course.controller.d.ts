@@ -13,6 +13,9 @@ export declare class CourseController {
         message: string;
     }>;
     removeCourse(id: string): Promise<void>;
-    purchaseCourse(courseId: string, price: number, req: CustomRequest): Promise<string>;
+    purchaseCourse(courseId: string, price: number, req: CustomRequest): Promise<{
+        sessionHold: any;
+        sessionUrl: any;
+    }>;
     check(): string;
 }

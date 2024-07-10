@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Course } from '../../course/entities/course.entity';
 import { Student } from 'src/features/student/entities/student.entity';
+import { PurchaseStatus } from 'src/features/enums/purchaseStatus';
 
 @Entity()
 export class PurchaseHistory {
@@ -18,6 +19,15 @@ export class PurchaseHistory {
 
   @ManyToOne(() => Course, (course) => course.purchases)
   course: Course;
+
+  @Column({
+    type: 'enum',
+    enum: PurchaseStatus,
+  })
+  purchase_status: PurchaseStatus;
+
+  @Column({ type: 'bigint' })
+  price: Number;
 
   @CreateDateColumn()
   purchaseDate: Date;

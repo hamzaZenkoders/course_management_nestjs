@@ -10,13 +10,17 @@ exports.PurchaseHistoryModule = void 0;
 const common_1 = require("@nestjs/common");
 const purchase_history_service_1 = require("./purchase-history.service");
 const purchase_history_controller_1 = require("./purchase-history.controller");
+const typeorm_1 = require("@nestjs/typeorm");
+const purchaseHistor_entity_1 = require("./entities/purchaseHistor.entity");
 let PurchaseHistoryModule = class PurchaseHistoryModule {
 };
 exports.PurchaseHistoryModule = PurchaseHistoryModule;
 exports.PurchaseHistoryModule = PurchaseHistoryModule = __decorate([
     (0, common_1.Module)({
+        imports: [typeorm_1.TypeOrmModule.forFeature([purchaseHistor_entity_1.PurchaseHistory])],
         controllers: [purchase_history_controller_1.PurchaseHistoryController],
         providers: [purchase_history_service_1.PurchaseHistoryService],
+        exports: [purchase_history_service_1.PurchaseHistoryService],
     })
 ], PurchaseHistoryModule);
 //# sourceMappingURL=purchase-history.module.js.map
