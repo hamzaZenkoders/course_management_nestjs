@@ -98,8 +98,11 @@ export class StripeService {
   }
 
   async handleWebhookEvent(rawBody: Buffer, signature: string): Promise<any> {
-    // const payload = request.body;
     if (!signature) {
+      throw new HttpException(
+        'Stripe signature not found',
+        HttpStatus.FORBIDDEN,
+      );
     }
 
     const endpointSecret =
