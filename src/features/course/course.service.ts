@@ -143,6 +143,7 @@ export class CourseService {
       courseFound.name,
     );
 
+    console.log('sessionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn', session);
     return session;
   }
 

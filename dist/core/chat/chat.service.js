@@ -50,6 +50,25 @@ let ChatService = class ChatService {
         chat.student = { id: studentId };
         return await this.chatRepository.save(chat);
     }
+    async createPrivateChat(roomCreationDto) {
+        const { teacherId, studentId } = roomCreationDto;
+        let chat = await this.findChat(teacherId, studentId);
+        if (!chat) {
+            chat = await this.createChat(teacherId, studentId);
+        }
+        return chat.id;
+    }
+    async saveMessage(messageDto) {
+        const { message, chatID } = messageDto;
+        const chat = await this.chatRepository.findOne({ where: { id: chatID } });
+        if (!chat) {
+            throw new Error(`Chat with ID ${chatID} not found`);
+        }
+        const chatMessage = new chatMessage_entity_1.ChatMessage();
+        chatMessage.message = message;
+        chatMessage.chat = chat;
+        return await this.chatMessageRepository.save(chatMessage);
+    }
 };
 exports.ChatService = ChatService;
 exports.ChatService = ChatService = __decorate([

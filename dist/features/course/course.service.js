@@ -85,6 +85,7 @@ let CourseService = class CourseService {
             throw new common_1.HttpException('Course is already bought', common_1.HttpStatus.FORBIDDEN);
         }
         const session = await this.stripeService.createCheckoutSession(courseId, studentId, studentEmail, price, courseFound.name);
+        console.log('sessionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn', session);
         return session;
     }
     async courseExists(courseName) {

@@ -76,8 +76,9 @@ let StripeService = class StripeService {
     }
     async handleWebhookEvent(rawBody, signature) {
         if (!signature) {
+            throw new common_1.HttpException('Stripe signature not found', common_1.HttpStatus.FORBIDDEN);
         }
-        const endpointSecret = 'whsec_50dc09115f5e66833cb1306a381203c6f67da2ffecc4ce4635fb7c6b3d667ea5';
+        const endpointSecret = process.env.ENDPOINT_SECRET;
         let event;
         try {
             event = this.stripe.webhooks.constructEvent(rawBody, signature, endpointSecret);

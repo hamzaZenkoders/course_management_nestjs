@@ -75,7 +75,7 @@ export class CourseController {
     @Req() req: CustomRequest,
   ) {
     const student = req.user;
-    //console.log();
+
     const sessionHold = await this.courseService.buyPaidCourse(
       courseId,
       student.id,
