@@ -84,5 +84,5 @@ export class ChatService {
     chatMessage.chat = chat;
 
     return await this.chatMessageRepository.save(chatMessage);
-  }
+   }
 }
