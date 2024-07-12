@@ -3,6 +3,7 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
+  Session,
 } from '@nestjs/common';
 import Stripe from 'stripe';
 import { Request } from 'express';
@@ -15,6 +16,7 @@ import { PurchaseHistoryService } from 'src/features/purchase-history/purchase-h
 import { EnrollmentService } from 'src/features/enrollment/enrollment.service';
 import { Enrollment } from 'src/features/enrollment/entities/enrollment.entity';
 import { MailService } from '../mail/mail.service';
+import { session } from 'passport';
 
 @Injectable()
 export class StripeService {
@@ -126,6 +128,7 @@ export class StripeService {
         break;
       case 'payment_intent.succeeded':
         //  console.log('eventtttttttt on succeedd', event);
+
         this.paymentSucceed(event.data.object.metadata);
         break;
       case 'payment_intent.payment_failed':
@@ -169,4 +172,54 @@ export class StripeService {
 
     await this.mailService.sendFailedTransactionEmail(studentEmailAddress);
   }
+
+  ////////////////////////////subscription//////////////////////////////////
+
+  async CheckoutSessionForSubscription(lookup_key: string) {
+    const prices = await this.stripe.prices.list({
+      lookup_keys: [lookup_key],
+      expand: ['data.product'],
+    });
+    const session = await this.stripe.checkout.sessions.create({
+      billing_address_collection: 'auto',
+      line_items: [
+        {
+          price: prices.data[0].id,
+          quantity: 1,
+        },
+      ],
+      mode: 'subscription',
+      metadata: {
+        lookupkey: lookup_key,
+      },
+
+      success_url: 'https://www.google.com/',
+      cancel_url: 'https://www.facebook.com/',
+    });
+
+    console.log(session);
+    return { session };
+  }
+
+  /*   async createSubscriptionSession() {
+    const prod = await this.stripe.products.retrieve('prod_QSdGXKI8e18Qla');
+
+    const price = await this.stripe.prices.retrieve(
+      prod.default_price.toString(),
+    );
+
+    return await this.stripe.checkout.sessions.create({
+      success_url: 'http:/  /localhost:3000/api#/',
+      line_items: [
+        {
+          price: price.id,
+          quantity: 2,
+        },
+      ],
+      mode: 'subscription',
+      metadata: {
+        eventType: 'BUY COURSE',
+      },
+    });
+  } */
 }

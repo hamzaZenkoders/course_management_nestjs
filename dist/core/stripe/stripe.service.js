@@ -121,6 +121,29 @@ let StripeService = class StripeService {
         const { studentEmailAddress } = metadata;
         await this.mailService.sendFailedTransactionEmail(studentEmailAddress);
     }
+    async CheckoutSessionForSubscription(lookup_key) {
+        const prices = await this.stripe.prices.list({
+            lookup_keys: [lookup_key],
+            expand: ['data.product'],
+        });
+        const session = await this.stripe.checkout.sessions.create({
+            billing_address_collection: 'auto',
+            line_items: [
+                {
+                    price: prices.data[0].id,
+                    quantity: 1,
+                },
+            ],
+            mode: 'subscription',
+            metadata: {
+                lookupkey: lookup_key,
+            },
+            success_url: 'https://www.google.com/',
+            cancel_url: 'https://www.facebook.com/',
+        });
+        console.log(session);
+        return { session };
+    }
 };
 exports.StripeService = StripeService;
 exports.StripeService = StripeService = __decorate([

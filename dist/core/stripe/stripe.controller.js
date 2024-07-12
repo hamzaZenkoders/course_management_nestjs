@@ -19,8 +19,9 @@ let StripeController = class StripeController {
     constructor(stripeService) {
         this.stripeService = stripeService;
     }
-    create() {
-        return 'working';
+    createCheckoutSubscription(body) {
+        const { lookup_key } = body;
+        return this.stripeService.CheckoutSessionForSubscription(lookup_key);
     }
     async webhook(req, signature) {
         try {
@@ -36,10 +37,11 @@ let StripeController = class StripeController {
 exports.StripeController = StripeController;
 __decorate([
     (0, common_1.Post)('/create-checkout-session'),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], StripeController.prototype, "create", null);
+], StripeController.prototype, "createCheckoutSubscription", null);
 __decorate([
     (0, common_1.Post)('/webhook'),
     __param(0, (0, common_1.Req)()),

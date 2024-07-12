@@ -57,6 +57,7 @@ export class ChatService {
     return await this.chatRepository.save(chat);
   }
 
+  ///////////////////////////creating private chat ////////////////////////////
   async createPrivateChat(roomCreationDto: RoomCreationDto): Promise<any> {
     //    console.log('In the chat service to see test', chatMessageDto);
 
@@ -84,5 +85,5 @@ export class ChatService {
     chatMessage.chat = chat;
 
     return await this.chatMessageRepository.save(chatMessage);
-   }
+  }
 }

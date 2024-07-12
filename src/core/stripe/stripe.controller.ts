@@ -5,8 +5,8 @@ import {
   Headers,
   Req,
   RawBodyRequest,
+  Request,
 } from '@nestjs/common';
-import { Request } from 'express'; // Import Request from express
 
 import { StripeService } from './stripe.service';
 
@@ -14,10 +14,10 @@ import { StripeService } from './stripe.service';
 export class StripeController {
   constructor(private readonly stripeService: StripeService) {}
 
-  @Post('/create-checkout-session')
-  create() {
-    // return this.stripeService.createCheckoutSession();
-    return 'working';
+  @Post('/create-checkout-session') ///testing for subcription
+  createCheckoutSubscription(@Body() body: any) {
+    const { lookup_key } = body;
+    return this.stripeService.CheckoutSessionForSubscription(lookup_key);
   }
 
   @Post('/webhook')
