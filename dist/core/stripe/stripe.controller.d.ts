@@ -266,6 +266,7 @@ export declare class StripeController {
     createCheckoutSubscription(body: any): Promise<{
         session: import("stripe").Stripe.Response<import("stripe").Stripe.Checkout.Session>;
     }>;
+    createPortal(): Promise<import("stripe").Stripe.Response<import("stripe").Stripe.BillingPortal.Session>>;
     webhook(req: RawBodyRequest<Request>, signature: string): Promise<{
         received: boolean;
         event: any;

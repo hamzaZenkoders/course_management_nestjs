@@ -276,4 +276,6 @@ export declare class StripeService {
     CheckoutSessionForSubscription(lookup_key: string): Promise<{
         session: Stripe.Response<Stripe.Checkout.Session>;
     }>;
+    createPortalSession(): Promise<Stripe.Response<Stripe.BillingPortal.Session>>;
+    handleSubscriptionCreated(session: Object): Promise<void>;
 }

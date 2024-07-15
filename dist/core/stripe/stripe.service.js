@@ -86,6 +86,8 @@ let StripeService = class StripeService {
         catch (err) {
             throw new Error(`Webhook Error: ${err.message}`);
         }
+        let subscription;
+        let status;
         switch (event.type) {
             case 'checkout.session.completed':
                 console.log('checkout session succeded');
@@ -95,6 +97,33 @@ let StripeService = class StripeService {
                 break;
             case 'payment_intent.payment_failed':
                 this.paymentFailed(event.data.object.metadata);
+                break;
+            case 'customer.subscription.trial_will_end':
+                subscription = event.data.object;
+                status = subscription.status;
+                console.log(`Subscription status is ${status}.`);
+                break;
+            case 'customer.subscription.deleted':
+                subscription = event.data.object;
+                status = subscription.status;
+                console.log(`Subscription status is ${status}.`);
+                break;
+            case 'customer.subscription.created':
+                console.log('inside customer subscription created');
+                console.log(event);
+                subscription = event.data.object;
+                status = subscription.status;
+                console.log(`Subscription status is ${status}.`);
+                this.handleSubscriptionCreated(subscription);
+                break;
+            case 'customer.subscription.updated':
+                subscription = event.data.object;
+                status = subscription.status;
+                console.log(`Subscription status is ${status}.`);
+                break;
+            case 'entitlements.active_entitlement_summary.updated':
+                subscription = event.data.object;
+                console.log(`Active entitlement summary updated for ${subscription}.`);
                 break;
             default:
                 console.log(`Unhandled event type: ${event.type}`);
@@ -143,6 +172,18 @@ let StripeService = class StripeService {
         });
         console.log(session);
         return { session };
+    }
+    async createPortalSession() {
+        const session_id = 'cs_test_a1A7GIwJBlLA4Xxpm4k9f8P1hghdQfId7U1820SLJrlSAn4EwYTdoiHxnq';
+        const checkoutSession = await this.stripe.checkout.sessions.retrieve(session_id);
+        const returnUrl = 'https://www.facebook.com/';
+        const portalSession = await this.stripe.billingPortal.sessions.create({
+            customer: String(checkoutSession.customer),
+            return_url: returnUrl,
+        });
+        return portalSession;
+    }
+    async handleSubscriptionCreated(session) {
     }
 };
 exports.StripeService = StripeService;

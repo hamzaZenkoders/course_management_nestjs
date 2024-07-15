@@ -121,6 +121,8 @@ export class StripeService {
       throw new Error(`Webhook Error: ${err.message}`);
     }
 
+    let subscription;
+    let status;
     switch (event.type) {
       case 'checkout.session.completed':
         console.log('checkout session succeded');
@@ -133,6 +135,44 @@ export class StripeService {
         break;
       case 'payment_intent.payment_failed':
         this.paymentFailed(event.data.object.metadata);
+        break;
+
+      //////subscription/////
+      case 'customer.subscription.trial_will_end':
+        subscription = event.data.object;
+        status = subscription.status;
+        console.log(`Subscription status is ${status}.`);
+        // Then define and call a method to handle the subscription trial ending.
+        // handleSubscriptionTrialEnding(subscription);
+        break;
+      case 'customer.subscription.deleted':
+        subscription = event.data.object;
+        status = subscription.status;
+        console.log(`Subscription status is ${status}.`);
+        // Then define and call a method to handle the subscription deleted.
+        // handleSubscriptionDeleted(subscriptionDeleted);
+        break;
+      case 'customer.subscription.created':
+        console.log('inside customer subscription created');
+        console.log(event);
+        subscription = event.data.object;
+        status = subscription.status;
+        console.log(`Subscription status is ${status}.`);
+        // Then define and call a method to handle the subscription created.
+        this.handleSubscriptionCreated(subscription);
+        break;
+      case 'customer.subscription.updated':
+        subscription = event.data.object;
+        status = subscription.status;
+        console.log(`Subscription status is ${status}.`);
+        // Then define and call a method to handle the subscription update.
+        // handleSubscriptionUpdated(subscription);
+        break;
+      case 'entitlements.active_entitlement_summary.updated':
+        subscription = event.data.object;
+        console.log(`Active entitlement summary updated for ${subscription}.`);
+        // Then define and call a method to handle active entitlement summary updated
+        // handleEntitlementUpdated(subscription);
         break;
 
       default:
@@ -222,4 +262,25 @@ export class StripeService {
       },
     });
   } */
+
+  async createPortalSession() {
+    const session_id =
+      'cs_test_a1A7GIwJBlLA4Xxpm4k9f8P1hghdQfId7U1820SLJrlSAn4EwYTdoiHxnq';
+
+    const checkoutSession =
+      await this.stripe.checkout.sessions.retrieve(session_id);
+
+    const returnUrl = 'https://www.facebook.com/';
+
+    const portalSession = await this.stripe.billingPortal.sessions.create({
+      customer: String(checkoutSession.customer),
+      return_url: returnUrl,
+    });
+
+    return portalSession;
+  }
+
+  async handleSubscriptionCreated(session: Object) {
+    //console.log(session.data.object.metadata);
+  }
 }

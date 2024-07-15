@@ -23,6 +23,9 @@ let StripeController = class StripeController {
         const { lookup_key } = body;
         return this.stripeService.CheckoutSessionForSubscription(lookup_key);
     }
+    async createPortal() {
+        return this.stripeService.createPortalSession();
+    }
     async webhook(req, signature) {
         try {
             const event = await this.stripeService.handleWebhookEvent(req.rawBody, signature);
@@ -42,6 +45,12 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], StripeController.prototype, "createCheckoutSubscription", null);
+__decorate([
+    (0, common_1.Post)('/create-portal-session'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], StripeController.prototype, "createPortal", null);
 __decorate([
     (0, common_1.Post)('/webhook'),
     __param(0, (0, common_1.Req)()),

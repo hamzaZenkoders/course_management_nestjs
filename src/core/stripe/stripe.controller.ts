@@ -20,6 +20,11 @@ export class StripeController {
     return this.stripeService.CheckoutSessionForSubscription(lookup_key);
   }
 
+  @Post('/create-portal-session')
+  async createPortal() {
+    return this.stripeService.createPortalSession();
+  }
+
   @Post('/webhook')
   async webhook(
     @Req() req: RawBodyRequest<Request>,
