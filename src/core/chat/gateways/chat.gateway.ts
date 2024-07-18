@@ -11,6 +11,7 @@ import {
 
 import { Server, Socket } from 'socket.io';
 import { RoomCreationDto } from '../dto/roomCreation-dto';
+import { ChatService } from '../chat.service';
 
 @WebSocketGateway({})
 export class ChatgateWay
@@ -18,14 +19,22 @@ export class ChatgateWay
 {
   @WebSocketServer() server: Server; // Inject WebSocket server instance
 
-  @SubscribeMessage('join')
-  handleJoin(client: Socket, roomId: string) {
-    client.join(roomId);
-    console.log(`Client ${client.id} joined room ${roomId}`);
+  constructor(private chatService: ChatService) {}
+
+  @SubscribeMessage('joinRoom')
+  async handleJoin(
+    client: Socket,
+    roomId: string,
+    @MessageBody() body: RoomCreationDto,
+  ) {
+    let chatRoomId = await this.chatService.createPrivateChat(body);
+
+    client.join(chatRoomId);
+    console.log(`Client ${client.id} has joined chat ${chatRoomId}`);
   }
 
   @SubscribeMessage('chat message')
-  handleMessage(
+  async handleMessage(
     @MessageBody() body: RoomCreationDto,
     @ConnectedSocket() client: Socket,
   ) {}
